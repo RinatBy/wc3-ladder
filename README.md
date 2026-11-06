@@ -1,11 +1,11 @@
 # Warcraft III Online
 
-DotA Classic (including NewYear) and LoD public player statistics, in the retained Battle.net 2007 style.
+https://wc3.uplay2.ru/ — DotA Classic (including NewYear) and LoD leaderboards.
 
-GitHub Pages source: `main`, `/docs`. Intended domain: `wc3.uplay2.ru`.
+GitHub Pages publishes main:/docs. The VDS exports public statistics every two minutes; SQLite/account data, IPs, credentials, maps and game binaries are never published.
 
-This is a preliminary view of real recorded games. Missing results, MMR, XP, and levels are displayed as dashes; no rating formula has been activated. Historical 2007 players are available only in the explicit archive view.
+Rating policy v1 was approved on 2026-11-07. Each completed 5v5 of ten distinct humans is replayed chronologically. Team Elo starts at 1000, K=50 (equal teams ±25); no individual KDA modifier to MMR. XP is 50 completion +50 victory + up to50 contribution; level L starts at100*(L-1)^2 XP. General match results remain separate from rated totals. Classic/NewYear share one rating, LoD has its own.
 
-The VDS publishes only public player names and game statistics. No account database, passwords, IP addresses, private SSH keys, client EXE or map files are in this repository.
+Public usernames preserve PvPGN spelling while identity joins stay case-insensitive. Hero names are extracted from the exact hash-verified map metadata. Source archive reference pages are retained in the owner's local project, removed from public navigation and current website files. Original Warcraft artwork belongs to its authors; corporate Blizzard logos are omitted.
 
-Original artwork remains the property of its authors; Blizzard corporate logos are omitted. The original server-side ladder application was not archived.
+Backend source is in tools/. Install only reviewed, checksum-verified pinned versions into /opt/warcraft-iii-online/ladder; the disposable checkout is overwritten by synchronization. Do not put secrets or client files in this repository.
