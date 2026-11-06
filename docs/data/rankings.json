@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "status": "preview",
+  "rating_status": "not_configured",
   "pools": {
     "classic": {
       "label": "DotA Classic",
@@ -345,6 +346,5 @@
       "recorded_matches": 4,
       "completed_matches": 0
     }
-  },
-  "rating_status": "not_configured"
+  }
 }
