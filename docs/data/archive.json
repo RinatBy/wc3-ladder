@@ -1,0 +1,226 @@
+{
+  "kind": "historical",
+  "captured_at": "2007-02-08",
+  "players": [
+    {
+      "name": "Panderen",
+      "rank": 1,
+      "level": 45,
+      "progress": 59,
+      "clan": "Rvns",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D4.gif",
+      "xp": 20091,
+      "wins": 475,
+      "losses": 180
+    },
+    {
+      "name": "sex4fun",
+      "rank": 2,
+      "level": 45,
+      "progress": 52,
+      "clan": "",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N3.gif",
+      "xp": 20021,
+      "wins": 208,
+      "losses": 111
+    },
+    {
+      "name": "FiZiX",
+      "rank": 3,
+      "level": 44,
+      "progress": 71,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3R3.gif",
+      "xp": 19711,
+      "wins": 501,
+      "losses": 409
+    },
+    {
+      "name": "MadHorse[LuNaR]",
+      "rank": 4,
+      "level": 44,
+      "progress": 70,
+      "clan": "LNR",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 19704,
+      "wins": 194,
+      "losses": 104
+    },
+    {
+      "name": "KisstheRain[aP]",
+      "rank": 5,
+      "level": 44,
+      "progress": 25,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O4.gif",
+      "xp": 19244,
+      "wins": 344,
+      "losses": 258
+    },
+    {
+      "name": "oCe.Darkness",
+      "rank": 6,
+      "level": 43,
+      "progress": 45,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N2.gif",
+      "xp": 18945,
+      "wins": 196,
+      "losses": 127
+    },
+    {
+      "name": "Drakrami.",
+      "rank": 7,
+      "level": 42,
+      "progress": 58,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O2.gif",
+      "xp": 18586,
+      "wins": 306,
+      "losses": 200
+    },
+    {
+      "name": "Vinicks_ORC",
+      "rank": 8,
+      "level": 42,
+      "progress": 25,
+      "clan": "vS",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O6.gif",
+      "xp": 18247,
+      "wins": 566,
+      "losses": 487
+    },
+    {
+      "name": "strikeRRose",
+      "rank": 9,
+      "level": 42,
+      "progress": 10,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 18100,
+      "wins": 246,
+      "losses": 178
+    },
+    {
+      "name": "rua",
+      "rank": 10,
+      "level": 41,
+      "progress": 70,
+      "clan": "BENZ",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H4.gif",
+      "xp": 18200,
+      "wins": 571,
+      "losses": 481
+    },
+    {
+      "name": "BahBahBlack",
+      "rank": 11,
+      "level": 41,
+      "progress": 63,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 18136,
+      "wins": 205,
+      "losses": 171
+    },
+    {
+      "name": "SiZeMaTTeRz",
+      "rank": 12,
+      "level": 41,
+      "progress": 58,
+      "clan": "",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3R2.gif",
+      "xp": 18086,
+      "wins": 210,
+      "losses": 180
+    },
+    {
+      "name": "g3.Balance",
+      "rank": 13,
+      "level": 41,
+      "progress": 41,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N3.gif",
+      "xp": 17904,
+      "wins": 196,
+      "losses": 107
+    },
+    {
+      "name": "POintgod56",
+      "rank": 14,
+      "level": 41,
+      "progress": 35,
+      "clan": "13th",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U3.gif",
+      "xp": 17848,
+      "wins": 422,
+      "losses": 378
+    },
+    {
+      "name": "RNhoj",
+      "rank": 15,
+      "level": 41,
+      "progress": 34,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O3.gif",
+      "xp": 17839,
+      "wins": 283,
+      "losses": 204
+    },
+    {
+      "name": "GangaAndVodka",
+      "rank": 16,
+      "level": 41,
+      "progress": 25,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H3.gif",
+      "xp": 17747,
+      "wins": 257,
+      "losses": 210
+    },
+    {
+      "name": "TzouRnmvv",
+      "rank": 17,
+      "level": 41,
+      "progress": 15,
+      "clan": "wow",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D3.gif",
+      "xp": 17646,
+      "wins": 546,
+      "losses": 469
+    },
+    {
+      "name": "Revelations",
+      "rank": 18,
+      "level": 40,
+      "progress": 95,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N4.gif",
+      "xp": 17955,
+      "wins": 284,
+      "losses": 206
+    },
+    {
+      "name": "Ivy)coolminje",
+      "rank": 19,
+      "level": 40,
+      "progress": 92,
+      "clan": "Ivy",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H3.gif",
+      "xp": 17920,
+      "wins": 186,
+      "losses": 131
+    },
+    {
+      "name": "Ews_SunPower",
+      "rank": 20,
+      "level": 40,
+      "progress": 80,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D3.gif",
+      "xp": 17803,
+      "wins": 245,
+      "losses": 187
+    }
+  ]
+}

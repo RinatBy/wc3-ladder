@@ -1,0 +1,57 @@
+TD.rankingOutline { BORDER-RIGHT: #464646 1px solid; BORDER-TOP: #464646 1px solid; BORDER-LEFT: #464646 1px solid; BORDER-BOTTOM: #464646 1px solid } 
+
+TD.rankingHeader 	{  color: #ffffff; font-size: 8pt; font-family: arial,helvetica,sans-serif; font-weight: bold; background-color: #2E2D2B; border-style: solid; border-width: 1px; border-color: #5D5D5D #5D5D5D #1E1D1C #1E1D1C; padding: 3px;}
+
+TD.rankingFiller { BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px; BACKGROUND-COLOR: #1f1e1d } 
+
+TD.rankingRow		{ text-align: center; color: #929292; font-size: 8pt; font-family: arial,helvetica,sans-serif; border-style: solid; border-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-color:#000000; padding: 3px; }
+
+TD.rankingRowAlt { BORDER-RIGHT: #000000 0px solid; PADDING-RIGHT: 3px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; BORDER-LEFT: #000000 0px solid; PADDING-TOP: 3px; BORDER-BOTTOM: #000000 0px solid } 
+
+SPAN.rankingHeader { FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+SPAN.rankingData { FONT-SIZE: 8pt; COLOR: #929292; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+SPAN.rankingName { FONT-SIZE: 8pt; COLOR: #929292; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+#colorRed { COLOR: red } 
+
+A.button:link { PADDING-RIGHT: 3px; DISPLAY: block; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; COLOR: #cba300; PADDING-TOP: 3px } 
+
+A.button:visited { PADDING-RIGHT: 3px; DISPLAY: block; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; COLOR: #cba300; PADDING-TOP: 3px } 
+
+A.button:hover { PADDING-RIGHT: 3px; DISPLAY: block; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; COLOR: #ffffff; PADDING-TOP: 3px; BACKGROUND-COLOR: #565553 } 
+
+A.button:active { PADDING-RIGHT: 3px; DISPLAY: block; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; COLOR: #ffffff; PADDING-TOP: 3px } 
+
+A:link { FONT-WEIGHT: bold; COLOR: #cba300; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+A:visited { FONT-WEIGHT: bold; COLOR: #aaaaaa; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+A:hover { FONT-WEIGHT: bold; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+A:active { FONT-WEIGHT: bold; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif } 
+
+A.rankingName:link { COLOR: #cba300 } 
+
+A.rankingName:visited { COLOR: #cba300 } 
+
+A.rankingName:hover { COLOR: #cba300; BACKGROUND-COLOR: #565553 } 
+
+A.rankingName:active { COLOR: #cba300 } 
+
+TABLE.mainTable	{ BACKGROUND-IMAGE: url('/war3/images/ladder-revise/right-bg.gif');  BACKGROUND-REPEAT: repeat-y; BACKGROUND-POSITION: right;}
+
+#levelbarParent		 { position: relative; height: 1px; width: 70px; }
+#levelbarChild		 { position: absolute; left: 30px; top: 1px; FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif; }
+#levelbarChild2		 { position: absolute; left: 55px; top: 4px; FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif; }	
+
+TD.playerStatsHeader { FONT-SIZE: 8pt; COLOR: #929292; FONT-FAMILY: arial,helvetica,sans-serif; }
+TD.playerStatsData	 { FONT-SIZE: 8pt; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif; font-weight: bold; text-align: right;}
+TD.playerStatsDataLeft{ FONT-SIZE: 8pt; COLOR: #ffffff; FONT-FAMILY: arial,helvetica,sans-serif; font-weight: bold;}
+
+LI.profileReport	 { FONT-SIZE: 8pt; COLOR: #929292; FONT-FAMILY: arial,helvetica,sans-serif; }
+OL.profileReport	 { FONT-SIZE: 8pt; COLOR: #929292; FONT-FAMILY: arial,helvetica,sans-serif; }
+
+#additionalInfo		 { POSITION: relative; background-color:#000000; width: 245px; height: 32px; overflow: auto; padding: 2px; border-style: solid; border-width: 0px; border-color: #5C5C5C #4E4E4E #4E4E4E #5C5C5C; scrollbar-Base-Color: 282724; scrollbar-Arrow-Color: 666666; scrollbar-3dLight-Color: 161616; scrollbar-DarkShadow-Color: black; scrollbar-Highlight-Color: 666666; scrollbar-Shadow-Color: 383838; }
+#homePage  			 { POSITION: relative; background-color:#000000; width: 245px; height: 32px; overflow: auto; padding: 2px; border-style: solid; border-width: 0px; border-color: #5C5C5C #4E4E4E #4E4E4E #5C5C5C; scrollbar-Base-Color: 282724; scrollbar-Arrow-Color: 666666; scrollbar-3dLight-Color: 161616; scrollbar-DarkShadow-Color: black; scrollbar-Highlight-Color: 666666; scrollbar-Shadow-Color: 383838; }	

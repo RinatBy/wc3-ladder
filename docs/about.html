@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Рейтинг Warcraft III Online в оформлении Battle.net 2007 года. DotA Classic и LoD.">
+  <title>Warcraft III Online — Рейтинг</title>
+  <link rel="stylesheet" href="css/war3/includes/war3-human-ie.css">
+  <link rel="stylesheet" href="css/war3/ladder/war3-ladder-ranking.css">
+  <link rel="stylesheet" href="ladder.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="original-header" aria-label="Warcraft III — старое оформление Battle.net">
+      <nav class="header-menus" aria-label="Разделы рейтинга">
+        <a href="index.html?pool=classic&amp;mode=live" id="classic-link">DotA Classic <span class="down-arrow"></span></a>
+        <a href="index.html?pool=lod&amp;mode=live" id="lod-link">DotA LoD <span class="down-arrow"></span></a>
+        <a href="index.html?mode=archive" id="archive-link">Образец 2007 <span class="down-arrow"></span></a>
+      </nav>
+    </div>
+  </header>
+  <nav class="crumbs" aria-label="Навигация">
+    <a id="home-link" href="index.html">Рейтинг</a> &gt; <b id="crumb">Архивный образец</b>
+    <span class="crumb-divider">|</span> <a href="original/solo-lordaeron.html">Оригинальная страница</a>
+  </nav>
+  <main>
+    <aside class="notice-frame" aria-live="polite">
+      <div id="notice-title" class="notice-title">ОБРАЗЕЦ ОФОРМЛЕНИЯ · 2007</div>
+      <div id="notice-text">Имена и результаты из архивной страницы. Это не статистика нашего сервера.</div>
+    </aside>
+    <section class="ranking-frame" aria-label="Таблица рейтинга">
+      <div class="frame-top"><i></i><i></i></div>
+      <div class="frame-middle">
+        <div class="pager">
+          <button id="first-page" class="picture-button" title="Первая страница"><img src="assets/war3/images/ladder-revise/firstpage-button.gif" alt="В начало"></button>
+          <button id="previous-page"><img src="assets/war3/images/ladder-revise/previous-button.gif" alt=""> Назад</button>
+          <div id="page-list" class="page-list"></div>
+          <button id="next-page">Далее <img src="assets/war3/images/ladder-revise/next-button.gif" alt=""></button>
+          <button id="last-page" class="picture-button" title="Последняя страница"><img src="assets/war3/images/ladder-revise/lastpage-button.gif" alt="В конец"></button>
+        </div>
+        <div class="table-scroll">
+          <table class="ladder-table" aria-label="Игроки рейтинга">
+            <colgroup><col class="rank-col"><col class="level-col"><col class="clan-col"><col class="portrait-col"><col class="name-col"><col class="xp-col"><col class="wins-col"><col class="losses-col"></colgroup>
+            <thead><tr>
+              <th scope="col"><button data-sort="rank">Место <img id="rank-arrow" src="assets/war3/images/ladder-revise/arrow-down.gif" alt=""></button></th>
+              <th scope="col"><button data-sort="level">Уровень</button></th>
+              <th scope="col"><button id="clan-heading" data-sort="clan">Игр</button></th>
+              <th scope="col" id="portrait-heading">Раса</th>
+              <th scope="col" class="name-heading"><button data-sort="name">Имя игрока</button></th>
+              <th scope="col"><button data-sort="xp">Опыт</button></th>
+              <th scope="col"><button data-sort="wins">Победы</button></th>
+              <th scope="col"><button data-sort="losses">Поражения</button></th>
+            </tr></thead>
+            <tbody id="players"></tbody>
+          </table>
+        </div>
+        <div id="table-state" class="table-state" role="status"></div>
+        <section id="profile" class="player-profile" hidden aria-label="Карточка игрока"></section>
+      </div>
+      <div class="frame-bottom"><i></i><i></i></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a href="index.html" class="return-link"><img src="assets/war3/images/ladder-revise/arrow-left.gif" alt=""> Вернуться к рейтингу</a>
+    <span class="footer-name">Warcraft III Online</span>
+    <form id="search-form" role="search"><label for="player-search">Поиск игрока:</label> <input id="player-search" name="q" autocomplete="off" maxlength="80"><button class="go-button" type="submit" aria-label="Найти"><img src="assets/war3/images/ladder-revise/go-button.gif" alt="Найти"></button></form>
+  </footer>
+  <script type="application/json" id="archive-data">{
+  "kind": "historical",
+  "captured_at": "2007-02-08",
+  "players": [
+    {
+      "name": "Panderen",
+      "rank": 1,
+      "level": 45,
+      "progress": 59,
+      "clan": "Rvns",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D4.gif",
+      "xp": 20091,
+      "wins": 475,
+      "losses": 180
+    },
+    {
+      "name": "sex4fun",
+      "rank": 2,
+      "level": 45,
+      "progress": 52,
+      "clan": "",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N3.gif",
+      "xp": 20021,
+      "wins": 208,
+      "losses": 111
+    },
+    {
+      "name": "FiZiX",
+      "rank": 3,
+      "level": 44,
+      "progress": 71,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3R3.gif",
+      "xp": 19711,
+      "wins": 501,
+      "losses": 409
+    },
+    {
+      "name": "MadHorse[LuNaR]",
+      "rank": 4,
+      "level": 44,
+      "progress": 70,
+      "clan": "LNR",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 19704,
+      "wins": 194,
+      "losses": 104
+    },
+    {
+      "name": "KisstheRain[aP]",
+      "rank": 5,
+      "level": 44,
+      "progress": 25,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O4.gif",
+      "xp": 19244,
+      "wins": 344,
+      "losses": 258
+    },
+    {
+      "name": "oCe.Darkness",
+      "rank": 6,
+      "level": 43,
+      "progress": 45,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N2.gif",
+      "xp": 18945,
+      "wins": 196,
+      "losses": 127
+    },
+    {
+      "name": "Drakrami.",
+      "rank": 7,
+      "level": 42,
+      "progress": 58,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O2.gif",
+      "xp": 18586,
+      "wins": 306,
+      "losses": 200
+    },
+    {
+      "name": "Vinicks_ORC",
+      "rank": 8,
+      "level": 42,
+      "progress": 25,
+      "clan": "vS",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O6.gif",
+      "xp": 18247,
+      "wins": 566,
+      "losses": 487
+    },
+    {
+      "name": "strikeRRose",
+      "rank": 9,
+      "level": 42,
+      "progress": 10,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 18100,
+      "wins": 246,
+      "losses": 178
+    },
+    {
+      "name": "rua",
+      "rank": 10,
+      "level": 41,
+      "progress": 70,
+      "clan": "BENZ",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H4.gif",
+      "xp": 18200,
+      "wins": 571,
+      "losses": 481
+    },
+    {
+      "name": "BahBahBlack",
+      "rank": 11,
+      "level": 41,
+      "progress": 63,
+      "clan": "oCe",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U2.gif",
+      "xp": 18136,
+      "wins": 205,
+      "losses": 171
+    },
+    {
+      "name": "SiZeMaTTeRz",
+      "rank": 12,
+      "level": 41,
+      "progress": 58,
+      "clan": "",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3R2.gif",
+      "xp": 18086,
+      "wins": 210,
+      "losses": 180
+    },
+    {
+      "name": "g3.Balance",
+      "rank": 13,
+      "level": 41,
+      "progress": 41,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N3.gif",
+      "xp": 17904,
+      "wins": 196,
+      "losses": 107
+    },
+    {
+      "name": "POintgod56",
+      "rank": 14,
+      "level": 41,
+      "progress": 35,
+      "clan": "13th",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3U3.gif",
+      "xp": 17848,
+      "wins": 422,
+      "losses": 378
+    },
+    {
+      "name": "RNhoj",
+      "rank": 15,
+      "level": 41,
+      "progress": 34,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3O3.gif",
+      "xp": 17839,
+      "wins": 283,
+      "losses": 204
+    },
+    {
+      "name": "GangaAndVodka",
+      "rank": 16,
+      "level": 41,
+      "progress": 25,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H3.gif",
+      "xp": 17747,
+      "wins": 257,
+      "losses": 210
+    },
+    {
+      "name": "TzouRnmvv",
+      "rank": 17,
+      "level": 41,
+      "progress": 15,
+      "clan": "wow",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D3.gif",
+      "xp": 17646,
+      "wins": 546,
+      "losses": 469
+    },
+    {
+      "name": "Revelations",
+      "rank": 18,
+      "level": 40,
+      "progress": 95,
+      "clan": "aP",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3N4.gif",
+      "xp": 17955,
+      "wins": 284,
+      "losses": 206
+    },
+    {
+      "name": "Ivy)coolminje",
+      "rank": 19,
+      "level": 40,
+      "progress": 92,
+      "clan": "Ivy",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3H3.gif",
+      "xp": 17920,
+      "wins": 186,
+      "losses": 131
+    },
+    {
+      "name": "Ews_SunPower",
+      "rank": 20,
+      "level": 40,
+      "progress": 80,
+      "clan": "EWs",
+      "portrait": "assets/war3/ladder/portraits/small/w3xp/W3D3.gif",
+      "xp": 17803,
+      "wins": 245,
+      "losses": 187
+    }
+  ]
+}</script>
+  <script type="application/json" id="rankings-data">{
+  "schema_version": 1,
+  "status": "preview",
+  "pools": {
+    "classic": {
+      "label": "DotA Classic",
+      "maps": [
+        "DotA_v6.85n_RB_Allstars.w3x",
+        "DotA v6.85k Allstars.w3x"
+      ],
+      "players": [
+        {
+          "name": "landazar",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 2,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "okyhb",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 1,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "saddz",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 1,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "spork",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 1,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "uplay",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 8,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "xlorka",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 1,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        }
+      ],
+      "recorded_matches": 8,
+      "completed_matches": 0
+    },
+    "lod": {
+      "label": "DotA LoD",
+      "maps": [
+        "DotAv6.85ozLoD.w3x"
+      ],
+      "players": [
+        {
+          "name": "cityhunter",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 2,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "clinkz",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 1,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "landazar",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 4,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "okyhb",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 2,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "saddz",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 3,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "spork",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 3,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "uplay",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 3,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        },
+        {
+          "name": "xlorka",
+          "rank": null,
+          "level": null,
+          "progress": null,
+          "clan": "",
+          "portrait": null,
+          "xp": null,
+          "mmr": null,
+          "wins": null,
+          "losses": null,
+          "appearances": 3,
+          "result_games": 0,
+          "kills": null,
+          "deaths": null,
+          "assists": null,
+          "creepkills": null,
+          "creepdenies": null,
+          "neutralkills": null,
+          "towerkills": null,
+          "raxkills": null,
+          "courierkills": null
+        }
+      ],
+      "recorded_matches": 4,
+      "completed_matches": 0
+    }
+  },
+  "rating_status": "not_configured"
+}
+</script>
+  <script src="ladder.js"></script>
+</body>
+</html>
