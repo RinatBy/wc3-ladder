@@ -32,7 +32,7 @@ def eligible(event):
 
 
 def replay(events):
-    players={};seen=set();count=0;accepted=[]
+    players={};seen=set();count=0;accepted=[];awards={}
     for event in sorted(events,key=lambda e:(e['date'],e['id'])):
         if event['id'] in seen: continue
         seen.add(event['id'])
@@ -44,14 +44,18 @@ def replay(events):
                 players[key]=dict(mmr=1000,xp=0,wins=0,losses=0,rated_games=0,**{m:0 for m in METRICS})
         averages={t:sum(players[p['name'].casefold()]['mmr'] for p in team)/5 for t,team in teams.items()}
         delta=mmr_delta(averages[1],averages[2],event['winner']==1)
+        awards[event['id']]={}
         for t,team in teams.items():
             totals={m:sum(p.get(m,0) or 0 for p in team) for m in ('kills','towerkills','raxkills')}
             for p in team:
                 state=players[p['name'].casefold()];won=t==event['winner']
-                state['mmr']=max(0,state['mmr']+(delta if t==1 else -delta))
-                state['xp']+=experience(won,p.get('kills',0) or 0,p.get('assists',0) or 0,totals['kills'],totals['towerkills'],totals['raxkills'])
+                before=state['mmr']
+                state['mmr']=max(0,before+(delta if t==1 else -delta))
+                gained=experience(won,p.get('kills',0) or 0,p.get('assists',0) or 0,totals['kills'],totals['towerkills'],totals['raxkills'])
+                state['xp']+=gained
+                awards[event['id']][p['name'].casefold()]=dict(mmr_before=before,mmr_after=state['mmr'],mmr_delta=state['mmr']-before,xp_gained=gained)
                 state['wins']+=int(won);state['losses']+=int(not won);state['rated_games']+=1
                 for metric in METRICS: state[metric]+=p.get(metric,0) or 0
         count+=1;accepted.append(event['id'])
     for state in players.values(): state['level'],state['progress']=level_progress(state['xp'])
-    return dict(players=players,rated_matches=count,match_ids=accepted)
+    return dict(players=players,rated_matches=count,match_ids=accepted,match_awards=awards)

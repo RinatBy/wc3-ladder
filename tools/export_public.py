@@ -39,10 +39,11 @@ def load_display_names(directory):
 
 def export(sources,display_names=None,hero_catalog=None):
     display_names=display_names or {};hero_catalog=hero_catalog or {}
-    pools = {key:dict(label=label, maps=maps, players=[], recorded_matches=0, completed_matches=0) for key,label,maps in [
+    pools = {key:dict(label=label, maps=maps, players=[], matches=[], recorded_matches=0, completed_matches=0) for key,label,maps in [
         ('classic','DotA Classic',[MAPS['classic'],MAPS['newyear']]), ('lod','DotA LoD',[MAPS['lod']])]}
     people = {'classic':{},'lod':{}}
     events = {'classic':[],'lod':[]}
+    histories = {'classic':[],'lod':[]}
     hero_seen={}
     for profile, path in sorted(sources.items()):
         if profile not in MAPS: raise ValueError('Unknown map profile')
@@ -52,7 +53,9 @@ def export(sources,display_names=None,hero_catalog=None):
         try:
             tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
             if not {'games','gameplayers'} <= tables: raise ValueError('Missing game tables')
-            for game in db.execute('SELECT id,map,datetime FROM games ORDER BY id'):
+            columns={r[1] for r in db.execute('PRAGMA table_info(games)')}
+            extra=','.join(name if name in columns else 'NULL AS '+name for name in ('duration','gamename'))
+            for game in db.execute('SELECT id,map,datetime,'+extra+' FROM games ORDER BY id'):
                 if str(game['map']).replace('\\','/').split('/')[-1] != MAPS[profile]: continue
                 pool['recorded_matches'] += 1
                 roster = [dict(r) for r in db.execute('SELECT name,team,colour FROM gameplayers WHERE gameid=?',(game['id'],))
@@ -77,9 +80,12 @@ def export(sources,display_names=None,hero_catalog=None):
                 final_colours = Counter(r.get('newcolour',r['colour']) for r in stats)
                 if any(n!=1 for n in stats_colours.values()) or any(n!=1 for n in final_colours.values()): continue
                 joined = [(r,s) for r in roster for s in stats if r['colour']==s['colour'] and s.get('newcolour',s['colour']) in COLOURS]
-                if not joined: continue
-                pool['completed_matches'] += 1
+                if joined: pool['completed_matches'] += 1
                 event=dict(id=f"{profile}:{game['id']:012d}",date=game['datetime'] or '',winner=results[0]['winner'],players=[])
+                match=dict(id=f"{profile}-{game['id']}",date=game['datetime'] or '',map_profile=profile,
+                           map=MAPS[profile],name=game['gamename'] or '',duration_seconds=game['duration'],
+                           winner=results[0]['winner'],team_sizes=[sum(r['team']==t for r in roster) for t in (0,1)],
+                           rated=False,replay_url=None,players=[])
                 for r,s in joined:
                     p = players[r['name'].casefold()]
                     final_colour = s.get('newcolour',s['colour'])
@@ -96,9 +102,20 @@ def export(sources,display_names=None,hero_catalog=None):
                         p['last_hero'] = str(s['hero'])[:4]
                         p['hero_name'] = hero_catalog.get(profile,{}).get(p['last_hero'])
                     event['players'].append(dict(name=r['name'],team=team,start_team=r['team']+1,**{m:int(s.get(m) or 0) for m in METRICS}))
+                final_stats={r['name'].casefold():s for r,s in joined}
+                for r in roster:
+                    s=final_stats.get(r['name'].casefold(),{})
+                    colour=s.get('newcolour',s.get('colour'))
+                    team=(1 if colour<=5 else 2) if colour in COLOURS else None
+                    hero=str(s.get('hero') or '')[:4]
+                    match['players'].append(dict(name=players[r['name'].casefold()]['name'],team=team,start_team=r['team']+1,
+                                                hero=hero,hero_name=hero_catalog.get(profile,{}).get(hero),
+                                                mmr_before=None,mmr_after=None,mmr_delta=None,xp_gained=None,
+                                                **{m:int(s[m]) if s.get(m) is not None else None for m in (*METRICS,'gold')}))
                 # Preserve the complete start roster requirement even if result rows are partial.
                 event['roster_valid']=(len(roster)==10 and len(identities)==10 and all(n==1 for n in identities.values()) and len(colours)==10 and all(n==1 for n in colours.values()))
                 events[poolkey].append(event)
+                histories[poolkey].append((event['id'],match))
         finally:
             db.close()
     for key, pool in pools.items():
@@ -110,6 +127,18 @@ def export(sources,display_names=None,hero_catalog=None):
         ranked=0
         for p in pool['players']:
             if p['rated_games']: ranked+=1;p['rank']=ranked
+        matches=[]
+        for event_id,match in histories[key]:
+            match['rated']=event_id in result['match_awards']
+            for p in match['players']:
+                p.update(result['match_awards'].get(event_id,{}).get(p['name'].casefold(),{}))
+            matches.append(match)
+        matches.sort(key=lambda m:(m['date'],m['map_profile'],int(m['id'].rsplit('-',1)[1])),reverse=True)
+        retained=set()
+        for p in pool['players']:
+            p['recent_match_ids']=[m['id'] for m in matches if any(r['name'].casefold()==p['name'].casefold() for r in m['players'])][:10]
+            retained.update(p['recent_match_ids'])
+        pool['matches']=[m for m in matches if m['id'] in retained]
     return dict(schema_version=1,status='active',rating_status='active',rating_version=1,pools=pools)
 
 

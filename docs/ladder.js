@@ -286,12 +286,70 @@ function poolForLocation(pathname, search=''){
 }
 function ladderUrl(pool, values={}){
  const query=new URLSearchParams();
- for(const key of ['q','sort','dir','page','player']){
+ for(const key of ['q','sort','dir','page','player','match']){
   const value=values[key];
   if(value==null||value===''||(key==='sort'&&value==='rank')||(key==='dir'&&value==='asc')||(key==='page'&&Number(value)<=1))continue;
   query.set(key,String(value));
  }
  return '/'+(pool==='lod'?'lod':'classic')+'/'+(query.size?'?'+query:'');
+}
+
+function findMatch(data,id){return (data?.matches||[]).find(m=>m.id===id)||null;}
+function recentMatches(data,name){
+ const player=(data?.players||[]).find(p=>p.name.toLocaleLowerCase()===String(name).toLocaleLowerCase());
+ return [...new Set(player?.recent_match_ids||[])].slice(0,10).map(id=>findMatch(data,id)).filter(Boolean);
+}
+
+function matchDate(value){
+ if(!value)return '—';const date=new Date(value.replace(' ','T')+(/Z$|[+-]\d\d:\d\d$/.test(value)?'':'Z'));
+ return Number.isNaN(date.getTime())?'—':date.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function matchDuration(seconds){return Number.isFinite(seconds)?Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0'):'—';}
+function signed(value){return Number.isFinite(value)?(value>0?'+':'')+value:'—';}
+function mapLabel(match){return match.map_profile==='lod'?'DotA LoD':match.map_profile==='newyear'?'DotA NewYear':'DotA Classic';}
+function profileCard(title){const card=node('section',null,'profile-card');card.append(node('h2',title));return card;}
+function profileValues(entries){const dl=node('dl',null,'profile-values');for(const[label,value]of entries)dl.append(node('dt',label),node('dd',value));return dl;}
+function detailLink(match,player){const a=node('a',matchDate(match.date));a.href=url({match:match.id,player:player||null});return a;}
+function matchOutcome(match,person){if(!person||![1,2].includes(person.team))return node('span','Нет данных','profile-subtitle');const won=person.team===match.winner;return node('span',won?'Победа':'Поражение',won?'result-win':'result-loss');}
+function profileContent(panel,p){
+ const data=rankings.pools?.[pool]||{},matches=recentMatches(data,p.name);
+ const heading=node('div',null,'profile-heading');const portrait=node('div',null,'profile-hero');portrait.append(heroPortrait(p));
+ const identity=node('div');identity.append(node('h1',p.name),node('p',pool==='lod'?'DotA LoD':'DotA Classic','profile-subtitle'));
+ if(p.hero_name)identity.append(node('p','Последний герой: '+p.hero_name,'profile-subtitle'));
+ heading.append(portrait,identity);panel.append(heading);
+ const summary=node('div',null,'profile-summary');
+ const rating=profileCard('Рейтинг');const bar=node('div',null,'level-bar profile-progress');const fill=node('div',null,'level-fill');fill.style.width=Math.max(0,Math.min(100,p.progress||0))+'%';bar.append(fill,node('span','Уровень '+(p.level??1),'level-value'));rating.append(bar);
+ rating.append(profileValues([['Место',format(p.rank)],['MMR',format(p.mmr)],['Опыт',format(p.xp)],['Прогресс уровня',(p.progress??0)+'%'],['Игры',format(p.rated_games)],['Победы',format(p.wins)],['Поражения',format(p.losses)]]));
+ const total=p.all_result_games??0,overall=profileCard('Общая статистика');
+ overall.append(profileValues([['Завершённые игры',format(total)],['Победы',format(p.all_wins)],['Поражения',format(p.all_losses)],['Процент побед',total?(100*(p.all_wins??0)/total).toFixed(1)+'%':'—'],['Убийства / смерти / помощь',[p.all_kills,p.all_deaths,p.all_assists].map(format).join(' / ')],['Крипы',format(p.all_creepkills)],['Башни',format(p.all_towerkills)]]));
+ const last=profileCard('Последняя игра');if(matches.length){const m=matches[0],person=m.players.find(r=>r.name.toLowerCase()===p.name.toLowerCase());last.append(detailLink(m,p.name),node('p',mapLabel(m)),matchOutcome(m,person),node('p',matchDuration(m.duration_seconds)),node('p',m.rated?'Рейтинговая игра':'Без изменения рейтинга','profile-subtitle'));}else last.append(node('p','Пока нет записанных результатов.'));
+ summary.append(rating,overall,last);panel.append(summary);
+ const history=node('section',null,'match-history');history.append(node('h2','Последние игры'));
+ if(!matches.length)history.append(node('p','Пока нет записей завершённых игр.','profile-subtitle'));
+ else{
+  const scroll=node('div',null,'table-scroll');const table=node('table',null,'history-table');table.setAttribute('aria-label','Последние игры '+p.name);
+  const head=node('tr');for(const label of ['Дата','Карта','Герой','Результат','У / С / П','Время','MMR'])head.append(node('th',label));const thead=node('thead');thead.append(head);table.append(thead);const tbody=node('tbody');
+  for(const m of matches){const person=m.players.find(r=>r.name.toLowerCase()===p.name.toLowerCase()),tr=node('tr');const date=node('td');date.append(detailLink(m,p.name));const hero=node('td');hero.append(heroPortrait(person));const outcome=node('td');outcome.append(matchOutcome(m,person));if(!m.rated)outcome.append(node('small','Без рейтинга','unrated-note'));tr.append(date,node('td',mapLabel(m)),hero,outcome,node('td',[person.kills,person.deaths,person.assists].map(format).join(' / ')),node('td',matchDuration(m.duration_seconds)),node('td',signed(person.mmr_delta),person.mmr_delta>0?'result-win':person.mmr_delta<0?'result-loss':''));tbody.append(tr);}
+  table.append(tbody);scroll.append(table);history.append(scroll);
+ }
+ panel.append(history);const back=node('a','← К рейтингу');back.href=url();panel.append(back);
+}
+function showMatch(id,player){
+ document.querySelector('.table-scroll').hidden=true;document.querySelector('.pager').hidden=true;$('table-state').hidden=true;
+ const panel=$('profile');panel.hidden=false;panel.replaceChildren();const match=findMatch(rankings.pools?.[pool],id);
+ if(!match){panel.append(node('h1','Матч не найден'),node('p','Этот матч отсутствует в доступной истории.'));const back=node('a','← К рейтингу');back.href=url();panel.append(back);return;}
+ document.title=mapLabel(match)+' · '+matchDate(match.date)+' — Warcraft III Online';
+ panel.append(node('h1',mapLabel(match)),node('p',matchDate(match.date)+' · '+matchDuration(match.duration_seconds)+' · На старте: '+match.team_sizes.join(' × '),'match-meta'));
+ if(match.name)panel.append(node('p',match.name,'profile-subtitle'));
+ panel.append(node('p',match.rated?'Рейтинговая игра':'Без изменения рейтинга','profile-subtitle'));
+ for(const team of [1,2,...(match.players.some(p=>p.team==null)?[null]:[])]){
+  const section=node('section',null,'match-team');section.append(node('h2',team==null?'Без итоговых данных':(team===1?'Свет':'Тьма')+' — '+(match.winner===team?'Победа':'Поражение'),team==null?'profile-subtitle':match.winner===team?'result-win':'result-loss'));
+  const scroll=node('div',null,'table-scroll'),table=node('table',null,'history-table match-table');table.setAttribute('aria-label',team==null?'Игроки без итоговых данных':team===1?'Команда Света':'Команда Тьмы');const head=node('tr');for(const label of ['Герой','Игрок','У','С','П','Крипы','Добивания','Лес','Башни','Бараки','Курьеры','MMR','XP'])head.append(node('th',label));const thead=node('thead');thead.append(head);const body=node('tbody');
+  for(const p of match.players.filter(p=>p.team===team)){const row=node('tr');const hero=node('td');hero.append(heroPortrait(p));const name=node('td');name.append(linkPlayer(p));row.append(hero,name);for(const key of ['kills','deaths','assists','creepkills','creepdenies','neutralkills','towerkills','raxkills','courierkills'])row.append(node('td',format(p[key])));row.append(node('td',signed(p.mmr_delta)),node('td',Number.isFinite(p.xp_gained)?'+'+p.xp_gained:'—'));body.append(row);}
+  table.append(thead,body);scroll.append(table);section.append(scroll);panel.append(section);
+ }
+ panel.append(node('p','Реплей этой игры не записан.','profile-subtitle'));
+ const back=node('a',player?'← К профилю '+player:'← К рейтингу');back.href=url({player:player||null});panel.append(back);
 }
 
 const $=id=>document.getElementById(id);
@@ -329,16 +387,7 @@ function showProfile(name){
  const panel=$('profile');panel.replaceChildren();if(!name){panel.hidden=true;return;}
  panel.hidden=false;const p=playerProfile(activePlayers(),name);
  if(!p){const back=node('a','← К таблице');back.href=url({player:null});panel.append(node('h1','Игрок не найден'),node('p','В выбранном разделе нет записи об этом игроке.'),back);return;}
- document.title=p.name+' — Warcraft III Online';panel.append(node('h1',p.name));
- const wrap=node('div',null,'profile-layout');
- if(p.portrait&&/^assets\/war3\/[A-Za-z0-9_./-]+$/.test(p.portrait)&&!p.portrait.includes('..')){const img=node('img',null,'profile-portrait');img.src=p.portrait;img.alt='Портрет игрока';wrap.append(img);}
- const dl=node('dl',null,'profile-values');const total=Number.isFinite(p.wins)&&Number.isFinite(p.losses)?p.wins+p.losses:null;
- const values=[['Место',p.rank??'—'],['Уровень',p.level??'—'],['MMR',format(p.mmr)],['Опыт',format(p.xp)],['Победы',format(p.wins)],['Поражения',format(p.losses)],['Игры в рейтинге',format(p.rated_games??p.appearances??total)],['Всего завершённых игр',format(p.all_result_games??total)],['Победы всего',format(p.all_wins??p.wins)],['Поражения всего',format(p.all_losses??p.losses)],['Последний герой',p.hero_name||'—'],['Процент побед',total?(100*p.wins/total).toFixed(1)+'%':'—']];
- if(mode==='archive')values.splice(2,1,['Клан',p.clan||'—']);
- if(mode!=='archive')for(const[key,label]of [['kills','Убийства'],['deaths','Смерти'],['assists','Помощь'],['creepkills','Крипы'],['towerkills','Башни']])values.push([label,format(p[key])]);
- for(const[label,value]of values){const dd=node('dd',label==='Последний герой'?null:value);if(label==='Последний герой')dd.append(heroPortrait(p));dl.append(node('dt',label),dd);}
- wrap.append(dl);panel.append(wrap,node('p',mode==='archive'?'Карточка из архивной таблицы 2007 года. Подробная история матчей в этом снимке отсутствует.':rankings.rating_status==='active'?'Статистика игрока.':p.result_games?'Предварительная статистика сервера.':'Участник сохранённых игр. Результаты этих матчей бот не записал.', 'profile-note'));
- const back=node('a','← К таблице');back.href=url({player:null});panel.append(back);
+ document.title=p.name+' — Warcraft III Online';profileContent(panel,p);
 }
 function render(){
  const isArchive=mode==='archive';const label=pool==='lod'?'DotA LoD':'DotA Classic';
@@ -355,7 +404,7 @@ function render(){
  $('first-page').disabled=$('previous-page').disabled=page<=1;$('next-page').disabled=$('last-page').disabled=page>=selected.pages;
  $('first-page').onclick=()=>{page=1;render();};$('previous-page').onclick=()=>{page--;render();};$('next-page').onclick=()=>{page++;render();};$('last-page').onclick=()=>{page=selected.pages;render();};
  for(const b of document.querySelectorAll('[data-sort]')){b.closest('th').setAttribute('aria-sort',b.dataset.sort===sort?(dir==='asc'?'ascending':'descending'):'none');}
- showProfile(params.get('player'));
+ if(params.get('match'))showMatch(params.get('match'),params.get('player'));else showProfile(params.get('player'));
 }
 $('player-search').value=term;
 $('search-form').addEventListener('submit',e=>{e.preventDefault();term=$('player-search').value.trim();page=1;render();});
