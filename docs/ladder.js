@@ -331,8 +331,6 @@ function render(){
  $('classic-link').setAttribute('aria-current',pool==='classic'?'page':'false');$('lod-link').setAttribute('aria-current',pool==='lod'?'page':'false');
  $('portrait-heading').textContent='Последний герой';
  $('clan-heading').textContent='Игры';$('clan-heading').dataset.sort=rankings.rating_status==='active'?'rated_games':'appearances';
- $('notice-title').textContent=isArchive?'ОБРАЗЕЦ ОФОРМЛЕНИЯ · 2007':label.toUpperCase();
- $('notice-text').textContent=isArchive?'Имена и результаты взяты из оригинальной архивной страницы. Это не статистика нашего сервера.':rankings.status==='not_connected'?'Источник результатов матчей ещё не подключён. Здесь будет рейтинг нашего сервера.':rankings.status==='preview'?'Предварительная статистика сервера · '+(rankings.pools?.[pool]?.completed_matches?'сохранённые результаты игр':'профили участников сохранённых игр'):pool==='classic'?'Общая статистика Classic и новогодней карты.':'Отдельная статистика LoD.';
  const selected=selectPlayers(activePlayers(),{term,sort,dir,page,size:20});page=selected.page;
  $('players').replaceChildren();for(const p of selected.rows)$('players').append(row(p));
  if(!selected.rows.length){const tr=node('tr');const td=node('td',term?'Игроки по этому запросу не найдены.':'Пока нет записей зачтённых матчей.', 'empty-cell');td.colSpan=9;tr.append(td);$('players').append(tr);}
@@ -347,6 +345,6 @@ $('player-search').value=term;
 $('search-form').addEventListener('submit',e=>{e.preventDefault();term=$('player-search').value.trim();page=1;render();});
 for(const b of document.querySelectorAll('[data-sort]'))b.addEventListener('click',()=>{dir=sort===b.dataset.sort&&dir==='asc'?'desc':'asc';sort=b.dataset.sort;page=1;render();});
 render();
-if(location.protocol==='http:'||location.protocol==='https:')fetch('data/rankings.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();}).then(data=>{if(data.schema_version!==1||!data.pools)throw Error('Unsupported data');rankings=data;render();}).catch(()=>{if(mode==='live')$('notice-text').textContent=(rankings.status==='preview'?'Предварительная статистика · ':'')+'Не удалось обновить данные. Показана сохранённая копия.';});
+if(location.protocol==='http:'||location.protocol==='https:')fetch('data/rankings.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json();}).then(data=>{if(data.schema_version!==1||!data.pools)throw Error('Unsupported data');rankings=data;render();}).catch(()=>{const message=$('data-update-error');message.textContent='Не удалось обновить данные. Показана сохранённая копия.';message.hidden=false;});
 
 })();
