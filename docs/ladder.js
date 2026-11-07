@@ -280,15 +280,30 @@ function playerProfile(players,name) {
   return players.find(p=>p.name.toLocaleLowerCase()===String(name).toLocaleLowerCase())??null;
 }
 
+function poolForLocation(pathname, search=''){
+ const match=pathname.match(/^\/(lod|classic)(?:\/|$)/);
+ return match?match[1]:new URLSearchParams(search).get('pool')==='lod'?'lod':'classic';
+}
+function ladderUrl(pool, values={}){
+ const query=new URLSearchParams();
+ for(const key of ['q','sort','dir','page','player']){
+  const value=values[key];
+  if(value==null||value===''||(key==='sort'&&value==='rank')||(key==='dir'&&value==='asc')||(key==='page'&&Number(value)<=1))continue;
+  query.set(key,String(value));
+ }
+ return '/'+(pool==='lod'?'lod':'classic')+'/'+(query.size?'?'+query:'');
+}
+
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-const pool=params.get('pool')==='lod'?'lod':'classic';
+const pool=poolForLocation(location.pathname,location.search);
+if(location.pathname!=='/'+pool+'/')location.replace(ladderUrl(pool,Object.fromEntries(params))+location.hash);
 const mode='live';
 let term=params.get('q')??'',sort=params.get('sort')??'rank',dir=params.get('dir')??'asc',page=Number(params.get('page'))||1;
 const archived={players:[]};
 let rankings=JSON.parse($('rankings-data').textContent);
 const format=value=>Number.isFinite(value)?value.toLocaleString('ru-RU'):'—';
-function url(changes={}){const p=new URLSearchParams({pool,mode,q:term,sort,dir,page:String(page)});for(const[k,v]of Object.entries(changes)){if(v==null)p.delete(k);else p.set(k,String(v));}return 'index.html?'+p;}
+function url(changes={}){return ladderUrl(pool,{q:term,sort,dir,page,...changes});}
 function node(tag,text,className){const n=document.createElement(tag);if(text!=null)n.textContent=text;if(className)n.className=className;return n;}
 function activePlayers(){return mode==='archive'?archived.players:(rankings.pools?.[pool]?.players??[]);}
 function linkPlayer(p){const a=node('a',p.name);a.href=url({player:p.name});return a;}
@@ -327,6 +342,7 @@ function showProfile(name){
 }
 function render(){
  const isArchive=mode==='archive';const label=pool==='lod'?'DotA LoD':'DotA Classic';
+ document.title=label+' — Warcraft III Online';
  $('crumb').textContent=isArchive?'Lordaeron · Solo · 2007':label;
  $('classic-link').setAttribute('aria-current',pool==='classic'?'page':'false');$('lod-link').setAttribute('aria-current',pool==='lod'?'page':'false');
  $('portrait-heading').textContent='Последний герой';
