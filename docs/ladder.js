@@ -293,6 +293,11 @@ function ladderUrl(pool, values={}){
  }
  return '/'+(pool==='lod'?'lod':'classic')+'/'+(query.size?'?'+query:'');
 }
+function legacyLadderTarget(search){
+ const values=new URLSearchParams(search);
+ if(!['pool','mode','q','sort','dir','page','player','match'].some(key=>values.has(key)))return null;
+ return ladderUrl(poolForLocation('/',search),Object.fromEntries(values));
+}
 
 function findMatch(data,id){return (data?.matches||[]).find(m=>m.id===id)||null;}
 function recentMatches(data,name){
