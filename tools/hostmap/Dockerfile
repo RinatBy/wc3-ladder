@@ -13,7 +13,7 @@ RUN ldconfig && make -C ghost -j1 DFLAGS= OFLAGS='-O2 -std=c++11' && mkdir -p /b
 COPY patch_readonly_map.py /checks/
 RUN python3 /checks/patch_readonly_map.py /src && make -C ghost -j1 DFLAGS= OFLAGS='-O2 -std=c++11' && cp ghost/ghost++ /bundle/
 
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS hostmap-runtime
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates python3 libboost-date-time1.74.0 libboost-system1.74.0 libboost-filesystem1.74.0 libboost-thread1.74.0 libgmp10 libmariadb3 libbz2-1.0 zlib1g && rm -rf /var/lib/apt/lists/*
 COPY --from=build /bundle/ /opt/ghost/
@@ -26,7 +26,7 @@ FROM build AS hostmap-build
 COPY patch_worker.py ready.hpp test_ready.cpp /hostmap/
 RUN g++ -std=c++11 /hostmap/test_ready.cpp -o /hostmap/test-ready && /hostmap/test-ready
 RUN python3 /hostmap/patch_worker.py /src && make -C /src/ghost clean && make -C /src/ghost -j1 DFLAGS= OFLAGS='-O2 -std=c++11'
-FROM warcraft-iii-hostbot:local AS hostmap
+FROM hostmap-runtime AS hostmap
 COPY --from=hostmap-build /src/ghost/ghost++ /opt/ghost/ghost++
 COPY *.py /app/
 WORKDIR /app
