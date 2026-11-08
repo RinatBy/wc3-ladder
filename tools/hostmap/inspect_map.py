@@ -53,6 +53,10 @@ def inspect(path, library='/opt/ghost/lib/libstorm.so', native=False):
     path=Path(path)
     if path.is_symlink() or not 4 <= path.stat().st_size <= 32*1024*1024:
         raise ValueError('Map size or type rejected')
+    if os.name!='nt':
+        # This pinned StormLib is built with USE_WITH_CASC: shared hash helpers
+        # live in CascLib, which GHost links globally as well.
+        c.CDLL('/opt/ghost/lib/libcasc.so',mode=c.RTLD_GLOBAL)
     lib=(c.WinDLL if os.name=='nt' else c.CDLL)(str(library))
     path_type=c.c_wchar_p if os.name=='nt' else c.c_char_p
     lib.SFileOpenArchive.argtypes=[path_type,c.c_uint32,c.c_uint32,c.POINTER(c.c_void_p)]
