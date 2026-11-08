@@ -89,6 +89,7 @@ def isolated_validate(path):
         '-v',str(ROOT/'inspect_map.py')+':/inspect_map.py:ro','--entrypoint','/usr/bin/timeout',
         'warcraft-iii-hostmap:trial','--kill-after=2','25','python3','/inspect_map.py','/candidate'],capture_output=True,timeout=35)
         if result.returncode!=0 or len(result.stdout)>1000:
+            print('HOSTMAP_INSPECTION_FAILED',result.returncode,result.stderr.decode('utf-8','replace')[-2500:],flush=True)
             return False
         return json.loads(result.stdout).get('valid') is True
     finally:
