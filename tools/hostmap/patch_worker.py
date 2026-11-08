@@ -19,17 +19,23 @@ def patch(root):
     replace(root, 'ghost.cpp', '\tm_LCPings = CFG->GetInt(',
             '\tm_HostMapPublic = CFG->GetInt( "hostmap_public", 0 ) == 1;\n'
             '\tm_HostMapLastStatus = 0;\n\tm_LCPings = CFG->GetInt(')
+    replace(root, 'ghost.cpp', '\tm_Map = new CMap( this, &MapCFG, m_MapCFGPath + m_DefaultMap );',
+            '\tm_Map = new CMap( this, &MapCFG, m_MapCFGPath + m_DefaultMap );\n'
+            '    if(CFG->GetInt("hostmap_validate",0)==1) {\n'
+            '        bool valid=m_Map->GetValid();\n'
+            '        CONSOLE_Print(valid ? "HOSTMAP_NATIVE_MAP_VALID" : "HOSTMAP_NATIVE_MAP_INVALID");\n'
+            '        exit(valid ? 0 : 3);\n    }')
     replace(root, 'ghost.cpp', '\t// get rid of any deleted games', '''
     if( m_HostMapPublic && GetTime() != m_HostMapLastStatus ) {
         bool logged = !m_BNETs.empty() && m_BNETs[0]->GetLoggedIn();
-        ofstream status("/state/hostmap.status.tmp");
-        status << GetTime() << "\\t" << ((m_CurrentGame || !m_Games.empty() || !logged) ? 1 : 0) << "\\n";
+        ofstream status("/status/hostmap.status.tmp");
+        status << static_cast<uint32_t>(time(NULL)) << "\\t" << ((m_CurrentGame || !m_Games.empty() || !logged) ? 1 : 0) << "\\n";
         status.close();
-        rename("/state/hostmap.status.tmp", "/state/hostmap.status");
+        rename("/status/hostmap.status.tmp", "/status/hostmap.status");
         m_HostMapLastStatus = GetTime();
     }
 \t// get rid of any deleted games''')
-    replace(root, 'bnet.cpp', '#include <boost/filesystem.hpp>', '#include <boost/filesystem.hpp>\n#include <regex>')
+    replace(root, 'bnet.cpp', '#include <boost/filesystem.hpp>', '#include <boost/filesystem.hpp>\n#include <regex>\n#include <ctime>')
     replace(root, 'bnet.cpp', '\tif( IsAdmin( User ) || IsRootAdmin( User ) || ForceRoot )\n\t{', '''
     if( m_GHost->m_HostMapPublic ) {
         // A realm-authenticated controller, never arbitrary players, can select a map.
@@ -40,7 +46,8 @@ def patch(root):
         request >> Issued >> Code >> Owner;
         getline(request, Name);
         if( !Name.empty() && Name[0] == ' ' ) Name.erase(0,1);
-        if( GetTime() < Issued || GetTime()-Issued > 30 ||
+        uint32_t Now = static_cast<uint32_t>(time(NULL));
+        if( Now < Issued || Now-Issued > 30 ||
             !regex_match(Code, regex("[a-f0-9]{12}")) ||
             !regex_match(Owner, regex("[A-Za-z0-9_\\\\[\\\\].()-]{1,15}")) ||
             !regex_match(Name, regex("[A-Za-z0-9][A-Za-z0-9 _.,!()\\\\[\\\\]+-]{0,29}")) ) return;
@@ -70,6 +77,11 @@ def patch(root):
     if text.count(anchor) != 2:
         raise RuntimeError('Unexpected LAN authentication anchors')
     path.write_text(text.replace(anchor, 'if( JoinedRealm.empty( ) && !m_GHost->m_HostMapPublic )\n\t\tPlayer->SetSpoofed( true );'))
+    replace(root, 'game_base.cpp',
+        '\tbool Reserved = IsReserved( joinPlayer->GetName( ) ) || ( m_GHost->m_ReserveAdmins && AnyAdminCheck ) || IsOwner( joinPlayer->GetName( ) );',
+        '\tbool Reserved = !m_GHost->m_HostMapPublic && (IsReserved( joinPlayer->GetName( ) ) || ( m_GHost->m_ReserveAdmins && AnyAdminCheck ) || IsOwner( joinPlayer->GetName( ) ));')
+    replace(root, 'game_base.cpp', 'if( SID == 255 && IsOwner( joinPlayer->GetName( ) ) )',
+            'if( SID == 255 && !m_GHost->m_HostMapPublic && IsOwner( joinPlayer->GetName( ) ) )')
     replace(root, 'game_base.cpp', '\t// countdown every 500 ms', '''
     if( m_GHost->m_HostMapPublic && !m_GameLoading && !m_GameLoaded ) SyncHostMapReady();
 \t// countdown every 500 ms''')
@@ -83,7 +95,8 @@ void CBaseGame :: SyncHostMapReady() {
         CGameSlot &slot = m_Slots[sid];
         fingerprint << sid << ":" << (unsigned)slot.GetPID() << ":" <<
             (unsigned)slot.GetSlotStatus() << ":" << (unsigned)slot.GetComputer() << ":" <<
-            (unsigned)slot.GetTeam() << ";";
+            (unsigned)slot.GetTeam() << ":" << (unsigned)slot.GetColour() << ":" <<
+            (unsigned)slot.GetRace() << ":" << (unsigned)slot.GetHandicap() << ";";
     }
     for( vector<CGamePlayer*>::iterator i = m_Players.begin(); i != m_Players.end(); ++i ) {
         CGamePlayer *p = *i;
