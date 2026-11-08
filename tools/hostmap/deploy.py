@@ -73,10 +73,14 @@ def prepare():
     if (ROOT/'compose.json').exists(): raise RuntimeError('Already prepared; inspect rather than overwrite')
     if (ROOT/'build.exit').read_text().strip()!='0': raise RuntimeError('Image build has not passed')
     image=inspect(IMAGE)['Id']
+    shipped=run('docker','run','--rm','--network','none','--read-only','--entrypoint','sha256sum',image,'/app/patch_worker.py').split()[0]
+    if shipped!=hashlib.sha256((ROOT/'patch_worker.py').read_bytes()).hexdigest():
+        raise RuntimeError('Loaded image does not contain the current reviewed worker patch')
     for port in WORKERS.values():
         with socket.socket() as listener: listener.bind(('176.124.218.23',port))
     if os.statvfs(ROOT).f_bavail*os.statvfs(ROOT).f_frsize<1024**3: raise RuntimeError('Insufficient disk reserve')
-    (ROOT/'before.json').write_text(json.dumps(snapshot(),indent=2)+'\n')
+    if (ROOT/'before.json').exists(): same_before()
+    else: (ROOT/'before.json').write_text(json.dumps(snapshot(),indent=2)+'\n')
     for path in ('assets','assets/auth','assets/maps','assets/mapcfgs','workers','status'):
         mkdir(ROOT/path)
     mkdir(ROOT/'controller',10003,10005,0o2770)
@@ -170,7 +174,7 @@ def start():
         values=[read_status(ROOT/'status'/w/'hostmap.status') for w in WORKERS]
         try: controller=json.loads((ROOT/'controller/controller.status.json').read_text())
         except (OSError,ValueError): controller={}
-        if all(fresh(s,int(time.time())) and not s['busy'] for s in values) and controller.get('authenticated'):
+        if all(fresh(s,int(time.time())) and not s['busy'] for s in values) and fresh(controller,int(time.time())) and controller.get('authenticated'):
             same_before()
             print('HOSTMAP_AUTHENTICATED; TWO_WORKERS_READY; EXISTING_BOTS_UNCHANGED')
             return

@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import time
 from core import Store
@@ -16,15 +17,14 @@ def process(store, job, validator):
     if not re.fullmatch('[a-f0-9]{32}',job['id']) or not re.fullmatch('[a-f0-9]{64}',job['digest']) or job['ext'] not in ('w3x','w3m'):
         raise ValueError('Invalid quarantine job')
     path=ROOT/'incoming'/(job['id']+'.upload')
-    if path.is_symlink() or path.stat().st_size != job['bytes'] or path.stat().st_size>32*1024*1024:
+    if not isinstance(job['bytes'],int) or not 4<=job['bytes']<=32*1024*1024:
         raise ValueError('Invalid quarantine file')
     # Copy into a private root-owned directory before invoking native parsers.
     # Upload receiver cannot mutate this copy during inspection/publication.
     frozen=ROOT/'validation'/(job['id']+'.map')
-    with path.open('rb') as source, frozen.open('xb') as destination:
-        shutil.copyfileobj(source,destination,65536)
-    frozen.chmod(0o444)
     try:
+        freeze(path,frozen,job['bytes'])
+        frozen.chmod(0o444)
         with frozen.open('rb') as stream:
             digest=hashlib.sha256()
             for block in iter(lambda:stream.read(65536),b''): digest.update(block)
@@ -36,6 +36,22 @@ def process(store, job, validator):
     finally:
         frozen.unlink(missing_ok=True)
     path.unlink()
+
+
+def freeze(path,target,expected):
+    descriptor=os.open(path,os.O_RDONLY|getattr(os,'O_NOFOLLOW',0))
+    with os.fdopen(descriptor,'rb') as source:
+        metadata=os.fstat(source.fileno())
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_size!=expected:
+            raise ValueError('Quarantine must be an unchanged regular file')
+        with target.open('xb') as destination:
+            remaining=expected
+            while remaining:
+                block=source.read(min(remaining,65536))
+                if not block: raise ValueError('Quarantine file was truncated')
+                destination.write(block)
+                remaining-=len(block)
+            if source.read(1): raise ValueError('Quarantine file grew while copying')
 
 
 def publish(store,job,path):

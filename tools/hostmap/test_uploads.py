@@ -1,6 +1,7 @@
 import io
 import tempfile
 import unittest
+import threading
 from pathlib import Path
 import core
 import uploads
@@ -32,6 +33,29 @@ class UploadTests(unittest.TestCase):
         self.assertEqual(len(list((self.root/'incoming').iterdir())),1)
         with self.assertRaises(core.Rejected):
             uploads.receive(self.store,token,'my map.w3x',8,io.BytesIO(b'HM3Wtest'),self.root/'incoming',now=1000)
+
+    def test_in_progress_upload_already_reserves_disk_quota(self):
+        with self.store.db() as db:
+            db.execute("INSERT INTO jobs (id,bytes,state) VALUES ('existing',?,'ready')",(1024**3-8,))
+        entered=threading.Event(); release=threading.Event(); failures=[]
+        class Slow(io.BytesIO):
+            def read(self,n=-1):
+                entered.set()
+                if not release.wait(4): raise RuntimeError('Test receiver timed out')
+                return super().read(n)
+        token1=self.store.issue_upload('uPlay',now=1000)
+        token2=self.store.issue_upload('Player2',now=1000)
+        def first():
+            try: uploads.receive(self.store,token1,'one.w3x',8,Slow(b'HM3Wtest'),self.root/'incoming',now=1000)
+            except Exception as error: failures.append(error)
+        thread=threading.Thread(target=first);thread.start()
+        try:
+            self.assertTrue(entered.wait(3))
+            with self.assertRaisesRegex(core.Rejected,'storage is full'):
+                uploads.receive(self.store,token2,'two.w3x',8,io.BytesIO(b'HM3Wtest'),self.root/'incoming',now=1000)
+        finally:
+            release.set();thread.join(5)
+        self.assertEqual(failures,[])
 
 
 if __name__ == '__main__':

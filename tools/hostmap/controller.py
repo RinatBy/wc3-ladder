@@ -107,6 +107,9 @@ def main():
             client.close()
             connected = False
             outbound.clear()
+            tmp=state/'controller.status.tmp'
+            tmp.write_text(json.dumps(dict(time=int(time.time()),authenticated=False,workers={})))
+            tmp.replace(state/'controller.status.json')
             time.sleep(5)
 
 
