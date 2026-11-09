@@ -179,6 +179,18 @@ def certificate():
 
 def activate():
     same_before()
+    # Containers use numeric IDs, but systemd must resolve its Group in NSS.
+    import grp
+    try:
+        grp.getgrgid(10005)
+    except KeyError:
+        try:
+            grp.getgrnam('hostmap-data')
+        except KeyError:
+            run('groupadd','--system','--gid','10005','hostmap-data')
+        else:
+            raise RuntimeError('HostMap group name already has a different GID')
+        grp.getgrgid(10005)
     if run('systemctl','is-active','warcraft-iii-hostmap.service')!='active':
         raise RuntimeError('HostMap parent unit must already be active; do not start it during matches')
     def workers():
