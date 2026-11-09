@@ -71,24 +71,24 @@ def job_status(store, job):
 
 
 PAGE = '''<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>HostMap вЂ” Р·Р°РіСЂСѓР·РєР° РєР°СЂС‚С‹</title><style>body{background:#111;color:#ddd;font:18px Arial;max-width:650px;margin:60px auto;padding:20px}h1{color:#e5c66c}button,input{font:inherit;margin:15px 0}button{padding:12px}a{color:#e5c66c}</style>
-<h1>HostMap</h1><p>Р’С‹Р±РµСЂРёС‚Рµ РєР°СЂС‚Сѓ Warcraft III 1.29.2: .w3x РёР»Рё .w3m, РґРѕ 32 РњР‘.</p>
-<input id="file" type="file" accept=".w3x,.w3m"><br><button id="send">Р—Р°РіСЂСѓР·РёС‚СЊ РєР°СЂС‚Сѓ</button>
-<p id="status">РћС‚РєСЂРѕР№С‚Рµ Р»РёС‡РЅСѓСЋ СЃСЃС‹Р»РєСѓ, РєРѕС‚РѕСЂСѓСЋ РІС‹РґР°Р» HostMap РєРѕРјР°РЅРґРѕР№ !upload.</p>
+<title>HostMap — загрузка карты</title><style>body{background:#111;color:#ddd;font:18px Arial;max-width:650px;margin:60px auto;padding:20px}h1{color:#e5c66c}button,input{font:inherit;margin:15px 0}button{padding:12px}a{color:#e5c66c}</style>
+<h1>HostMap</h1><p>Выберите карту Warcraft III 1.29.2: .w3x или .w3m, до 32 МБ.</p>
+<input id="file" type="file" accept=".w3x,.w3m"><br><button id="send">Загрузить карту</button>
+<p id="status">Откройте личную ссылку, которую выдал HostMap командой !upload.</p>
 <script src="/upload.js"></script></html>'''
 JS = '''let token=location.hash.slice(1);history.replaceState(null,'','/');
 const status=document.getElementById('status'),button=document.getElementById('send');
-if(token)status.textContent='РЎСЃС‹Р»РєР° РґРµР№СЃС‚РІСѓРµС‚ 15 РјРёРЅСѓС‚ Рё РїРѕРґС…РѕРґРёС‚ РґР»СЏ РѕРґРЅРѕР№ Р·Р°РіСЂСѓР·РєРё.';
+if(token)status.textContent='Ссылка действует 15 минут и подходит для одной загрузки.';
 button.onclick=async()=>{let f=document.getElementById('file').files[0];if(!f||!token)return;
-button.disabled=true;status.textContent='РљР°СЂС‚Р° Р·Р°РіСЂСѓР¶Р°РµС‚СЃСЏвЂ¦';try{
+button.disabled=true;status.textContent='Карта загружается…';try{
 let r=await fetch('/upload',{method:'POST',headers:{'Authorization':'Bearer '+token,'X-Map-Name':encodeURIComponent(f.name),'Content-Type':'application/octet-stream'},body:f});
-token='';let j=await r.json();if(!r.ok)throw Error(j.error||'РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё');
-status.textContent='РљР°СЂС‚Р° РїРѕР»СѓС‡РµРЅР°. РџСЂРѕРІРµСЂСЏРµРј СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊвЂ¦';
+token='';let j=await r.json();if(!r.ok)throw Error(j.error||'Ошибка загрузки');
+status.textContent='Карта получена. Проверяем совместимость…';
 for(let i=0;i<120;i++){await new Promise(r=>setTimeout(r,1000));let s=await(await fetch('/status?id='+j.id)).json();
-if(s.state==='ready'){status.textContent='Р“РѕС‚РѕРІРѕ! Р’ С‡Р°С‚Рµ Warcraft РЅР°РїРёС€РёС‚Рµ: /w HostMap !host '+s.code+' My game';return;}
-if(s.state==='rejected')throw Error('РљР°СЂС‚Р° РЅРµ РїСЂРѕС€Р»Р° РїСЂРѕРІРµСЂРєСѓ. Р¤Р°Р№Р» РЅРµ РґРѕР±Р°РІР»РµРЅ.');}
-status.textContent='РџСЂРѕРІРµСЂРєР° РїСЂРѕРґРѕР»Р¶Р°РµС‚СЃСЏ. РќР°Р№РґРёС‚Рµ РєР°СЂС‚Сѓ РїРѕР·Р¶Рµ РєРѕРјР°РЅРґРѕР№ !maps.';
-}catch(e){status.textContent=e.message+' Р”Р»СЏ РїРѕРІС‚РѕСЂРЅРѕР№ РїРѕРїС‹С‚РєРё РїРѕР»СѓС‡РёС‚Рµ РЅРѕРІСѓСЋ СЃСЃС‹Р»РєСѓ С‡РµСЂРµР· !upload.';}};'''
+if(s.state==='ready'){status.textContent='Готово! В чате Warcraft напишите: /w HostMap !host '+s.code+' Test1';return;}
+if(s.state==='rejected')throw Error('Карта не прошла проверку. Файл не добавлен.');}
+status.textContent='Проверка продолжается. Найдите карту позже командой !maps.';
+}catch(e){status.textContent=e.message+' Для повторной попытки получите новую ссылку через !upload.';}};'''
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
