@@ -67,7 +67,8 @@ def publish(store,job,path):
         raise ValueError('Existing map checksum mismatch')
     code=store.add_map(job['digest'],job['ext'],job['title'])
     config=ROOT/'assets/mapcfgs'/(code+'.cfg')
-    contents='map_path = Maps\\Download\\'+code+'.'+job['ext']+'\nmap_localpath = '+name+'\nmap_type = \nmap_observers = 4\nmap_maxslots = 24\n'
+    # Let pinned GHost use the map editor version for legacy/24-player compatibility.
+    contents='map_path = Maps\\Download\\'+code+'.'+job['ext']+'\nmap_localpath = '+name+'\nmap_type = \nmap_observers = 4\n'
     if config.exists() and config.read_text()!=contents:
         raise ValueError('Existing map config mismatch')
     if not config.exists():

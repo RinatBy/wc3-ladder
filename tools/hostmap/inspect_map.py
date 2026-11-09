@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import struct
+import re
 import shutil
 import subprocess
 import sys
@@ -104,9 +105,10 @@ def inspect(path, library='/opt/ghost/lib/libstorm.so', native=False):
                      'war3map.w3u','war3map.w3b','war3map.w3d','war3map.w3a','war3map.w3q'):
             total+=len(read(name,16*1024*1024,optional=True))
             if total>48*1024*1024: raise ValueError('Excessive expanded map size')
+        result=dict(valid=True,format=version)
         if native:
-            validate_native()
-        return dict(valid=True,format=version)
+            result.update(validate_native())
+        return result
     finally:
         lib.SFileCloseArchive(archive)
 
@@ -116,7 +118,7 @@ def validate_native():
     root.mkdir()
     for name in ('common.j','blizzard.j'):
         shutil.copyfile(Path('/scripts')/name,root/name)
-    (root/'candidate.cfg').write_text('map_path = Maps\\Download\\candidate.w3x\nmap_localpath = candidate\nmap_observers = 4\nmap_maxslots = 24\n')
+    (root/'candidate.cfg').write_text('map_path = Maps\\Download\\candidate.w3x\nmap_localpath = candidate\nmap_observers = 4\n')
     config=dict(hostmap_validate='1',bot_mapcfgpath=str(root)+'/',bot_mappath='/',
         bot_defaultmap='candidate.cfg',bot_war3path='/tmp/no-auth/',bnet_server='',
         bot_log=str(root/'native.log'),db_type='sqlite3',db_sqlite3_file=str(root/'native.db'),
@@ -132,6 +134,8 @@ def validate_native():
         if result.returncode!=0 or not any(line.endswith('HOSTMAP_NATIVE_MAP_VALID') for line in output.splitlines()):
             print('NATIVE_CHECK_DIAGNOSTIC',result.returncode,output[-2000:],file=sys.stderr)
             raise ValueError('Native GHost map validation failed')
+    added=re.findall(r'\[MAP\] adding (\d+) observer slots',output)
+    return dict(observer_slots_added=int(added[-1])) if added else {}
 
 
 if __name__=='__main__':
