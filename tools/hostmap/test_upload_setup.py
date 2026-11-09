@@ -2,10 +2,28 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from enable_uploads import certificate_command, set_upload_url, write_owned
+import http.server
+import threading
+from enable_uploads import certificate_command, set_upload_url, write_owned, wait_http
 
 
 class SetupTests(unittest.TestCase):
+    def test_probe_waits_for_graceful_nginx_reload(self):
+        class Endpoint(http.server.BaseHTTPRequestHandler):
+            calls=0
+            def do_GET(self):
+                Endpoint.calls+=1
+                self.send_response(404 if Endpoint.calls==1 else 200)
+                self.end_headers();self.wfile.write(b'ready')
+            def log_message(self,*args): pass
+        server=http.server.HTTPServer(('127.0.0.1',0),Endpoint)
+        worker=threading.Thread(target=lambda:server.serve_forever(poll_interval=0.01),daemon=True)
+        worker.start()
+        try:
+            wait_http('http://127.0.0.1:'+str(server.server_port)+'/',b'ready',seconds=2)
+            self.assertGreaterEqual(Endpoint.calls,2)
+        finally:
+            server.shutdown();server.server_close();worker.join(1)
     def test_certificate_uses_existing_account_without_accepting_new_terms(self):
         command=certificate_command('a'*32)
         self.assertIn('--webroot',command)

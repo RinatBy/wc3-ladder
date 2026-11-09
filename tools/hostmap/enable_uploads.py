@@ -123,6 +123,25 @@ def nginx_check_reload():
     run('systemctl','reload','nginx')
 
 
+def wait_http(url,expected,seconds=12,contains=False):
+    # A successful reload signals the master before old workers stop accepting.
+    # Keep certificate verification enabled while waiting for the new vhost.
+    deadline=time.monotonic()+seconds
+    last=None
+    while time.monotonic()<deadline:
+        try:
+            with urlopen(url,timeout=min(3,max(0.1,deadline-time.monotonic()))) as response:
+                body=response.read(65536)
+                if response.status==200 and (expected in body if contains else body==expected): return
+        except HTTPError as error:
+            error.close()
+            last=error
+        except OSError as error:
+            last=error
+        time.sleep(0.25)
+    raise RuntimeError('HTTP/TLS vhost did not become ready') from last
+
+
 def prepare_http():
     same_before()
     addresses={a[4][0] for a in socket.getaddrinfo(DOMAIN,80,socket.AF_INET)}
@@ -140,8 +159,7 @@ def prepare_http():
     probe=challenge/('hostmap-'+token)
     probe.write_text(token);probe.chmod(0o644)
     try:
-        with urlopen('http://'+DOMAIN+'/.well-known/acme-challenge/'+probe.name,timeout=12) as reply:
-            if reply.read()!=token.encode(): raise RuntimeError('ACME webroot is not reachable')
+        wait_http('http://'+DOMAIN+'/.well-known/acme-challenge/'+probe.name,token.encode())
     finally:
         probe.unlink(missing_ok=True)
     same_before()
@@ -187,8 +205,7 @@ def activate():
         except OSError: time.sleep(1)
     else: raise RuntimeError('Loopback map receiver unavailable')
     write_owned(SITE,site_config(True),nginx_check_reload)
-    with urlopen(URL,timeout=12) as response:
-        if response.status!=200 or b'HostMap' not in response.read(): raise RuntimeError('TLS endpoint not verified')
+    wait_http(URL,b'HostMap',contains=True)
     unit('warcraft-iii-hostmap-maps.service',f'''[Unit]
 Description=Warcraft HostMap isolated map validation queue
 Requires=docker.service warcraft-iii-hostmap.service
