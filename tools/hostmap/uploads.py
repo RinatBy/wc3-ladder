@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import secrets
 import socketserver
+import socket
 import threading
 import time
 from urllib.parse import unquote, urlsplit, parse_qs
@@ -137,6 +138,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 class Server(socketserver.ThreadingMixIn,http.server.HTTPServer):
     daemon_threads=True
     request_queue_size=8
+    max_connection_seconds=180
     def __init__(self,*args,**kwargs):
         self.slots=threading.BoundedSemaphore(2)
         super().__init__(*args,**kwargs)
@@ -146,8 +148,17 @@ class Server(socketserver.ThreadingMixIn,http.server.HTTPServer):
         request.settimeout(60)
         super().process_request(request,address)
     def process_request_thread(self,request,address):
+        def expire():
+            try: request.shutdown(socket.SHUT_RDWR)
+            except OSError: pass
+            request.close()
+        deadline=threading.Timer(self.max_connection_seconds,expire)
+        deadline.daemon=True
+        deadline.start()
         try: super().process_request_thread(request,address)
-        finally: self.slots.release()
+        finally:
+            deadline.cancel()
+            self.slots.release()
 
 
 if __name__=='__main__':
