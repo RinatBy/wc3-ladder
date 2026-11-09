@@ -12,7 +12,7 @@ import time
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
-from deploy import ROOT, PROJECT, same_before, run
+from deploy import ROOT, PROJECT, same_before, run, inspect as container_info
 from finish import unit
 
 DOMAIN='maps.wc3.uplay2.ru'
@@ -161,6 +161,16 @@ def certificate():
 
 def activate():
     same_before()
+    if run('systemctl','is-active','warcraft-iii-hostmap.service')!='active':
+        raise RuntimeError('HostMap parent unit must already be active; do not start it during matches')
+    def workers():
+        result={}
+        for name in ('hostmap1','hostmap2'):
+            value=container_info(PROJECT+'-'+name+'-1')
+            result[name]=dict(id=value['Id'],pid=value['State']['Pid'],started=value['State']['StartedAt'])
+        return result
+    workers_before=workers()
+    (ROOT/'uploads-workers-before.json').write_text(json.dumps(workers_before,indent=2)+'\n')
     cert=Path('/etc/letsencrypt/live')/DOMAIN/'fullchain.pem'
     run('openssl','x509','-in',str(cert),'-noout','-checkhost',DOMAIN)
     run('openssl','x509','-in',str(cert),'-noout','-checkend','86400')
@@ -215,6 +225,7 @@ WantedBy=multi-user.target
         # The chat controller reconnects; game workers are separate processes.
         run(*compose,'restart','controller')
         same_before()
+        if workers()!=workers_before: raise RuntimeError('A game worker changed during upload activation')
     except BaseException:
         set_upload_url(config,None)
         run(*compose,'restart','controller')
