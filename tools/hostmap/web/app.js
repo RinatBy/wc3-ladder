@@ -4,6 +4,7 @@
   const $=id=>document.getElementById(id);
   let csrf='',job=null,request=null,working=false,polling=false;
   let catalogSequence=0,searchTimer;
+  const retiredTestMap='7235147e923f';
   const messages={session_expired:'Сессия истекла. Обновите страницу.',session_limit:'Слишком много подключений. Попробуйте позже.',rate_limit:'Слишком частые запросы. Подождите и попробуйте позже.',upload_pending:'Предыдущая карта ещё проверяется.',service_busy:'Хостер занят. Попробуйте позже.',temporarily_unavailable:'Хостинг временно недоступен. Попробуйте позже.',rooms_busy:'Оба хостера заняты. Карта сохранена — попробуйте создать игру позже.',already_hosting:'У вас уже есть комната или заявка на её создание.',ip_rooms_full:'Для вашей сети уже созданы две комнаты. Дождитесь завершения одной из игр.',room_unavailable:'Такое название занято или комната ещё освобождается. Попробуйте другое название чуть позже.',confirmation_timeout:'Хостер не подтвердил создание. Обновите страницу через минуту перед повторной попыткой.',controller_unavailable:'Бот временно недоступен. Попробуйте позже.',map_not_ready:'Дождитесь проверки карты.',invalid_size:'Выберите карту до 32 МБ.',not_found:'Заявка не найдена в этой сессии.',invalid_request:'Не удалось отправить запрос.',invalid_csrf:'Обновите страницу и повторите попытку.',wrong_origin:'Откройте страницу по адресу maps.wc3.uplay2.ru.'};
   Object.assign(messages,{'This is not a Warcraft map archive.':'Файл не является картой Warcraft. Изменение расширения не меняет его содержимое.','Choose a .w3x or .w3m file, up to 32 MiB.':'Выберите карту .w3x или .w3m до 32 МБ.','Incomplete upload. Request a new link and retry.':'Загрузка прервалась. Подождите минуту и отправьте карту ещё раз.','Map storage is full. Contact the administrator.':'Хранилище карт заполнено. Обратитесь к администратору.'});
   function message(error){return messages[error]||((error||'').startsWith('Room name:')?'Название: до 30 знаков, латинские буквы, цифры и пробелы.':error||'Ошибка соединения. Повторите попытку.');}
@@ -24,10 +25,11 @@
     try{
       const data=await api('/api/maps?q='+encodeURIComponent($('map-search').value.trim()));
       if(sequence!==catalogSequence)return;
+      data.maps=data.maps.filter(item=>item.code!==retiredTestMap);
       const placeholder=new Option(data.maps.length?'Выберите карту':'Карты не найдены','');placeholder.disabled=true;
       $('map-list').replaceChildren(placeholder,...data.maps.map(item=>new Option(item.title,item.code,false,!!job&&item.code===job.code)));
       if(!job||!data.maps.some(item=>item.code===job.code))$('map-list').value='';
-      text('catalog-status',data.more?'Показаны первые 100 карт. Уточните название.':'Карт в списке: '+data.maps.length+'.');buttons();
+      text('catalog-status',data.more?'Уточните название для поиска других карт.':'');buttons();
     }catch(error){text('catalog-status',error.message,true);}
   }
   async function selectMap(code){
@@ -35,6 +37,7 @@
     job=state.job;request=state.request;render();
   }
   function render(){
+    if(job&&job.code===retiredTestMap)job=null;
     $('hosting').hidden=!job||job.state!=='ready';
     if(job){
       if(job.state==='ready'){text('upload-status','Карта проверена и готова к хостингу.');$('map-name').textContent=job.title;}

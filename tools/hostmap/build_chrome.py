@@ -6,7 +6,7 @@ from ui_assets import WEB_FILES
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT.parent/'sites/warcraft-ladder-2007'
-TAG='20261110-align1'
+TAG='20261110-hostclean1'
 NAV='''  <nav class="site-navigation" aria-label="Разделы сайта">
     <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
     <div class="rating-menu">
@@ -56,13 +56,12 @@ def main():
     web=ROOT/'web'
     text=(web/'index.html').read_text(encoding='utf-8')
     text=re.sub(r'<body.*?<main[^>]*>',lambda _:'<body class="hosting-page">\n'+HEADER.replace('__NAV__',NAV.replace('id="hosting-link"','id="hosting-link" aria-current="page"'))+'\n<main class="hosting-main">',text,count=1,flags=re.S)
-    text=text.replace('<main class="hosting-main"><div class="frame">','<main class="hosting-main"><section class="ranking-frame"><div class="frame-top"><i></i><i></i></div><div class="frame-middle"><div class="hosting-content">')
-    text=re.sub(r'</div></main><footer>.*?</footer>',lambda _:'</div></div><div class="frame-bottom"><i></i><i></i></div></section></main>\n'+footer(host=True),text,count=1,flags=re.S)
     text=re.sub(r'<footer class="site-footer">.*?</footer>',lambda _:footer(host=True),text,count=1,flags=re.S)
     text=re.sub(r'/web/style\.css(?:\?v=[^"\s]+)?', '/web/style.css?v='+TAG, text)
+    text=re.sub(r'/web/app\.js(?:\?v=[^"\s]+)?', '/web/app.js?v='+TAG, text)
     (web/'index.html').write_text(text,encoding='utf-8')
     hosting='''
-.hosting-content{max-width:760px;margin:auto;padding:24px 32px;background:#000;color:#e2d6bd;font:13px/1.6 Arial,Helvetica,sans-serif}
+.hosting-content{max-width:760px;margin:auto;padding:30px 32px;background:#000;color:#e2d6bd;font:13px/1.6 Arial,Helvetica,sans-serif}
 .hosting-content h1{font:normal 26px Georgia,serif;color:#e4c66b;margin:0 0 12px}.hosting-content .intro{color:#c2b69e;margin-bottom:24px}
 .hosting-content section{border-top:1px solid #4c4030;padding:20px 0}.hosting-content h2{font:normal 19px Georgia,serif;color:#e5c66c;margin:0 0 20px}
 .hosting-content h2 span{display:inline-grid;place-items:center;width:26px;height:26px;border:2px ridge #777;margin-right:10px;background:#21190f;color:#e5c66c;font:inherit}
@@ -72,7 +71,7 @@ def main():
 .hosting-content button:disabled{opacity:.45;cursor:default}.hosting-content button:hover:enabled{filter:brightness(1.3)}.hosting-content .muted{color:#a99c82;font-size:12px;line-height:1.6}
 .hosting-content .notice{padding:13px 0;border-top:1px solid #4c4030}.hosting-content .map-name{color:#fff;overflow-wrap:anywhere}#upload-status,#room-status{overflow-wrap:anywhere}
 .hosting-content .success{color:#a7d288}.hosting-content .error{color:#e9aa96}.hosting-content code{color:#fff}@media(max-width:560px){.hosting-content{padding:18px 12px}.hosting-content h1{font-size:24px}.hosting-content button{width:100%}}
-.hosting-content select{display:block;width:100%;height:135px;background:#171512;border:1px solid #716454;color:#e4c66b;font:13px/1.5 Arial;padding:5px}.hosting-content select option{padding:5px 8px}.hosting-content input[type=search]{width:100%}.map-upload{margin-top:24px}.map-upload summary{color:#ffd100;cursor:pointer;text-decoration:underline}.map-upload[open] summary{margin-bottom:20px}
+.hosting-content select{display:block;width:100%;height:135px;background:#171512;border:1px solid #716454;color:#e4c66b;font:13px/1.5 Arial;padding:5px}.hosting-content select option{padding:5px 8px}.hosting-content input[type=search]{width:100%}.map-upload{margin-top:24px}.map-upload summary{display:inline-block;list-style:none;font:bold 15px Georgia,serif;color:#ffd100;background:linear-gradient(#14175c,#030425);border:4px ridge #625d51;padding:13px 26px;cursor:pointer;min-height:48px;text-align:center}.map-upload summary::-webkit-details-marker{display:none}.map-upload summary:hover{filter:brightness(1.3)}.map-upload summary:focus-visible{outline:1px solid #fff;outline-offset:3px}.map-upload[open] summary{margin-bottom:20px}#catalog-status:empty{display:none}@media(max-width:560px){.map-upload summary{width:100%}}
 '''
     host_css=base+'\n\n'+shared+'\n'+hosting
     host_css=re.sub(r'assets/war3/images/ladder-revise/([^\)\'\"]+)',lambda m:'/web/'+('header.gif' if m[1] in ('gatewayselect-header-w3xp.gif','headers/W3XP-Lordaeron-Ladders.gif') else m[1]),host_css)
