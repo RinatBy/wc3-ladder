@@ -9,18 +9,22 @@
   <title>Warcraft III Online — Рейтинг</title>
   <link rel="stylesheet" href="css/war3/includes/war3-human-ie.css">
   <link rel="stylesheet" href="css/war3/ladder/war3-ladder-ranking.css">
-  <link rel="stylesheet" href="ladder.css?v=20261110-shell3">
+  <link rel="stylesheet" href="ladder.css?v=20261110-menu4">
 </head>
 <body>
     <header class="site-header gateway-header">
-    <a class="original-header" href="https://wc3.uplay2.ru/" aria-label="Warcraft III Online — главная"></a>
-  </header>
-  <nav class="site-navigation" aria-label="Разделы сайта">
-    <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
-    <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
-    <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
+    <div class="original-header">  <nav class="site-navigation" aria-label="Разделы сайта">
+    <a href="https://wc3.uplay2.ru/" id="main-link" aria-current="page">Главная</a>
+    <details class="rating-menu">
+      <summary>Рейтинг <span class="down-arrow" aria-hidden="true"></span></summary>
+      <div class="rating-options">
+        <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
+        <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
+      </div>
+    </details>
     <a href="https://maps.wc3.uplay2.ru/" id="hosting-link">Захостить карту</a>
-  </nav>
+  </nav></div>
+  </header>
   <span id="crumb" class="sr-only">Рейтинг</span>
   <main>
     <p id="data-update-error" class="data-update-error" role="status" hidden></p>
