@@ -32,7 +32,7 @@
 .site-footer:before,.site-footer:after{content:'';position:absolute;top:0;width:15px;height:52px;pointer-events:none}
 .site-footer:before{left:0;background:url('/web/bot-left.gif') no-repeat}
 .site-footer:after{right:0;background:url('/web/bot-right.gif') no-repeat}
-.site-footer .return-link{grid-column:1;justify-self:start;position:relative;display:flex;align-items:center;gap:0;height:52px;max-width:none;padding:14px 0 0 35px;color:#bcbcbc;font:11px Arial,Helvetica,sans-serif;white-space:nowrap}
+.site-footer .return-link{grid-column:auto;justify-self:start;position:absolute;left:0;top:0;display:flex;align-items:center;gap:0;height:52px;max-width:none;padding:14px 0 0 40px;color:#bcbcbc;font:11px Arial,Helvetica,sans-serif;white-space:nowrap}
 .site-footer .return-link img{position:absolute;left:0;top:0;width:32px;height:52px}
 .site-footer .footer-name{grid-column:2;display:flex;align-items:center;justify-content:center;min-width:0;margin:0;padding:14px 0 0;color:#9b875b;text-align:center;font:12px Georgia,'Times New Roman',serif;white-space:nowrap}
 .site-footer form{grid-column:3;justify-self:end;display:flex;align-items:center;gap:7px;height:52px;margin:0;padding:14px 0 0;line-height:20px}

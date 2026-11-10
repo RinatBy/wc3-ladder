@@ -6,7 +6,7 @@ from ui_assets import WEB_FILES
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT.parent/'sites/warcraft-ladder-2007'
-TAG='20261110-shell2'
+TAG='20261110-shell3'
 NAV='''  <nav class="site-navigation" aria-label="Разделы сайта">
     <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
     <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
