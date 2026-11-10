@@ -38,6 +38,13 @@ def main():
     allowed='|'.join(re.escape(n) for n in WEB_FILES if n!='index.html')
     updated,count=re.subn(r'location ~ \^/web/\([^\n]+\)\$ \{',lambda _:'location ~ ^/web/('+allowed+')$ {',current)
     if count!=1: raise RuntimeError('Expected exactly one owned static allowlist')
+    # Public GIF/CSS requests must not exhaust the API's quota during a page load.
+    updated=re.sub(r'^    limit_(?:conn hostmap_upload_conn 8|req zone=hostmap_upload_rate burst=12 nodelay);\n','',updated,flags=re.M)
+    limits='        limit_conn hostmap_upload_conn 8;\n        limit_req zone=hostmap_upload_rate burst=12 nodelay;\n'
+    for location in ('    location = /api/host {\n','    location / {\n'):
+        if location+limits not in updated:
+            if updated.count(location)!=1: raise RuntimeError('Unexpected API location')
+            updated=updated.replace(location,location+limits,1)
     write_owned(SITE,updated,nginx_check_reload)
     if processes()!=before or marker.read_bytes()!=access: raise RuntimeError('A process or access setting changed')
     result=dict(public_files=len(WEB_FILES),service_restarts=0,guest_access_unchanged=True,backup=str(backup))

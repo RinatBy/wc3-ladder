@@ -10,7 +10,8 @@
   async function api(path,options={}){
     let response;
     try{response=await fetch(path,{credentials:'same-origin',cache:'no-store',...options,headers:{...(options.method==='POST'?{'X-CSRF-Token':csrf}:{}),...(options.headers||{})}});}catch{throw Error('Соединение прервалось. Обновите страницу, чтобы проверить состояние заявки.');}
-    const data=await response.json();if(!response.ok)throw Error(message(data.error));return data;
+    let data;try{data=await response.json();}catch{throw Error('Сервис временно недоступен. Обновите страницу и повторите попытку.');}
+    if(!response.ok)throw Error(message(data.error));return data;
   }
   function buttons(){
     $('upload').disabled=!csrf||working||!!(job&&['receiving','pending'].includes(job.state))||!$('file').files.length;
