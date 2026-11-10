@@ -8,6 +8,7 @@ import sqlite3
 import time
 from deploy import ROOT,PROJECT,run,inspect,same_before
 from enable_uploads import SITE,MARKER,write_owned,nginx_check_reload
+from ui_assets import WEB_FILES
 
 
 def workers():
@@ -37,7 +38,7 @@ def prepare():
     (backup/'hostmap.db').chmod(0o600)
     for path in ROOT.glob('*.py'): shutil.copyfile(path,ROOT/'app'/path.name)
     destination=ROOT/'app/web';destination.mkdir(exist_ok=True)
-    for name in ('index.html','app.js','style.css','header.gif','wood.gif'):
+    for name in WEB_FILES:
         shutil.copyfile(ROOT/'web'/name,destination/name)
     public=Path('/var/www/wc3-hostmap')
     ownership=public/'.hostmap-owned'
@@ -45,7 +46,7 @@ def prepare():
         raise RuntimeError('Unexpected public webroot')
     public.mkdir(parents=True,exist_ok=True);public.chmod(0o755)
     ownership.write_text('HostMap static frontend only\n')
-    for name in ('index.html','app.js','style.css','header.gif','wood.gif'):
+    for name in WEB_FILES:
         temporary=public/(name+'.next')
         shutil.copyfile(ROOT/'web'/name,temporary);temporary.chmod(0o644);os.replace(temporary,public/name)
     compose=json.loads((ROOT/'compose.json').read_text())
@@ -94,13 +95,14 @@ def prepare():
         add_header X-Content-Type-Options "nosniff";
         add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'";
     }
-    location ~ ^/web/(app\\.js|style\\.css|header\\.gif|wood\\.gif)$ {
+    location ~ ^/web/__HOSTMAP_STATIC_FILES__$ {
         alias /var/www/wc3-hostmap/$1;
         add_header Cache-Control "no-store";
         add_header X-Content-Type-Options "nosniff";
     }
     location /web/ { return 404; }
 '''
+        static=static.replace('__HOSTMAP_STATIC_FILES__','('+'|'.join(re.escape(n) for n in WEB_FILES if n!='index.html')+')')
         suffix=suffix.replace('    location / {',static+'    location / {',1)
     if prefix+suffix!=current: write_owned(SITE,prefix+suffix,nginx_check_reload)
     guard()

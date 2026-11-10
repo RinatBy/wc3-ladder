@@ -10,6 +10,7 @@ from urllib.parse import parse_qs, unquote, urlsplit
 import uploads
 from core import Rejected, Store
 from guest import Guest
+from ui_assets import WEB_FILES
 
 ORIGIN='https://maps.wc3.uplay2.ru'
 COOKIE='__Host-hostmap'
@@ -76,6 +77,7 @@ class GuestHandler(uploads.Handler):
         if url.path=='/': return self.reply(200,(WEB/'index.html').read_bytes(),'text/html; charset=utf-8')
         assets={'/web/app.js':('app.js','text/javascript; charset=utf-8'),'/web/style.css':('style.css','text/css; charset=utf-8'),
                 '/web/header.gif':('header.gif','image/gif'),'/web/wood.gif':('wood.gif','image/gif')}
+        assets.update({'/web/'+name:(name,'image/gif') for name in WEB_FILES if name.endswith('.gif')})
         if url.path in assets:
             name,kind=assets[url.path];return self.reply(200,(WEB/name).read_bytes(),kind)
         if url.path=='/legacy': return self.reply(200,uploads.PAGE,'text/html; charset=utf-8')

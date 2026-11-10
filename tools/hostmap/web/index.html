@@ -1,10 +1,18 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Захостить карту — Warcraft III Online</title><link rel="canonical" href="https://maps.wc3.uplay2.ru/">
-<link rel="stylesheet" href="/web/style.css"></head>
-<body><header><a class="crest" href="https://wc3.uplay2.ru/" aria-label="Warcraft III Online — главная"><img src="/web/header.gif" width="505" height="75" alt="Warcraft III Online"></a>
-<nav><a href="https://wc3.uplay2.ru/">Главная</a><a href="https://wc3.uplay2.ru/classic/">DotA Classic</a><a href="https://wc3.uplay2.ru/lod/">DotA LoD</a><a aria-current="page" href="/">Захостить карту</a></nav></header>
-<main><div class="frame"><h1>Захостить карту</h1><p class="intro">Загрузите карту, создайте комнату и заходите в неё через Warcraft III.</p>
+<link rel="stylesheet" href="/web/style.css?v=20261110-shell2"></head>
+<body class="hosting-page">
+  <header class="site-header gateway-header">
+    <a class="original-header" href="https://wc3.uplay2.ru/" aria-label="Warcraft III Online — главная"></a>
+  </header>
+  <nav class="site-navigation" aria-label="Разделы сайта">
+    <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
+    <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
+    <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
+    <a href="https://maps.wc3.uplay2.ru/" id="hosting-link" aria-current="page">Захостить карту</a>
+  </nav>
+<main class="hosting-main"><section class="ranking-frame"><div class="frame-top"><i></i><i></i></div><div class="frame-middle"><div class="hosting-content"><h1>Захостить карту</h1><p class="intro">Загрузите карту, создайте комнату и заходите в неё через Warcraft III.</p>
 <section aria-labelledby="upload-title"><h2 id="upload-title"><span>1</span> Карта</h2>
 <label for="file">Карта Warcraft III 1.29.2</label><input id="file" type="file" accept=".w3x,.w3m" aria-describedby="file-help">
 <p class="muted" id="file-help">.w3x или .w3m · до 32 МБ</p>
@@ -16,5 +24,10 @@
 <button id="create" disabled>Создать игру</button><p id="room-status" role="status" aria-live="polite"></p></section>
 <p id="page-status" class="notice" role="status" aria-live="polite">Подключаемся к хостеру…</p>
 <p class="muted">После входа в лобби каждый играющий участник пишет <code>!go</code>. Карта скачается у остальных игроков при подключении.</p>
-</div></main><footer><a href="https://wc3.uplay2.ru/">Warcraft III Online</a></footer>
+</div></div><div class="frame-bottom"><i></i><i></i></div></section></main>
+      <footer class="site-footer">
+    <a href="https://wc3.uplay2.ru/" class="return-link"><img src="/web/arrow-left.gif" alt="">На главную</a>
+    <span class="footer-name">Warcraft III Online</span>
+    
+  </footer>
 <script src="/web/app.js"></script></body></html>

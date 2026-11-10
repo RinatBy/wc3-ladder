@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import shutil
 import zipfile
+from ui_assets import WEB_FILES
 
 
 def main():
@@ -14,7 +15,7 @@ def main():
     if not target.is_relative_to(project): raise RuntimeError('Unexpected project target')
     target.mkdir(parents=True,exist_ok=True)
     files=sorted(source.glob('*.py'))+[source/n for n in ('Dockerfile','ready.hpp','test_ready.cpp','README.ru.md','README.guest.ru.md')]
-    files += [source/'web'/n for n in ('index.html','app.js','style.css','header.gif','wood.gif')]
+    files += [source/'web'/n for n in WEB_FILES]
     manifest={}
     for path in files:
         digest=hashlib.sha256(path.read_bytes()).hexdigest()
