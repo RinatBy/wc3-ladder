@@ -46,9 +46,9 @@ def main():
     (backup/'hostmap.db').chmod(0o600)
     if (ROOT/'.broker-before-catalog.py').is_file():
         shutil.copyfile(ROOT/'.broker-before-catalog.py',backup/'broker.py')
-    for name in ('guest.py','guest_http.py','uploads.py'):
+    for name in ('guest.py','guest_http.py','uploads.py','ui_assets.py'):
         target=ROOT/'app'/name
-        shutil.copyfile(target,backup/name)
+        if target.exists(): shutil.copyfile(target,backup/name)
         temporary=target.with_suffix('.catalog-next')
         shutil.copyfile(ROOT/name,temporary);temporary.chmod(0o644);os.replace(temporary,target)
     run('docker','compose','-p',PROJECT,'-f',str(ROOT/'compose.json'),'restart','uploads')
