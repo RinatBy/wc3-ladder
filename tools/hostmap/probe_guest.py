@@ -10,13 +10,12 @@ from core import Store,read_status,fresh
 from deploy import ROOT,WORKERS
 from deploy_guest import guard
 from guest import Guest
-from guest_http import GuestHandler
-from uploads import Server
+from guest_http import GuestHandler,GuestServer
 
 
 def main():
     guard();os.setgid(10005);os.umask(0o007)
-    server=Server(('127.0.0.1',6130),GuestHandler)
+    server=GuestServer(('127.0.0.1',6130),GuestHandler)
     server.store=Store(ROOT/'controller/hostmap.db',list(WORKERS))
     server.guest=Guest(server.store);server.incoming=ROOT/'incoming';server.trust_proxy=True;server.enabled=True
     thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()

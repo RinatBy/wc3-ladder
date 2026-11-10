@@ -39,6 +39,15 @@ def prepare():
     destination=ROOT/'app/web';destination.mkdir(exist_ok=True)
     for name in ('index.html','app.js','style.css','header.gif','wood.gif'):
         shutil.copyfile(ROOT/'web'/name,destination/name)
+    public=Path('/var/www/wc3-hostmap')
+    ownership=public/'.hostmap-owned'
+    if public.is_symlink() or (public.exists() and not ownership.is_file()):
+        raise RuntimeError('Unexpected public webroot')
+    public.mkdir(parents=True,exist_ok=True);public.chmod(0o755)
+    ownership.write_text('HostMap static frontend only\n')
+    for name in ('index.html','app.js','style.css','header.gif','wood.gif'):
+        temporary=public/(name+'.next')
+        shutil.copyfile(ROOT/'web'/name,temporary);temporary.chmod(0o644);os.replace(temporary,public/name)
     compose=json.loads((ROOT/'compose.json').read_text())
     expected=['python3','/app/uploads.py']
     if compose['services']['uploads']['entrypoint'] not in (expected,['python3','/app/guest_http.py']):
@@ -55,6 +64,7 @@ def prepare():
     line='    server_name maps.wc3.uplay2.ru;'
     position=current.index('    listen 443 ssl;')
     prefix,suffix=current[:position],current[position:]
+    suffix=suffix.replace('limit_conn hostmap_upload_conn 4;','limit_conn hostmap_upload_conn 8;')
     redirect='    if ($host != maps.wc3.uplay2.ru) { return 308 https://maps.wc3.uplay2.ru/; }'
     if redirect not in suffix:
         suffix=suffix.replace(line,line+'\n'+redirect,1)
@@ -76,6 +86,22 @@ def prepare():
     }
 '''
         suffix=suffix.replace('    location / {',location+'    location / {',1)
+    if 'location = / {' not in suffix:
+        static='''    location = / {
+        root /var/www/wc3-hostmap;
+        try_files /index.html =404;
+        add_header Cache-Control "no-store";
+        add_header X-Content-Type-Options "nosniff";
+        add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'";
+    }
+    location ~ ^/web/(app\\.js|style\\.css|header\\.gif|wood\\.gif)$ {
+        alias /var/www/wc3-hostmap/$1;
+        add_header Cache-Control "no-store";
+        add_header X-Content-Type-Options "nosniff";
+    }
+    location /web/ { return 404; }
+'''
+        suffix=suffix.replace('    location / {',static+'    location / {',1)
     if prefix+suffix!=current: write_owned(SITE,prefix+suffix,nginx_check_reload)
     guard()
     (ROOT/'guest-prepared.json').write_text(json.dumps(dict(prepared=True,public=False,backup=str(backup)))+'\n')

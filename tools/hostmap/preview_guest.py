@@ -4,15 +4,14 @@ from pathlib import Path
 import tempfile
 from core import Store
 from guest import Guest
-from guest_http import GuestHandler
-from uploads import Server
+from guest_http import GuestHandler,GuestServer
 
 
 if __name__=='__main__':
     os.umask(0o007)
     with tempfile.TemporaryDirectory(prefix='hostmap-preview-') as temporary:
         root=Path(temporary); (root/'incoming').mkdir()
-        server=Server(('127.0.0.1',8051),GuestHandler)
+        server=GuestServer(('127.0.0.1',8051),GuestHandler)
         server.store=Store(root/'hostmap.db',['HostMap1','HostMap2'])
         server.guest=Guest(server.store,secret=b'preview-only-not-a-live-secret!!')
         server.incoming=root/'incoming'; server.trust_proxy=False;server.enabled=True

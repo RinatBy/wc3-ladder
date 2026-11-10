@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 import threading
 import socket
+import time
 import unittest
 import core
 import uploads
@@ -16,9 +17,10 @@ class HttpTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('guest_http'),'Guest HTTP flow has not been implemented')
         from guest import Guest
         from guest_http import GuestHandler
+        import guest_http
         self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
         root=Path(self.tmp.name); (root/'incoming').mkdir()
-        self.server=uploads.Server(('127.0.0.1',0),GuestHandler)
+        self.server=getattr(guest_http,'GuestServer',uploads.Server)(('127.0.0.1',0),GuestHandler)
         self.server.store=core.Store(root/'state.db',['HostMap1','HostMap2'])
         self.server.guest=Guest(self.server.store,secret=b'x'*32)
         self.server.incoming=root/'incoming'; self.server.trust_proxy=False; self.server.enabled=True
@@ -77,6 +79,25 @@ class HttpTests(unittest.TestCase):
         except socket.timeout: data=None
         self.assertEqual(data,b'', 'Incomplete control body must release the handler promptly')
         self.assertEqual(self.request('POST','/api/session')[0],200)
+
+    def test_status_and_session_remain_available_during_two_uploads(self):
+        sockets=[]
+        self.server.trust_proxy=True
+        try:
+            for index in range(2):
+                ip='192.0.2.'+str(index+1)
+                status,headers,state=self.request('POST','/api/session',headers={'X-Real-IP':ip})
+                self.assertEqual(status,200)
+                cookie=headers['Set-Cookie'].split(';')[0];csrf=json.loads(state)['csrf']
+                connection=socket.create_connection(self.server.server_address,timeout=2);sockets.append(connection)
+                header=f'POST /api/upload HTTP/1.0\r\nHost: maps.wc3.uplay2.ru\r\nOrigin: https://maps.wc3.uplay2.ru\r\nCookie: {cookie}\r\nX-CSRF-Token: {csrf}\r\nX-Real-IP: {ip}\r\nX-Map-Name: test.w3x\r\nContent-Length: 100\r\n\r\nHM3W'
+                connection.sendall(header.encode())
+            time.sleep(0.1)
+            try: status=self.request('POST','/api/session',headers={'X-Real-IP':'192.0.2.19'})[0]
+            except (OSError,http.client.HTTPException): status=None
+            self.assertEqual(status,200,'Two map streams must not block the control interface')
+        finally:
+            for connection in sockets: connection.close()
 
 
 if __name__=='__main__': unittest.main()

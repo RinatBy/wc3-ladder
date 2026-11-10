@@ -16,7 +16,18 @@ COOKIE='__Host-hostmap'
 WEB=Path(__file__).with_name('web')
 
 
+class GuestServer(uploads.Server):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.slots=threading.BoundedSemaphore(8)
+        self.upload_slots=threading.BoundedSemaphore(2)
+
+
 class GuestHandler(uploads.Handler):
+    def reply(self,*args,**kwargs):
+        try: return super().reply(*args,**kwargs)
+        except OSError: self.close_connection=True
+
     def origin(self): return getattr(self.server,'origin',ORIGIN)
 
     def token(self):
@@ -81,9 +92,13 @@ class GuestHandler(uploads.Handler):
 
     def do_POST(self):
         if not self.canonical(): return
-        if not self.path.startswith('/api/'): return super().do_POST()
+        if not self.path.startswith('/api/'):
+            if self.path!='/upload': return super().do_POST()
+            if not self.server.upload_slots.acquire(blocking=False): return self.reply(429,dict(error='service_busy'))
+            try: return super().do_POST()
+            finally: self.server.upload_slots.release()
         self.connection.settimeout(60)
-        deadline=None; expired=threading.Event()
+        deadline=None; upload_slot=False;expired=threading.Event()
         def expire():
             expired.set()
             try: self.connection.shutdown(socket.SHUT_RDWR)
@@ -102,6 +117,8 @@ class GuestHandler(uploads.Handler):
             if self.path=='/api/upload':
                 name=unquote(self.headers.get('X-Map-Name',''))
                 if not 4<=size<=uploads.MAX_BYTES: raise Rejected('invalid_size')
+                if not self.server.upload_slots.acquire(blocking=False): raise Rejected('service_busy')
+                upload_slot=True
                 ticket=self.server.guest.upload_ticket(token,self.client_ip())
                 job=uploads.receive(self.server.store,ticket,name,size,self.rfile,self.server.incoming)
                 return self.reply(202,dict(id=job))
@@ -125,12 +142,13 @@ class GuestHandler(uploads.Handler):
             self.close_connection=True
         finally:
             if deadline: deadline.cancel()
+            if upload_slot: self.server.upload_slots.release()
 
 
 def main():
     import os
     os.umask(0o007)
-    server=uploads.Server(('127.0.0.1',6129),GuestHandler)
+    server=GuestServer(('127.0.0.1',6129),GuestHandler)
     server.store=Store('/data/hostmap.db',['HostMap1','HostMap2'])
     server.guest=Guest(server.store)
     server.incoming=Path('/incoming');server.trust_proxy=True
