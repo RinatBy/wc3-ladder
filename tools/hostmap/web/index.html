@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Захостить карту — Warcraft III Online</title><link rel="canonical" href="https://maps.wc3.uplay2.ru/">
+<link rel="stylesheet" href="/web/style.css"></head>
+<body><header><a class="crest" href="https://wc3.uplay2.ru/" aria-label="Warcraft III Online — главная"><img src="/web/header.gif" width="505" height="75" alt="Warcraft III Online"></a>
+<nav><a href="https://wc3.uplay2.ru/">Главная</a><a href="https://wc3.uplay2.ru/classic/">DotA Classic</a><a href="https://wc3.uplay2.ru/lod/">DotA LoD</a><a aria-current="page" href="/">Захостить карту</a></nav></header>
+<main><div class="frame"><h1>Захостить карту</h1><p class="intro">Загрузите карту, создайте комнату и заходите в неё через Warcraft III.</p>
+<section aria-labelledby="upload-title"><h2 id="upload-title"><span>1</span> Карта</h2>
+<label for="file">Карта Warcraft III 1.29.2</label><input id="file" type="file" accept=".w3x,.w3m" aria-describedby="file-help">
+<p class="muted" id="file-help">.w3x или .w3m · до 32 МБ</p>
+<button id="upload" disabled>Загрузить карту</button><p id="upload-status" role="status" aria-live="polite"></p></section>
+<section id="hosting" hidden aria-labelledby="host-title"><h2 id="host-title"><span>2</span> Комната</h2>
+<p id="map-name" class="map-name"></p><label for="room">Название комнаты</label>
+<input id="room" type="text" maxlength="30" value="My game" autocomplete="off" aria-describedby="room-help">
+<p class="muted" id="room-help">До 30 знаков: латинские буквы, цифры и обычные пробелы.</p>
+<button id="create" disabled>Создать игру</button><p id="room-status" role="status" aria-live="polite"></p></section>
+<p id="page-status" class="notice" role="status" aria-live="polite">Подключаемся к хостеру…</p>
+<p class="muted">После входа в лобби каждый играющий участник пишет <code>!go</code>. Карта скачается у остальных игроков при подключении.</p>
+</div></main><footer><a href="https://wc3.uplay2.ru/">Warcraft III Online</a></footer>
+<script src="/web/app.js"></script></body></html>

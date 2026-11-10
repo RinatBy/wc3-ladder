@@ -8,6 +8,8 @@ import time
 
 from core import Store, Rejected, account, read_status, fresh
 from realm import Realm, chat_event
+from guest import Guest
+import struct
 
 
 class Commands:
@@ -67,6 +69,7 @@ def main():
     if credentials['account'] != 'HostMap':
         raise ValueError('Wrong controller account')
     client = Realm(credentials)
+    guests = Guest(store)
     outbound = deque()
     last_sent = 0
     last_tick = 0
@@ -81,6 +84,8 @@ def main():
                 kind,body = client.receive()
                 if kind == 0x25:
                     client.send(kind,body)
+                elif kind == 0x09:
+                    guests.confirm(body,statuses())
                 elif kind == 0x0f:
                     event = chat_event(body)
                     if event and event[0] in (4,5) and len(outbound) < 32:
@@ -96,6 +101,13 @@ def main():
                 last_sent = now
             if now-last_tick >= 2:
                 store.reconcile(statuses())
+                dispatch=guests.dispatch(statuses())
+                if dispatch:
+                    # Persisted before sending: a restart never replays a creation command.
+                    client.whisper(dispatch['worker'],dispatch['command'])
+                waiting=guests.waiting()
+                if waiting:
+                    client.send(0x09,struct.pack('<4I',1023,1023,0,1)+waiting.encode('ascii')+b'\0\0\0')
                 tmp = state/'controller.status.tmp'
                 tmp.write_text(json.dumps(dict(time=int(time.time()),authenticated=True,
                     workers={w:bool(fresh(s,int(time.time())) and not s['busy']) for w,s in statuses().items()})))

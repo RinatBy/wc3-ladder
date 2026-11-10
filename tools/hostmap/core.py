@@ -92,27 +92,32 @@ class Store:
 
     def host(self, owner, code, room, statuses, now=None):
         account(owner)
-        room_name(room)
-        if not re.fullmatch('[a-f0-9]{12}', code):
-            raise Rejected('Use the map code from !maps.')
         now = int(time.time()) if now is None else now
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')
-            self._reconcile(db, statuses, now)
-            item = db.execute('SELECT * FROM maps WHERE code=?', (code,)).fetchone()
-            if item is None:
-                raise Rejected('Map not found. Use !maps.')
-            used = {r[0] for r in db.execute('SELECT worker FROM leases')}
-            worker = next((w for w in self.workers if w not in used and
-                           fresh(statuses.get(w), now) and not statuses[w].get('busy')), None)
-            if not worker:
-                raise Rejected('All rooms are busy. Try again after a game finishes.')
-            try:
-                db.execute('INSERT INTO leases VALUES (?,?,?,?,0)', (worker, owner, room, now))
-            except sqlite3.IntegrityError:
-                raise Rejected('You already have a room, or this room name is in use.') from None
+            return self._reserve(db,owner,code,room,statuses,now,owner)
+
+    def _reserve(self, db, owner, code, room, statuses, now, command_owner):
+        # Internal caller may use a guest: namespace; wire owner is always an existing service/account.
+        account(command_owner)
+        room_name(room)
+        if not re.fullmatch('[a-f0-9]{12}', code):
+            raise Rejected('Use the map code from !maps.')
+        self._reconcile(db, statuses, now)
+        item = db.execute('SELECT * FROM maps WHERE code=?', (code,)).fetchone()
+        if item is None:
+            raise Rejected('Map not found. Use !maps.')
+        used = {r[0] for r in db.execute('SELECT worker FROM leases')}
+        worker = next((w for w in self.workers if w not in used and
+                       fresh(statuses.get(w), now) and not statuses[w].get('busy')), None)
+        if not worker:
+            raise Rejected('All rooms are busy. Try again after a game finishes.')
+        try:
+            db.execute('INSERT INTO leases VALUES (?,?,?,?,0)', (worker, owner, room, now))
+        except sqlite3.IntegrityError:
+            raise Rejected('You already have a room, or this room name is in use.') from None
         return dict(worker=worker, owner=owner, room=room, code=code, created=now,
-                    command=f'!hmhost {now} {code} {owner} {room}')
+                    command=f'!hmhost {now} {code} {command_owner} {room}')
 
     def issue_upload(self, owner, now=None):
         account(owner)
