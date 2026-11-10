@@ -6,16 +6,16 @@ from ui_assets import WEB_FILES
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT.parent/'sites/warcraft-ladder-2007'
-TAG='20261110-menu4'
+TAG='20261110-menu5'
 NAV='''  <nav class="site-navigation" aria-label="Разделы сайта">
     <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
-    <details class="rating-menu">
-      <summary>Рейтинг <span class="down-arrow" aria-hidden="true"></span></summary>
+    <div class="rating-menu">
+      <button class="rating-toggle" type="button">Рейтинг <span class="down-arrow" aria-hidden="true"></span></button>
       <div class="rating-options">
         <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
         <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
       </div>
-    </details>
+    </div>
     <a href="https://maps.wc3.uplay2.ru/" id="hosting-link">Захостить карту</a>
   </nav>'''
 HEADER='''  <header class="site-header gateway-header">
