@@ -6,15 +6,20 @@ from ui_assets import WEB_FILES
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT.parent/'sites/warcraft-ladder-2007'
-TAG='20261110-shell3'
+TAG='20261110-menu4'
 NAV='''  <nav class="site-navigation" aria-label="Разделы сайта">
     <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
-    <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
-    <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
+    <details class="rating-menu">
+      <summary>Рейтинг <span class="down-arrow" aria-hidden="true"></span></summary>
+      <div class="rating-options">
+        <a href="https://wc3.uplay2.ru/classic/" id="classic-link">DotA Classic</a>
+        <a href="https://wc3.uplay2.ru/lod/" id="lod-link">DotA LoD</a>
+      </div>
+    </details>
     <a href="https://maps.wc3.uplay2.ru/" id="hosting-link">Захостить карту</a>
   </nav>'''
 HEADER='''  <header class="site-header gateway-header">
-    <a class="original-header" href="https://wc3.uplay2.ru/" aria-label="Warcraft III Online — главная"></a>
+    <div class="original-header">__NAV__</div>
   </header>'''
 
 
@@ -30,7 +35,7 @@ def footer(form='',host=False):
 def patch_site(text,home=False):
     form=re.search(r'<form id="search-form".*?</form>',text,re.S)
     text=re.sub(r'\s*<nav class="(?:hosting-navigation|site-navigation)".*?</nav>','',text,flags=re.S)
-    replacement=HEADER+'\n'+NAV
+    replacement=HEADER.replace('__NAV__',NAV)
     if home: replacement=replacement.replace('id="main-link"','id="main-link" aria-current="page"')
     text,count=re.subn(r'<header class="site-header[^\"]*">.*?</header>',replacement,text,count=1,flags=re.S)
     if count!=1: raise ValueError('Expected one site header')
@@ -50,7 +55,7 @@ def main():
         path.write_text(patch_site(path.read_text(encoding='utf-8'),home=name=='home.html'),encoding='utf-8')
     web=ROOT/'web'
     text=(web/'index.html').read_text(encoding='utf-8')
-    text=re.sub(r'<body.*?<main[^>]*>',lambda _:'<body class="hosting-page">\n'+HEADER+'\n'+NAV.replace('id="hosting-link"','id="hosting-link" aria-current="page"')+'\n<main class="hosting-main">',text,count=1,flags=re.S)
+    text=re.sub(r'<body.*?<main[^>]*>',lambda _:'<body class="hosting-page">\n'+HEADER.replace('__NAV__',NAV.replace('id="hosting-link"','id="hosting-link" aria-current="page"'))+'\n<main class="hosting-main">',text,count=1,flags=re.S)
     text=text.replace('<main class="hosting-main"><div class="frame">','<main class="hosting-main"><section class="ranking-frame"><div class="frame-top"><i></i><i></i></div><div class="frame-middle"><div class="hosting-content">')
     text=re.sub(r'</div></main><footer>.*?</footer>',lambda _:'</div></div><div class="frame-bottom"><i></i><i></i></div></section></main>\n'+footer(host=True),text,count=1,flags=re.S)
     text=re.sub(r'<footer class="site-footer">.*?</footer>',lambda _:footer(host=True),text,count=1,flags=re.S)
@@ -69,9 +74,10 @@ def main():
 .hosting-content .success{color:#a7d288}.hosting-content .error{color:#e9aa96}.hosting-content code{color:#fff}@media(max-width:560px){.hosting-content{padding:18px 12px}.hosting-content h1{font-size:24px}.hosting-content button{width:100%}}
 '''
     host_css=base+'\n\n'+shared+'\n'+hosting
-    host_css=re.sub(r'assets/war3/images/ladder-revise/([^\)\'\"]+)',lambda m:'/web/'+('header.gif' if m[1]=='gatewayselect-header-w3xp.gif' else m[1]),host_css)
+    host_css=re.sub(r'assets/war3/images/ladder-revise/([^\)\'\"]+)',lambda m:'/web/'+('header.gif' if m[1] in ('gatewayselect-header-w3xp.gif','headers/W3XP-Lordaeron-Ladders.gif') else m[1]),host_css)
     (web/'style.css').write_text(host_css,encoding='utf-8')
     assets=SITE/'dist/assets/war3/images/ladder-revise'
+    shutil.copyfile(assets/'headers/W3XP-Lordaeron-Ladders.gif',web/'header.gif')
     for name in WEB_FILES:
         if name.endswith('.gif') and name not in ('header.gif','wood.gif'): shutil.copyfile(assets/name,web/name)
     print('Built shared header, four-link navigation, original frames and aligned footer')
