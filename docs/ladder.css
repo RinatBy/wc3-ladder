@@ -17,3 +17,28 @@
 
 /* Original 2007 gateway choices, with our ladder names over the old region labels. */
 .gateway-header .original-header{display:block;background-image:url('assets/war3/images/ladder-revise/gatewayselect-header-w3xp.gif')}.gateway-home{text-align:center;padding:clamp(48px,12vh,110px) 20px 60px}.gateway-home h1{font:normal 24px Georgia,'Times New Roman',serif;color:#dcc16e;margin:0 0 28px}.gateway-grid{display:grid;grid-template-columns:repeat(2,285px);gap:42px;justify-content:center}.gateway-choice{position:relative;display:block;width:285px;height:144px;text-decoration:none;color:#e5c46b}.gateway-choice img{display:block;width:285px;height:144px}.gateway-choice-label{position:absolute;left:104px;right:10px;top:41px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(90deg,#0b0b0b,#101010 65%);text-shadow:1px 2px #000}.gateway-choice-label strong{font:normal 22px Georgia,'Times New Roman',serif;white-space:nowrap}.gateway-choice-label small{font:10px Georgia,'Times New Roman',serif;color:#d6cfc1;margin-top:5px}.gateway-choice:hover{filter:brightness(1.2)}.gateway-choice:focus-visible{outline:2px solid #e5c46b;outline-offset:5px}.gateway-footer{justify-content:center;padding:0;color:#9b875b;font:12px Georgia,'Times New Roman',serif}@media(max-width:660px){.gateway-grid{grid-template-columns:285px;gap:12px}.gateway-home{padding-top:44px}.gateway-home h1{font-size:22px;margin-bottom:20px}}
+
+/* Shared original site chrome, including the image's 14px transparent footer cap. */
+.site-header{height:75px;margin:0 -5px;background:url('assets/war3/images/ladder-revise/top-bg.gif') repeat-x center top;position:relative;border:0}
+.site-header:before,.site-header:after{content:'';position:absolute;top:0;width:15px;height:75px}
+.site-header:before{left:0;background:url('assets/war3/images/ladder-revise/top-left.gif') no-repeat}
+.site-header:after{right:0;background:url('assets/war3/images/ladder-revise/top-right.gif') no-repeat}
+.site-header .original-header{display:block;width:505px;max-width:100%;height:75px;margin:auto;background:url('assets/war3/images/ladder-revise/gatewayselect-header-w3xp.gif') center top no-repeat}
+.site-navigation{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 24px;margin:0 -5px;padding:9px 12px;background:#10100e;border-bottom:1px solid #4c4030;font:13px/20px Georgia,'Times New Roman',serif}
+.site-navigation a:link,.site-navigation a:visited{display:inline-block;padding:0;color:#ffd100;font:inherit;font-weight:normal;text-decoration:underline;white-space:nowrap}
+.site-navigation a:hover{color:#fff}.site-navigation a[aria-current=page]{font-weight:bold;text-decoration-thickness:2px;text-underline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.site-footer{position:fixed;inset:auto 0 0;height:52px;margin:0;padding:0 20px;border:0;background:url('assets/war3/images/ladder-revise/bot-left-bg.gif') repeat-x left top;display:grid;grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr);align-items:stretch;justify-content:normal;z-index:5;font:11px Arial,Helvetica,sans-serif}
+.site-footer:before,.site-footer:after{content:'';position:absolute;top:0;width:15px;height:52px;pointer-events:none}
+.site-footer:before{left:0;background:url('assets/war3/images/ladder-revise/bot-left.gif') no-repeat}
+.site-footer:after{right:0;background:url('assets/war3/images/ladder-revise/bot-right.gif') no-repeat}
+.site-footer .return-link{grid-column:1;justify-self:start;position:relative;display:flex;align-items:center;gap:0;height:52px;max-width:none;padding:14px 0 0 35px;color:#bcbcbc;font:11px Arial,Helvetica,sans-serif;white-space:nowrap}
+.site-footer .return-link img{position:absolute;left:0;top:0;width:32px;height:52px}
+.site-footer .footer-name{grid-column:2;display:flex;align-items:center;justify-content:center;min-width:0;margin:0;padding:14px 0 0;color:#9b875b;text-align:center;font:12px Georgia,'Times New Roman',serif;white-space:nowrap}
+.site-footer form{grid-column:3;justify-self:end;display:flex;align-items:center;gap:7px;height:52px;margin:0;padding:14px 0 0;line-height:20px}
+.site-footer label{margin:0;padding:0;color:#bcbcbc;font:bold 11px/20px Arial,Helvetica,sans-serif;white-space:nowrap}
+.site-footer input{box-sizing:border-box;width:150px;height:21px;margin:0;padding:2px 5px;background:#070707;border:1px solid #665c4c;color:#ffd100;font:12px/17px Arial,Helvetica,sans-serif}
+.site-footer .go-button{display:flex;align-items:center;justify-content:center;width:27px;min-width:27px;height:21px;margin:0;padding:0;border:0;background:none;line-height:0}
+.site-footer .go-button img{display:block;height:21px;max-height:21px;max-width:27px}
+@media(max-width:760px){.site-navigation{gap:7px 18px}.site-footer{grid-template-columns:1fr auto 1fr;padding:0 15px}.site-footer label{display:none}.site-footer input{width:105px}.site-footer .footer-name{font-size:11px}.site-footer .return-link{font-size:10px}}
+@media(max-width:480px){.site-navigation{font-size:12px;gap:6px 15px}.site-footer{grid-template-columns:1fr 1fr}.site-footer .footer-name{display:none}.site-footer form{grid-column:2}.site-header .original-header{background-size:auto 75px}}
