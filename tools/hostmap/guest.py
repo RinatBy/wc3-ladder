@@ -161,10 +161,11 @@ class Guest:
 
     def confirm(self, body, statuses, now=None):
         now=clock(now)
-        if len(body)<22 or struct.unpack_from('<I',body)[0]<1: return False
+        if len(body)<38 or struct.unpack_from('<I',body)[0]<1: return False
         try:
             port=struct.unpack_from('>H',body,14)[0]; ip=socket.inet_ntoa(body[16:20])
-            room=body[20:body.index(0,20)].decode('ascii')
+            # Warcraft response includes a full sockaddr, game status and elapsed time.
+            room=body[36:body.index(0,36)].decode('ascii')
         except (ValueError,UnicodeError): return False
         if ip!='176.124.218.23': return False
         worker={6117:'HostMap1',6118:'HostMap2'}.get(port)

@@ -73,7 +73,9 @@ class GuestTests(unittest.TestCase):
     def test_advertisement_requires_exact_room_endpoint_and_fresh_worker(self):
         job=self.ready_map(); self.guest.create(self.token,'b'*32,job,'Guest Room','192.0.2.1',now=1001)
         dispatch=self.guest.dispatch(self.statuses,now=1001)
-        body=struct.pack('<I',1)+b'\0'*10+struct.pack('>H',6117)+socket.inet_aton('176.124.218.23')+b'Guest Room\0'
+        # Warcraft's sockaddr + status/elapsed fields put the name at body offset36,
+        # unlike the legacy StarCraft response parsed by GHost's generic helper.
+        body=struct.pack('<I',1)+b'\0'*10+struct.pack('>H',6117)+socket.inet_aton('176.124.218.23')+b'\0'*16+b'Guest Room\0'
         self.assertFalse(self.guest.confirm(body,self.statuses,now=1002))
         self.statuses[dispatch['worker']]=dict(time=1002,busy=True)
         self.assertFalse(self.guest.confirm(body.replace(b'Guest Room',b'Other Room'),self.statuses,now=1002))
