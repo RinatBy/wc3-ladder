@@ -27,7 +27,7 @@
       const placeholder=new Option(data.maps.length?'Выберите карту':'Карты не найдены','');placeholder.disabled=true;
       $('map-list').replaceChildren(placeholder,...data.maps.map(item=>new Option(item.title,item.code,false,!!job&&item.code===job.code)));
       if(!job||!data.maps.some(item=>item.code===job.code))$('map-list').value='';
-      text('catalog-status',data.more?'Показаны первые 100 карт. Уточните название.':data.maps.length+' карт в списке.');buttons();
+      text('catalog-status',data.more?'Показаны первые 100 карт. Уточните название.':'Карт в списке: '+data.maps.length+'.');buttons();
     }catch(error){text('catalog-status',error.message,true);}
   }
   async function selectMap(code){
