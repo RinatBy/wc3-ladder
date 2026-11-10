@@ -54,7 +54,7 @@ def main():
     text=text.replace('<main class="hosting-main"><div class="frame">','<main class="hosting-main"><section class="ranking-frame"><div class="frame-top"><i></i><i></i></div><div class="frame-middle"><div class="hosting-content">')
     text=re.sub(r'</div></main><footer>.*?</footer>',lambda _:'</div></div><div class="frame-bottom"><i></i><i></i></div></section></main>\n'+footer(host=True),text,count=1,flags=re.S)
     text=re.sub(r'<footer class="site-footer">.*?</footer>',lambda _:footer(host=True),text,count=1,flags=re.S)
-    text=text.replace('/web/style.css"','/web/style.css?v='+TAG+'"')
+    text=re.sub(r'/web/style\.css(?:\?v=[^"\s]+)?', '/web/style.css?v='+TAG, text)
     (web/'index.html').write_text(text,encoding='utf-8')
     hosting='''
 .hosting-content{max-width:760px;margin:auto;padding:24px 32px;background:#000;color:#e2d6bd;font:13px/1.6 Arial,Helvetica,sans-serif}
