@@ -52,6 +52,19 @@ class HttpTests(unittest.TestCase):
         job=json.loads(data)['id']; other,_=self.session()
         self.assertEqual(self.request('GET','/api/job?id='+job,headers={'Cookie':other})[0],400)
 
+    def test_catalog_selection_requires_session_csrf_and_validated_identity(self):
+        self.assertEqual(self.request('GET','/api/maps')[0],400)
+        cookie,csrf=self.session()
+        code=self.server.store.add_map('a'*64,'w3x','Spec Arena')
+        status,_,body=self.request('GET','/api/maps?q=Arena',headers={'Cookie':cookie})
+        self.assertEqual(status,200);self.assertEqual(json.loads(body)['maps'][0]['code'],code)
+        payload=json.dumps(dict(code=code)).encode()
+        self.assertEqual(self.request('POST','/api/select',payload,{'Cookie':cookie})[0],403)
+        status,_,body=self.request('POST','/api/select',payload,{'Cookie':cookie,'X-CSRF-Token':csrf})
+        self.assertEqual(status,200);self.assertEqual(json.loads(body)['job']['id'],'map:'+code)
+        invalid=json.dumps(dict(code='../../etc/passwd')).encode()
+        self.assertEqual(self.request('POST','/api/select',invalid,{'Cookie':cookie,'X-CSRF-Token':csrf})[0],400)
+
     def test_fake_proxy_header_does_not_change_local_address(self):
         for index in range(20):
             status,_,_=self.request('POST','/api/session',headers={'X-Real-IP':'192.0.2.'+str(index+1)})

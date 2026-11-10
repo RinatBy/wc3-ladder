@@ -39,6 +39,7 @@ class Guest:
                 created INTEGER, state TEXT, worker TEXT DEFAULT '', dispatched INTEGER DEFAULT 0,
                 error TEXT DEFAULT '');
             CREATE INDEX IF NOT EXISTS guest_request_session ON guest_requests(session);
+            CREATE TABLE IF NOT EXISTS guest_choices (session TEXT PRIMARY KEY, code TEXT);
             ''')
 
     def ip(self, value):
@@ -62,6 +63,7 @@ class Guest:
             db.execute('BEGIN IMMEDIATE')
             db.execute('DELETE FROM guest_events WHERE created<?',(now-86400,))
             db.execute('DELETE FROM guest_sessions WHERE created<=?',(now-86400,))
+            db.execute('DELETE FROM guest_choices WHERE session NOT IN (SELECT id FROM guest_sessions)')
             db.execute('DELETE FROM uploads WHERE expires<?',(now-86400,))
             db.execute("DELETE FROM jobs WHERE owner LIKE 'guest:%' AND state='rejected' AND created<?",(now-86400,))
             db.execute("DELETE FROM guest_requests WHERE created<? AND state IN ('failed','ended')",(now-86400,))
@@ -89,6 +91,7 @@ class Guest:
                 db.execute('SELECT 1 FROM uploads WHERE owner=? AND used=0 AND expires>=?',(owner,now)).fetchone()):
                 raise Rejected('upload_pending')
             self._limit(db,'upload',sid,ip,now,5,60)
+            db.execute('DELETE FROM guest_choices WHERE session=?',(sid,))
             ticket=secrets.token_urlsafe(32)
             db.execute('INSERT INTO uploads VALUES (?,?,?,?,0)',(digest(ticket),owner,now,now+120))
         return ticket
@@ -111,8 +114,28 @@ class Guest:
         with self.store.db() as db:
             sid=self._auth(db,token,clock(now))
             job=db.execute('SELECT id,state,code,title FROM jobs WHERE owner=? ORDER BY rowid DESC LIMIT 1',('guest:'+sid,)).fetchone()
+            chosen=db.execute('SELECT m.code,m.title FROM guest_choices c JOIN maps m ON m.code=c.code WHERE c.session=?',(sid,)).fetchone()
+            if chosen: job=dict(id='map:'+chosen['code'],state='ready',code=chosen['code'],title=chosen['title'])
             request=db.execute('SELECT id,state,room,error FROM guest_requests WHERE session=? ORDER BY rowid DESC LIMIT 1',(sid,)).fetchone()
             return dict(job=dict(job) if job else None,request=dict(request) if request else None)
+
+    def catalog(self, token, query='', digest='', now=None):
+        if not isinstance(query,str) or len(query)>60 or (digest and not re.fullmatch('[a-f0-9]{64}',digest)):
+            raise Rejected('invalid_request')
+        with self.store.db() as db:
+            self._auth(db,token,clock(now))
+            rows=db.execute('SELECT code,title,ext,digest FROM maps WHERE instr(lower(title),lower(?))>0 AND (?=\'\' OR digest=?) ORDER BY title COLLATE NOCASE,code LIMIT 101',(query,digest,digest)).fetchall()
+            return dict(maps=[dict(r) for r in rows[:100]],more=len(rows)>100)
+
+    def select(self, token, code, now=None):
+        now=clock(now)
+        if not isinstance(code,str) or not re.fullmatch('[a-f0-9]{12}',code): raise Rejected('map_not_ready')
+        with self.store.db() as db:
+            db.execute('BEGIN IMMEDIATE');sid=self._auth(db,token,now)
+            if not db.execute('SELECT 1 FROM maps WHERE code=?',(code,)).fetchone(): raise Rejected('map_not_ready')
+            if db.execute("SELECT 1 FROM jobs WHERE owner=? AND state IN ('receiving','pending')",('guest:'+sid,)).fetchone(): raise Rejected('upload_pending')
+            db.execute('INSERT OR REPLACE INTO guest_choices VALUES (?,?)',(sid,code))
+        return self.state(token,now=now)
 
     def create(self, token, identifier, job, room, ip, now=None):
         now=clock(now); ip=self.ip(ip); room_name(room)
@@ -123,7 +146,10 @@ class Guest:
             if existing:
                 if existing['session']!=sid or existing['job']!=job or existing['room']!=room: raise Rejected('not_found')
                 return dict(id=existing['id'],state=existing['state'],room=existing['room'],error=existing['error'])
-            item=db.execute("SELECT code FROM jobs WHERE id=? AND owner=? AND state='ready'",(job,'guest:'+sid)).fetchone()
+            if isinstance(job,str) and re.fullmatch('map:[a-f0-9]{12}',job):
+                item=db.execute('SELECT code FROM maps WHERE code=?',(job[4:],)).fetchone()
+            else:
+                item=db.execute("SELECT code FROM jobs WHERE id=? AND owner=? AND state='ready'",(job,'guest:'+sid)).fetchone()
             if not item: raise Rejected('map_not_ready')
             if (db.execute("SELECT 1 FROM guest_requests WHERE session=? AND state IN ('queued','dispatched')",(sid,)).fetchone() or
                 db.execute('SELECT 1 FROM leases WHERE owner=? AND (active=1 OR created>?)',('guest:'+sid,now-60)).fetchone()):

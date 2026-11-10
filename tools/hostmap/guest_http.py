@@ -85,6 +85,7 @@ class GuestHandler(uploads.Handler):
             try:
                 self.gate(); token=self.token(); query=parse_qs(url.query)
                 if url.path=='/api/state': result=self.server.guest.state(token)
+                elif url.path=='/api/maps': result=self.server.guest.catalog(token,query.get('q',[''])[0],query.get('digest',[''])[0])
                 elif url.path=='/api/job': result=self.server.guest.job(token,query.get('id',[''])[0])
                 elif url.path=='/api/request': result=self.server.guest.request(token,query.get('id',[''])[0])
                 else: return self.reply(404,dict(error='not_found'))
@@ -124,11 +125,14 @@ class GuestHandler(uploads.Handler):
                 ticket=self.server.guest.upload_ticket(token,self.client_ip())
                 job=uploads.receive(self.server.store,ticket,name,size,self.rfile,self.server.incoming)
                 return self.reply(202,dict(id=job))
-            if self.path=='/api/host':
+            if self.path in ('/api/host','/api/select'):
                 if not 1<=size<=1024: raise Rejected('invalid_request')
                 deadline=threading.Timer(getattr(self.server,'control_seconds',5),expire)
                 deadline.daemon=True;deadline.start()
                 data=json.loads(self.rfile.read(size))
+                if self.path=='/api/select':
+                    if not isinstance(data,dict) or set(data)!={'code'} or not isinstance(data['code'],str): raise Rejected('invalid_request')
+                    return self.reply(200,self.server.guest.select(token,data['code']))
                 if not isinstance(data,dict) or set(data)!={'id','job','room'} or not all(isinstance(v,str) for v in data.values()):
                     raise Rejected('invalid_request')
                 result=self.server.guest.create(token,data['id'],data['job'],data['room'],self.client_ip())

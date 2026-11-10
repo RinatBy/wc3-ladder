@@ -6,7 +6,7 @@ from ui_assets import WEB_FILES
 
 ROOT=Path(__file__).resolve().parent
 SITE=ROOT.parent/'sites/warcraft-ladder-2007'
-TAG='20261110-menu5'
+TAG='20261110-catalog1'
 NAV='''  <nav class="site-navigation" aria-label="Разделы сайта">
     <a href="https://wc3.uplay2.ru/" id="main-link">Главная</a>
     <div class="rating-menu">
@@ -72,6 +72,7 @@ def main():
 .hosting-content button:disabled{opacity:.45;cursor:default}.hosting-content button:hover:enabled{filter:brightness(1.3)}.hosting-content .muted{color:#a99c82;font-size:12px;line-height:1.6}
 .hosting-content .notice{padding:13px 0;border-top:1px solid #4c4030}.hosting-content .map-name{color:#fff;overflow-wrap:anywhere}#upload-status,#room-status{overflow-wrap:anywhere}
 .hosting-content .success{color:#a7d288}.hosting-content .error{color:#e9aa96}.hosting-content code{color:#fff}@media(max-width:560px){.hosting-content{padding:18px 12px}.hosting-content h1{font-size:24px}.hosting-content button{width:100%}}
+.hosting-content select{display:block;width:100%;height:135px;background:#171512;border:1px solid #716454;color:#e4c66b;font:13px/1.5 Arial;padding:5px}.hosting-content select option{padding:5px 8px}.hosting-content input[type=search]{width:100%}.map-upload{margin-top:24px}.map-upload summary{color:#ffd100;cursor:pointer;text-decoration:underline}.map-upload[open] summary{margin-bottom:20px}
 '''
     host_css=base+'\n\n'+shared+'\n'+hosting
     host_css=re.sub(r'assets/war3/images/ladder-revise/([^\)\'\"]+)',lambda m:'/web/'+('header.gif' if m[1] in ('gatewayselect-header-w3xp.gif','headers/W3XP-Lordaeron-Ladders.gif') else m[1]),host_css)

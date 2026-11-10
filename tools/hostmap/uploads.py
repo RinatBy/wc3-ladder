@@ -29,7 +29,10 @@ def receive(store, token, filename, size, stream, incoming, now=None):
     # Reserve bytes in the same write transaction as the quota check, before streaming.
     with store.db() as db:
         db.execute('BEGIN IMMEDIATE')
-        usage = db.execute("SELECT coalesce(sum(bytes),0) FROM jobs WHERE state!='rejected'").fetchone()[0]
+        usage = db.execute("""SELECT coalesce(sum(bytes),0) FROM (
+            SELECT max(bytes) AS bytes FROM jobs WHERE state='ready'
+            GROUP BY CASE WHEN coalesce(digest,'')='' THEN id ELSE digest END
+            UNION ALL SELECT bytes FROM jobs WHERE state IN ('receiving','pending'))""").fetchone()[0]
         if usage+size > 1024*1024*1024:
             raise Rejected('Map storage is full. Contact the administrator.')
         db.execute('INSERT INTO jobs (id,owner,digest,ext,title,bytes,state,created) VALUES (?,?,?,?,?,?,?,?)',
@@ -51,7 +54,12 @@ def receive(store, token, filename, size, stream, incoming, now=None):
             file.flush()
             os.fsync(file.fileno())
         with store.db() as db:
-            db.execute("UPDATE jobs SET digest=?,state='pending' WHERE id=?",(digest.hexdigest(),job))
+            known=db.execute('SELECT code,ext,title FROM maps WHERE digest=?',(digest.hexdigest(),)).fetchone()
+            if known:
+                db.execute("UPDATE jobs SET digest=?,state='ready',code=?,ext=?,title=? WHERE id=?",(digest.hexdigest(),known['code'],known['ext'],known['title'],job))
+            else:
+                db.execute("UPDATE jobs SET digest=?,state='pending' WHERE id=?",(digest.hexdigest(),job))
+        if known: path.unlink()
     except BaseException:
         path.unlink(missing_ok=True)
         with store.db() as db:

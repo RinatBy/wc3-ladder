@@ -13,6 +13,8 @@ if __name__=='__main__':
         root=Path(temporary); (root/'incoming').mkdir()
         server=GuestServer(('127.0.0.1',8051),GuestHandler)
         server.store=Store(root/'hostmap.db',['HostMap1','HostMap2'])
+        server.store.add_map('a'*64,'w3x','Spec Arena.w3x')
+        server.store.add_map('b'*64,'w3x','DotA Classic')
         server.guest=Guest(server.store,secret=b'preview-only-not-a-live-secret!!')
         server.incoming=root/'incoming'; server.trust_proxy=False;server.enabled=True
         server.origin='http://127.0.0.1:8051';server.cookie_name='hostmap-preview'

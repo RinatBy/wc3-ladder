@@ -55,6 +55,9 @@ def freeze(path,target,expected):
 
 
 def publish(store,job,path):
+    with store.db() as db:
+        known=db.execute('SELECT ext FROM maps WHERE digest=?',(job['digest'],)).fetchone()
+    if known: job={**job,'ext':known['ext']}
     name=job['digest']+'.'+job['ext']
     target=ROOT/'assets/maps'/name
     if target.is_symlink():
