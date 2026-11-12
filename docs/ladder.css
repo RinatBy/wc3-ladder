@@ -52,6 +52,7 @@
 @media(max-width:480px){.site-footer{grid-template-columns:1fr 1fr}.site-footer .footer-name{display:none}.site-footer form{grid-column:2}.site-header .original-header{background-size:auto 75px}}
 
 .ladder-directory {
+  text-align: left;
   width: min(720px, calc(100% - 36px));
   margin: clamp(44px, 10vh, 108px) auto;
   color: #e5d5aa;
