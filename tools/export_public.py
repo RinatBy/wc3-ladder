@@ -12,6 +12,13 @@ BOTS = {'ghost','hostclassic','hostnewyear','hostlod'}
 COLOURS = set(range(1,6)) | set(range(7,12))
 METRICS = ('kills','deaths','assists','creepkills','creepdenies','neutralkills','towerkills','raxkills','courierkills')
 
+# Saddzz played these two games on a replacement account. Credit the
+# original account in the public export while retaining the recorded roster.
+MATCH_PLAYER_CORRECTIONS = {
+    ('lod', 17, '2026-11-11 18:54:13'): ('saddzz', 'saddz'),
+    ('lod', 18, '2026-11-11 19:59:28'): ('saddzz', 'saddz'),
+}
+
 
 def read_snapshot(path):
     path = Path(path).resolve(strict=True)
@@ -60,6 +67,13 @@ def export(sources,display_names=None,hero_catalog=None):
                 pool['recorded_matches'] += 1
                 roster = [dict(r) for r in db.execute('SELECT name,team,colour FROM gameplayers WHERE gameid=?',(game['id'],))
                           if r['team'] in (0,1) and r['colour'] in COLOURS and r['name'].casefold() not in BOTS]
+                correction = MATCH_PLAYER_CORRECTIONS.get((profile, game['id'], game['datetime']))
+                if correction:
+                    source, destination = correction
+                    participants = [row for row in roster if row['name'].casefold() == source]
+                    if len(participants) != 1 or any(row['name'].casefold() == destination for row in roster):
+                        raise ValueError(f"Ambiguous player correction in {profile}-{game['id']}")
+                    participants[0]['name'] = display_names.get(destination, destination)
                 identities = Counter(r['name'].casefold() for r in roster)
                 colours = Counter(r['colour'] for r in roster)
                 # Ambiguous identity/slot joins must not silently create player results.
