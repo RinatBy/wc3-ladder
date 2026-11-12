@@ -41,7 +41,7 @@ def main():
         public.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         embedded=json.dumps(result,ensure_ascii=False).replace('<','\\u003c').replace('>','\\u003e').replace('&','\\u0026')
         files=['docs/data/rankings.json']
-        for name in ('index.html','about.html'):
+        for name in ('index.html','about.html','lod/4x4-no-mid/index.html','lod/3x3-only-mid/index.html'):
             path=checkout/'docs'/name
             before=path.read_text(encoding='utf-8')
             after,n=re.subn(r'(<script type="application/json" id="rankings-data">).*?(</script>)',lambda m:m[1]+embedded+m[2],before,flags=re.S)

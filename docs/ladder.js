@@ -280,9 +280,25 @@ function playerProfile(players,name) {
   return players.find(p=>p.name.toLocaleLowerCase()===String(name).toLocaleLowerCase())??null;
 }
 
+const LADDER_PATHS = {
+ classic: '/classic/',
+ lod: '/lod/',
+ 'lod-4x4': '/lod/4x4-no-mid/',
+ 'lod-3x3': '/lod/3x3-only-mid/',
+};
+const LADDER_LABELS = {
+ classic: 'DotA Classic 5×5',
+ lod: 'DotA LoD 5×5',
+ 'lod-4x4': 'DotA LoD 4×4 · без мида',
+ 'lod-3x3': 'DotA LoD 3×3 · только мид',
+};
+
 function poolForLocation(pathname, search=''){
- const match=pathname.match(/^\/(lod|classic)(?:\/|$)/);
- return match?match[1]:new URLSearchParams(search).get('pool')==='lod'?'lod':'classic';
+ const route=pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
+ const exact=Object.keys(LADDER_PATHS).find(key=>LADDER_PATHS[key]===route);
+ if(exact)return exact;
+ if(pathname.startsWith('/classic/'))return 'classic';
+ return pathname.startsWith('/lod/')||new URLSearchParams(search).get('pool')==='lod'?'lod':'classic';
 }
 function ladderUrl(pool, values={}){
  const query=new URLSearchParams();
@@ -291,7 +307,7 @@ function ladderUrl(pool, values={}){
   if(value==null||value===''||(key==='sort'&&value==='rank')||(key==='dir'&&value==='asc')||(key==='page'&&Number(value)<=1))continue;
   query.set(key,String(value));
  }
- return '/'+(pool==='lod'?'lod':'classic')+'/'+(query.size?'?'+query:'');
+ return (Object.hasOwn(LADDER_PATHS,pool)?LADDER_PATHS[pool]:LADDER_PATHS.classic)+(query.size?'?'+query:'');
 }
 function legacyLadderTarget(search){
  const values=new URLSearchParams(search);
@@ -319,7 +335,7 @@ function matchOutcome(match,person){if(!person||![1,2].includes(person.team))ret
 function profileContent(panel,p){
  const data=rankings.pools?.[pool]||{},matches=recentMatches(data,p.name);
  const heading=node('div',null,'profile-heading');const portrait=node('div',null,'profile-hero');portrait.append(heroPortrait(p));
- const identity=node('div');identity.append(node('h1',p.name),node('p',pool==='lod'?'DotA LoD':'DotA Classic','profile-subtitle'));
+ const identity=node('div');identity.append(node('h1',p.name),node('p',LADDER_LABELS[pool],'profile-subtitle'));
  if(p.hero_name)identity.append(node('p','Последний герой: '+p.hero_name,'profile-subtitle'));
  heading.append(portrait,identity);panel.append(heading);
  const summary=node('div',null,'profile-summary');
@@ -353,14 +369,18 @@ function showMatch(id,player){
   for(const p of match.players.filter(p=>p.team===team)){const row=node('tr');const hero=node('td');hero.append(heroPortrait(p));const name=node('td');name.append(linkPlayer(p));row.append(hero,name);for(const key of ['kills','deaths','assists','creepkills','creepdenies','neutralkills','towerkills','raxkills','courierkills'])row.append(node('td',format(p[key])));row.append(node('td',signed(p.mmr_delta)),node('td',Number.isFinite(p.xp_gained)?'+'+p.xp_gained:'—'));body.append(row);}
   table.append(thead,body);scroll.append(table);section.append(scroll);panel.append(section);
  }
- panel.append(node('p','Реплей этой игры не записан.','profile-subtitle'));
+ if(match.mode_source){
+  const lane={'only-mid':'Только мид','no-mid':'Без мида','no-top':'Без верхней линии','no-bottom':'Без нижней линии','all-lanes':'Все линии'}[match.lane_mode];
+  const source=match.mode_source==='map-event'?'событие карты в реплее':'команда в журнале матча';
+  if(lane)panel.append(node('p',lane+' · '+source,'profile-subtitle'));
+ }
  const back=node('a',player?'← К профилю '+player:'← К рейтингу');back.href=url({player:player||null});panel.append(back);
 }
 
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const pool=poolForLocation(location.pathname,location.search);
-if(location.pathname!=='/'+pool+'/')location.replace(ladderUrl(pool,Object.fromEntries(params))+location.hash);
+if(location.pathname!==LADDER_PATHS[pool])location.replace(ladderUrl(pool,Object.fromEntries(params))+location.hash);
 const mode='live';
 let term=params.get('q')??'',sort=params.get('sort')??'rank',dir=params.get('dir')??'asc',page=Number(params.get('page'))||1;
 const archived={players:[]};
@@ -395,7 +415,7 @@ function showProfile(name){
  document.title=p.name+' — Warcraft III Online';profileContent(panel,p);
 }
 function render(){
- const isArchive=mode==='archive';const label=pool==='lod'?'DotA LoD':'DotA Classic';
+ const isArchive=mode==='archive';const label=LADDER_LABELS[pool];
  document.title=label+' — Warcraft III Online';
  $('crumb').textContent=isArchive?'Lordaeron · Solo · 2007':label;
  $('classic-link').setAttribute('aria-current',pool==='classic'?'page':'false');$('lod-link').setAttribute('aria-current',pool==='lod'?'page':'false');

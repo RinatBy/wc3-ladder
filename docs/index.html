@@ -7,7 +7,7 @@
   <base href="/">
   <link rel="canonical" href="https://wc3.uplay2.ru/">
   <title>Warcraft III Online — выбор рейтинга</title>
-  <link rel="stylesheet" href="ladder.css?v=20261110-align1">
+  <link rel="stylesheet" href="ladder.css?v=20261112-mode-ladders">
 </head>
 <body class="gateway-page">
     <header class="site-header gateway-header">
@@ -24,15 +24,17 @@
   </nav></div>
   </header>
   <main class="gateway-home">
-    <nav class="gateway-grid" aria-label="Выбор рейтинга">
-      <a class="gateway-choice" href="/classic/">
-        <img src="assets/war3/images/ladder-revise/kalimdor-gateway.gif" alt="" width="285" height="144">
-        <span class="gateway-choice-label"><strong>DotA Classic</strong><small>Рейтинг</small></span>
-      </a>
-      <a class="gateway-choice" href="/lod/">
-        <img src="assets/war3/images/ladder-revise/northrend-gateway.gif" alt="" width="285" height="144">
-        <span class="gateway-choice-label"><strong>DotA LoD</strong><small>Рейтинг</small></span>
-      </a>
+    <nav class="ladder-directory" aria-labelledby="ladder-directory-title">
+      <div class="ladder-directory-heading">
+        <img src="assets/war3/images/ladder-revise/ladder-menu.gif" alt="" width="54" height="52">
+        <h1 id="ladder-directory-title">Рейтинги</h1>
+      </div>
+      <ul>
+        <li><a href="/classic/">DotA Classic 5×5</a></li>
+        <li><a href="/lod/">DotA LoD 5×5</a></li>
+        <li><a href="/lod/4x4-no-mid/">DotA LoD 4×4 · без мида</a></li>
+        <li><a href="/lod/3x3-only-mid/">DotA LoD 3×3 · только мид</a></li>
+      </ul>
     </nav>
   </main>
     <footer class="site-footer">

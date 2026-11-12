@@ -5,6 +5,7 @@ from contextlib import closing
 import json
 from pathlib import Path
 import sqlite3
+from lod_modes import game_mode, replay_index
 from rating import replay
 
 MAPS = {'classic':'DotA_v6.85n_RB_Allstars.w3x', 'newyear':'DotA v6.85k Allstars.w3x', 'lod':'DotAv6.85ozLoD.w3x'}
@@ -18,6 +19,48 @@ MATCH_PLAYER_CORRECTIONS = {
     ('lod', 17, '2026-11-11 18:54:13'): ('saddzz', 'saddz'),
     ('lod', 18, '2026-11-11 19:59:28'): ('saddzz', 'saddz'),
 }
+
+MODE_LADDERS = (
+    ('lod-4x4', 'DotA LoD 4×4 · без мида', 4, 'no-mid'),
+    ('lod-3x3', 'DotA LoD 3×3 · только мид', 3, 'only-mid'),
+)
+
+
+def mode_ladder(label, size, lane, events, histories, people):
+    result = replay((event for event in events if event.get('lane_mode') == lane), size)
+    awards = result['match_awards']
+    matches = []
+    for event_id, match in histories:
+        if event_id not in awards:
+            continue
+        rows = [{**row, **awards[event_id][row['name'].casefold()]} for row in match['players']]
+        matches.append({**match, 'rated': True, 'players': rows})
+    matches.sort(key=lambda match: (match['date'], int(match['id'].rsplit('-', 1)[1])), reverse=True)
+    player_matches = defaultdict(list)
+    for match in matches:
+        for row in match['players']:
+            player_matches[row['name'].casefold()].append((match['id'], row))
+
+    players = []
+    for identity, state in result['players'].items():
+        base = people[identity]
+        recent = player_matches[identity]
+        last = next((row for _, row in recent if row['hero']), {})
+        players.append(dict(name=base['name'], clan=base['clan'], portrait=base['portrait'],
+                            appearances=state['rated_games'], result_games=state['rated_games'],
+                            all_result_games=state['rated_games'], all_wins=state['wins'],
+                            all_losses=state['losses'], last_hero=last.get('hero'),
+                            hero_name=last.get('hero_name'),
+                            recent_match_ids=[match_id for match_id, _ in recent[:10]],
+                            **{f'all_{metric}': state[metric] for metric in METRICS}, **state))
+    players.sort(key=lambda player: (-player['mmr'], -player['wins'], -player['xp'], player['name'].casefold()))
+    for rank, player in enumerate(players, 1):
+        player['rank'] = rank
+    retained = {match_id for player in players for match_id in player['recent_match_ids']}
+    count = result['rated_matches']
+    return dict(label=label, maps=[MAPS['lod']], players=players, recorded_matches=count,
+                completed_matches=count, rated_matches=count, rated_match_ids=result['match_ids'],
+                matches=[match for match in matches if match['id'] in retained])
 
 
 def read_snapshot(path):
@@ -56,6 +99,7 @@ def export(sources,display_names=None,hero_catalog=None):
         if profile not in MAPS: raise ValueError('Unknown map profile')
         poolkey = 'lod' if profile=='lod' else 'classic'
         pool, players = pools[poolkey], people[poolkey]
+        replays = replay_index(Path(path).parent/'replays') if profile == 'lod' else {}
         db = read_snapshot(path)
         try:
             tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
@@ -100,6 +144,11 @@ def export(sources,display_names=None,hero_catalog=None):
                            map=MAPS[profile],name=game['gamename'] or '',duration_seconds=game['duration'],
                            winner=results[0]['winner'],team_sizes=[sum(r['team']==t for r in roster) for t in (0,1)],
                            rated=False,replay_url=None,players=[])
+                if profile == 'lod':
+                    mode = game_mode(game, replays)
+                    if mode:
+                        event['lane_mode'], match['mode_source'] = mode
+                        match['lane_mode'] = mode[0]
                 for r,s in joined:
                     p = players[r['name'].casefold()]
                     final_colour = s.get('newcolour',s['colour'])
@@ -127,7 +176,7 @@ def export(sources,display_names=None,hero_catalog=None):
                                                 mmr_before=None,mmr_after=None,mmr_delta=None,xp_gained=None,
                                                 **{m:int(s[m]) if s.get(m) is not None else None for m in (*METRICS,'gold')}))
                 # Preserve the complete start roster requirement even if result rows are partial.
-                event['roster_valid']=(len(roster)==10 and len(identities)==10 and all(n==1 for n in identities.values()) and len(colours)==10 and all(n==1 for n in colours.values()))
+                event['roster_valid']=(len(roster)==len(identities)==len(colours)==len(event['players']))
                 events[poolkey].append(event)
                 histories[poolkey].append((event['id'],match))
         finally:
@@ -153,6 +202,8 @@ def export(sources,display_names=None,hero_catalog=None):
             p['recent_match_ids']=[m['id'] for m in matches if any(r['name'].casefold()==p['name'].casefold() for r in m['players'])][:10]
             retained.update(p['recent_match_ids'])
         pool['matches']=[m for m in matches if m['id'] in retained]
+    for key, label, size, lane in MODE_LADDERS:
+        pools[key] = mode_ladder(label, size, lane, events['lod'], histories['lod'], people['lod'])
     return dict(schema_version=1,status='active',rating_status='active',rating_version=1,pools=pools)
 
 

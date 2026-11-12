@@ -23,26 +23,27 @@ def experience(won,kills,assists,team_kills,team_towers,team_barracks):
     return 50+50*int(won)+bonus
 
 
-def eligible(event):
+def eligible(event, team_size=5):
     people=event['players']
-    return (event.get('roster_valid',True) and event['winner'] in (1,2) and len(people)==10
-            and len({p['name'].casefold() for p in people})==10
-            and Counter(p['team'] for p in people)=={1:5,2:5}
-            and Counter(p['start_team'] for p in people)=={1:5,2:5})
+    teams={1:team_size,2:team_size}
+    return (event.get('roster_valid',True) and event['winner'] in (1,2) and len(people)==2*team_size
+            and len({p['name'].casefold() for p in people})==2*team_size
+            and Counter(p['team'] for p in people)==teams
+            and Counter(p['start_team'] for p in people)==teams)
 
 
-def replay(events):
+def replay(events, team_size=5):
     players={};seen=set();count=0;accepted=[];awards={}
     for event in sorted(events,key=lambda e:(e['date'],e['id'])):
         if event['id'] in seen: continue
         seen.add(event['id'])
-        if not eligible(event): continue
+        if not eligible(event,team_size): continue
         people=event['players'];teams={t:[p for p in people if p['team']==t] for t in (1,2)}
         for p in people:
             key=p['name'].casefold()
             if key not in players:
                 players[key]=dict(mmr=1000,xp=0,wins=0,losses=0,rated_games=0,**{m:0 for m in METRICS})
-        averages={t:sum(players[p['name'].casefold()]['mmr'] for p in team)/5 for t,team in teams.items()}
+        averages={t:sum(players[p['name'].casefold()]['mmr'] for p in team)/team_size for t,team in teams.items()}
         delta=mmr_delta(averages[1],averages[2],event['winner']==1)
         awards[event['id']]={}
         for t,team in teams.items():
