@@ -542,6 +542,14 @@
               "start_team": 2,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                null,
+                "I04Z",
+                null,
+                null,
+                "I09M",
+                "I0OG"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -563,6 +571,14 @@
               "start_team": 1,
               "hero": "N01O",
               "hero_name": "Lone Druid",
+              "items": [
+                null,
+                null,
+                "I09M",
+                null,
+                "I05Y",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -601,6 +617,14 @@
               "start_team": 1,
               "hero": "Naka",
               "hero_name": "Bounty Hunter",
+              "items": [
+                "I0JF",
+                "I0M9",
+                "I05I",
+                "I04M",
+                "I0P1",
+                "I0GJ"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -622,6 +646,14 @@
               "start_team": 1,
               "hero": "H000",
               "hero_name": "Centaur Warchief",
+              "items": [
+                "I04O",
+                "I0BA",
+                "I0BM",
+                "I05I",
+                "I0LL",
+                "I05Y"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -643,6 +675,14 @@
               "start_team": 1,
               "hero": "H00T",
               "hero_name": "Clockwerk Goblin",
+              "items": [
+                "I0GJ",
+                "I08O",
+                "I0GC",
+                "I0GH",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -664,6 +704,14 @@
               "start_team": 1,
               "hero": "H00U",
               "hero_name": "Invoker",
+              "items": [
+                null,
+                "I06D",
+                "I02O",
+                "I0IN",
+                "I06L",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -685,6 +733,14 @@
               "start_team": 1,
               "hero": "O00J",
               "hero_name": "Spiritbreaker",
+              "items": [
+                "I0GH",
+                "I05Y",
+                "I0BA",
+                "I05G",
+                "I0KY",
+                "I05H"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -706,6 +762,14 @@
               "start_team": 2,
               "hero": "Otch",
               "hero_name": "Earthshaker",
+              "items": [
+                "I04H",
+                "I0OI",
+                "I0LL",
+                "I0L7",
+                "I0HI",
+                "I08Z"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -727,6 +791,14 @@
               "start_team": 2,
               "hero": "UC18",
               "hero_name": "Demon Witch",
+              "items": [
+                "I004",
+                "I0AL",
+                "I0OG",
+                "I05I",
+                "I05H",
+                "I04H"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -748,6 +820,14 @@
               "start_team": 2,
               "hero": "NC00",
               "hero_name": "Skeleton King",
+              "items": [
+                "I00Q",
+                "I04I",
+                "I08P",
+                "I0BJ",
+                "I05Y",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -769,6 +849,14 @@
               "start_team": 2,
               "hero": "H00K",
               "hero_name": "Goblin Techies",
+              "items": [
+                "I012",
+                "I05Z",
+                null,
+                null,
+                "I0HI",
+                "I06L"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -790,6 +878,14 @@
               "start_team": 2,
               "hero": "E02N",
               "hero_name": "Gyrocopter",
+              "items": [
+                "I0SV",
+                "I09H",
+                "I0NU",
+                "I0AM",
+                "I05I",
+                "I02O"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -1579,6 +1675,14 @@
               "start_team": 2,
               "hero": "N0HP",
               "hero_name": "Ancient Apparition",
+              "items": [
+                "I0MI",
+                "I063",
+                "I0QS",
+                null,
+                "I05I",
+                "I05G"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1600,6 +1704,14 @@
               "start_team": 1,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                "I0GC",
+                null,
+                null,
+                "I02O",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1621,6 +1733,14 @@
               "start_team": 1,
               "hero": "H507",
               "hero_name": "Talon Queen",
+              "items": [
+                "I0HB",
+                "I0MI",
+                null,
+                "I06J",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1642,6 +1762,14 @@
               "start_team": 1,
               "hero": "Nbbc",
               "hero_name": "Juggernaut",
+              "items": [
+                "I04O",
+                "I05Y",
+                "I04G",
+                "I08T",
+                "I0JF",
+                "I04M"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1663,6 +1791,14 @@
               "start_team": 1,
               "hero": "Ntin",
               "hero_name": "Tinker",
+              "items": [
+                "I05I",
+                null,
+                null,
+                null,
+                "I0MI",
+                "I0LL"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1684,6 +1820,14 @@
               "start_team": 2,
               "hero": "UC76",
               "hero_name": "Death Prophet",
+              "items": [
+                "I0LL",
+                "I0MI",
+                "I0GC",
+                null,
+                "I05I",
+                "I04I"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1705,6 +1849,14 @@
               "start_team": 2,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I0MI",
+                "I0LL",
+                "I05I",
+                "I0NG",
+                "I0QS",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1726,6 +1878,14 @@
               "start_team": 2,
               "hero": "H008",
               "hero_name": "Bristleback",
+              "items": [
+                "I0HB",
+                "I0BM",
+                "I0MI",
+                "I050",
+                "I05I",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -1766,6 +1926,14 @@
               "start_team": 2,
               "hero": "H00R",
               "hero_name": "Undying",
+              "items": [
+                "I0SD",
+                "I0LL",
+                "I0QS",
+                null,
+                "I05I",
+                null
+              ],
               "mmr_before": 1032,
               "mmr_after": 1006,
               "mmr_delta": -26,
@@ -1787,6 +1955,14 @@
               "start_team": 1,
               "hero": "H00Q",
               "hero_name": "Sacred Warrior",
+              "items": [
+                "I09H",
+                "I0G1",
+                "I05Y",
+                "I0KL",
+                "I06H",
+                "I09C"
+              ],
               "mmr_before": 998,
               "mmr_after": 1024,
               "mmr_delta": 26,
@@ -1808,6 +1984,14 @@
               "start_team": 2,
               "hero": "U008",
               "hero_name": "Lycanthrope",
+              "items": [
+                "I05Y",
+                null,
+                "I0BJ",
+                "I0BG",
+                "I097",
+                "I0KL"
+              ],
               "mmr_before": 1022,
               "mmr_after": 996,
               "mmr_delta": -26,
@@ -1829,6 +2013,14 @@
               "start_team": 2,
               "hero": "E02J",
               "hero_name": "Disruptor",
+              "items": [
+                "I04I",
+                "I0MI",
+                "I06L",
+                "I0QS",
+                "I05I",
+                null
+              ],
               "mmr_before": 980,
               "mmr_after": 954,
               "mmr_delta": -26,
@@ -1850,6 +2042,14 @@
               "start_team": 2,
               "hero": "Nbrn",
               "hero_name": "Drow Ranger",
+              "items": [
+                "I08O",
+                "I095",
+                "I02T",
+                "I0MU",
+                "I08P",
+                "I0GH"
+              ],
               "mmr_before": 1007,
               "mmr_after": 981,
               "mmr_delta": -26,
@@ -1871,6 +2071,14 @@
               "start_team": 1,
               "hero": "N0MK",
               "hero_name": "Arc Warden",
+              "items": [
+                "I0A3",
+                "I02T",
+                "I0B1",
+                "I0A5",
+                "I0G1",
+                "I0AB"
+              ],
               "mmr_before": 1002,
               "mmr_after": 1028,
               "mmr_delta": 26,
@@ -1892,6 +2100,14 @@
               "start_team": 1,
               "hero": "N0MU",
               "hero_name": "Earth Spirit",
+              "items": [
+                "I0BJ",
+                "I08O",
+                null,
+                "I05Y",
+                "I0A9",
+                "I0QH"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1026,
               "mmr_delta": 26,
@@ -1913,6 +2129,14 @@
               "start_team": 2,
               "hero": "H502",
               "hero_name": "Sorceress",
+              "items": [
+                "I0AL",
+                "I0MI",
+                "I0GH",
+                "I0HI",
+                "I0QS",
+                "I05I"
+              ],
               "mmr_before": 993,
               "mmr_after": 967,
               "mmr_delta": -26,
@@ -1934,6 +2158,14 @@
               "start_team": 1,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I0MU",
+                "I0AB",
+                null,
+                "I05Y",
+                "I0J6",
+                "I0A3"
+              ],
               "mmr_before": 953,
               "mmr_after": 979,
               "mmr_delta": 26,
@@ -1955,6 +2187,14 @@
               "start_team": 1,
               "hero": "H00H",
               "hero_name": "Oblivion",
+              "items": [
+                "I0AL",
+                "I0QS",
+                "I0SD",
+                "I05I",
+                null,
+                null
+              ],
               "mmr_before": 993,
               "mmr_after": 1019,
               "mmr_delta": 26,
@@ -1995,6 +2235,14 @@
               "start_team": 2,
               "hero": "H502",
               "hero_name": "Sorceress",
+              "items": [
+                "I05C",
+                "I0MI",
+                "I0LL",
+                "I091",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2016,6 +2264,14 @@
               "start_team": 1,
               "hero": "Ucrl",
               "hero_name": "Stone Giant",
+              "items": [
+                "I0BM",
+                "I0HB",
+                "I0GJ",
+                "I0JF",
+                "I099",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2056,6 +2312,14 @@
               "start_team": 1,
               "hero": "UC60",
               "hero_name": "Necro'lic",
+              "items": [
+                "I0HI",
+                "I0MI",
+                "I0BK",
+                "I0PB",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2077,6 +2341,14 @@
               "start_team": 2,
               "hero": "Orkn",
               "hero_name": "Shadow Shaman",
+              "items": [
+                "I0SA",
+                "I0QS",
+                "I0LL",
+                "I0MI",
+                "I0HI",
+                "I05I"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2098,6 +2370,14 @@
               "start_team": 1,
               "hero": "N0M7",
               "hero_name": "Winter Wyvern",
+              "items": [
+                null,
+                "I04Z",
+                null,
+                "I0LL",
+                "I0SD",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2119,6 +2399,14 @@
               "start_team": 1,
               "hero": "Nbrn",
               "hero_name": "Drow Ranger",
+              "items": [
+                "I0HB",
+                "I0MU",
+                "I02T",
+                "I08T",
+                null,
+                "I09C"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2140,6 +2428,14 @@
               "start_team": 2,
               "hero": "Udre",
               "hero_name": "Night Stalker",
+              "items": [
+                "I0KY",
+                "I05Y",
+                "I0BA",
+                "I095",
+                "I0KL",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2161,6 +2457,14 @@
               "start_team": 2,
               "hero": "E02H",
               "hero_name": "Shadow Demon",
+              "items": [
+                "I0SD",
+                "I0LL",
+                null,
+                null,
+                "I0JI",
+                "I0GC"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2201,6 +2505,14 @@
               "start_team": 2,
               "hero": "Nfir",
               "hero_name": "Shadow Fiend",
+              "items": [
+                "I0P4",
+                "I05Y",
+                "I04O",
+                "I04P",
+                null,
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2222,6 +2534,14 @@
               "start_team": 2,
               "hero": "N01A",
               "hero_name": "Silencer",
+              "items": [
+                "I0MI",
+                "I093",
+                "I0LL",
+                null,
+                "I04R",
+                "I04G"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2243,6 +2563,14 @@
               "start_team": 1,
               "hero": "E02J",
               "hero_name": "Disruptor",
+              "items": [
+                "I0GC",
+                "I0HI",
+                "I04G",
+                "I0MI",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2264,6 +2592,14 @@
               "start_team": 2,
               "hero": "U00K",
               "hero_name": "Sand King",
+              "items": [
+                "I0HB",
+                "I05Y",
+                "I06H",
+                "I04O",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2285,6 +2621,14 @@
               "start_team": 1,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                null,
+                "I095",
+                "I046",
+                null,
+                "I08Y",
+                "I05Y"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2306,6 +2650,14 @@
               "start_team": 2,
               "hero": "H507",
               "hero_name": "Talon Queen",
+              "items": [
+                "I06J",
+                "I05Y",
+                "I044",
+                "I02R",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2327,6 +2679,14 @@
               "start_team": 1,
               "hero": "Hjai",
               "hero_name": "Crystal Maiden",
+              "items": [
+                "I0SD",
+                "I04G",
+                "I047",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2348,6 +2708,14 @@
               "start_team": 1,
               "hero": "H0DO",
               "hero_name": "Skywrath Mage",
+              "items": [
+                "I0LL",
+                "I0MI",
+                "I04R",
+                "I053",
+                "I0QN",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2386,6 +2754,14 @@
               "start_team": 2,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I0GJ",
+                "I04K",
+                "I06A",
+                null,
+                null,
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2407,6 +2783,14 @@
               "start_team": 2,
               "hero": "E005",
               "hero_name": "Moon Rider",
+              "items": [
+                "I05Y",
+                null,
+                "I04G",
+                "I04E",
+                "I06J",
+                "I06J"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2428,6 +2812,14 @@
               "start_team": 2,
               "hero": "UC76",
               "hero_name": "Death Prophet",
+              "items": [
+                "I06L",
+                "I0GC",
+                null,
+                "I02O",
+                null,
+                "I02Y"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2449,6 +2841,14 @@
               "start_team": 1,
               "hero": "Opgh",
               "hero_name": "Axe",
+              "items": [
+                "I04H",
+                "I08O",
+                "I06L",
+                "I02O",
+                "I06H",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2470,6 +2870,14 @@
               "start_team": 1,
               "hero": "Emns",
               "hero_name": "Prophet",
+              "items": [
+                "I04R",
+                "I0BM",
+                "I047",
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2491,6 +2899,14 @@
               "start_team": 2,
               "hero": "U00E",
               "hero_name": "Necrolyte",
+              "items": [
+                "I063",
+                "I0HB",
+                "I05H",
+                "I02O",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2512,6 +2928,14 @@
               "start_team": 1,
               "hero": "N01W",
               "hero_name": "Shadow Priest",
+              "items": [
+                "I0HB",
+                "I0LL",
+                "I0MI",
+                "I05C",
+                "I05G",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2533,6 +2957,14 @@
               "start_team": 1,
               "hero": "UC18",
               "hero_name": "Demon Witch",
+              "items": [
+                "I093",
+                "I0HB",
+                null,
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -2571,6 +3003,14 @@
               "start_team": 1,
               "hero": "H004",
               "hero_name": "Slayer",
+              "items": [
+                "I04H",
+                "I06L",
+                "I05D",
+                "I02O",
+                "I04Z",
+                "I05I"
+              ],
               "mmr_before": 1024,
               "mmr_after": 995,
               "mmr_delta": -29,
@@ -2592,6 +3032,14 @@
               "start_team": 1,
               "hero": "Hlgr",
               "hero_name": "Dragon Knight",
+              "items": [
+                "I06H",
+                "I05Y",
+                "I04K",
+                "I08P",
+                null,
+                null
+              ],
               "mmr_before": 1027,
               "mmr_after": 998,
               "mmr_delta": -29,
@@ -2613,6 +3061,14 @@
               "start_team": 2,
               "hero": "Nfir",
               "hero_name": "Shadow Fiend",
+              "items": [
+                "I04H",
+                "I0P4",
+                "I0AM",
+                "I095",
+                null,
+                "I05Y"
+              ],
               "mmr_before": 1003,
               "mmr_after": 1032,
               "mmr_delta": 29,
@@ -2634,6 +3090,14 @@
               "start_team": 2,
               "hero": "N01A",
               "hero_name": "Silencer",
+              "items": [
+                "I06F",
+                "I05Y",
+                "I04G",
+                "I06L",
+                "I06F",
+                null
+              ],
               "mmr_before": 924,
               "mmr_after": 953,
               "mmr_delta": 29,
@@ -2655,6 +3119,14 @@
               "start_team": 1,
               "hero": "N0MD",
               "hero_name": "Oracle",
+              "items": [
+                null,
+                "I0QS",
+                "I05F",
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": 1049,
               "mmr_after": 1020,
               "mmr_delta": -29,
@@ -2676,6 +3148,14 @@
               "start_team": 2,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I012",
+                "I05Z",
+                "I04N",
+                null,
+                "I05I",
+                "I06L"
+              ],
               "mmr_before": 978,
               "mmr_after": 1007,
               "mmr_delta": 29,
@@ -2697,6 +3177,14 @@
               "start_team": 2,
               "hero": "H00Q",
               "hero_name": "Sacred Warrior",
+              "items": [
+                "I06H",
+                "I05Y",
+                "I06H",
+                "I08T",
+                "I04M",
+                "I02P"
+              ],
               "mmr_before": 951,
               "mmr_after": 980,
               "mmr_delta": 29,
@@ -2718,6 +3206,14 @@
               "start_team": 2,
               "hero": "H506",
               "hero_name": "Fire Lord",
+              "items": [
+                "I0MI",
+                "I0HB",
+                null,
+                null,
+                null,
+                null
+              ],
               "mmr_before": 978,
               "mmr_after": 1007,
               "mmr_delta": 29,
@@ -2739,6 +3235,14 @@
               "start_team": 1,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                "I04G",
+                "I0HI",
+                "I0MI",
+                null,
+                "I05G",
+                "I05H"
+              ],
               "mmr_before": 1022,
               "mmr_after": 993,
               "mmr_delta": -29,
@@ -2760,6 +3264,14 @@
               "start_team": 1,
               "hero": "Ekee",
               "hero_name": "Tormented Soul",
+              "items": [
+                null,
+                "I0LL",
+                "I0MI",
+                "I05I",
+                null,
+                "I05D"
+              ],
               "mmr_before": 1022,
               "mmr_after": 993,
               "mmr_delta": -29,
@@ -2798,6 +3310,14 @@
               "start_team": 2,
               "hero": "Hblm",
               "hero_name": "Keeper of the Light",
+              "items": [
+                "I0HI",
+                "I0MI",
+                "I05I",
+                null,
+                null,
+                null
+              ],
               "mmr_before": 948,
               "mmr_after": 924,
               "mmr_delta": -24,
@@ -2819,6 +3339,14 @@
               "start_team": 2,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I0GJ",
+                "I0P4",
+                "I0AP",
+                null,
+                "I05I",
+                null
+              ],
               "mmr_before": 1027,
               "mmr_after": 1003,
               "mmr_delta": -24,
@@ -2840,6 +3368,14 @@
               "start_team": 2,
               "hero": "H00V",
               "hero_name": "Gorgon",
+              "items": [
+                "I06J",
+                "I05Y",
+                "I05C",
+                "I05I",
+                null,
+                null
+              ],
               "mmr_before": 975,
               "mmr_after": 951,
               "mmr_delta": -24,
@@ -2861,6 +3397,14 @@
               "start_team": 1,
               "hero": "E004",
               "hero_name": "Bone Fletcher",
+              "items": [
+                "I06L",
+                "I05I",
+                "I0MU",
+                null,
+                "I045",
+                "I0GJ"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1024,
               "mmr_delta": 24,
@@ -2882,6 +3426,14 @@
               "start_team": 2,
               "hero": "E02X",
               "hero_name": "Grand Magus",
+              "items": [
+                "I0MI",
+                "I063",
+                "I0GH",
+                null,
+                "I04G",
+                "I04B"
+              ],
               "mmr_before": 1002,
               "mmr_after": 978,
               "mmr_delta": -24,
@@ -2903,6 +3455,14 @@
               "start_team": 1,
               "hero": "Opgh",
               "hero_name": "Axe",
+              "items": [
+                "I05I",
+                "I0BM",
+                "I0M9",
+                "I0BA",
+                "I0LL",
+                "I02O"
+              ],
               "mmr_before": 1025,
               "mmr_after": 1049,
               "mmr_delta": 24,
@@ -2924,6 +3484,14 @@
               "start_team": 2,
               "hero": "N01W",
               "hero_name": "Shadow Priest",
+              "items": [
+                "I05Z",
+                "I05D",
+                "I06F",
+                "I04Z",
+                null,
+                "I04W"
+              ],
               "mmr_before": 1002,
               "mmr_after": 978,
               "mmr_delta": -24,
@@ -2945,6 +3513,14 @@
               "start_team": 1,
               "hero": "H004",
               "hero_name": "Slayer",
+              "items": [
+                "I0MI",
+                "I0BK",
+                null,
+                null,
+                null,
+                null
+              ],
               "mmr_before": 998,
               "mmr_after": 1022,
               "mmr_delta": 24,
@@ -2966,6 +3542,14 @@
               "start_team": 1,
               "hero": "E02I",
               "hero_name": "Tuskarr",
+              "items": [
+                "I0MI",
+                "I04H",
+                "I0JI",
+                "I04G",
+                null,
+                null
+              ],
               "mmr_before": 998,
               "mmr_after": 1022,
               "mmr_delta": 24,
@@ -2987,6 +3571,14 @@
               "start_team": 1,
               "hero": "Nbrn",
               "hero_name": "Drow Ranger",
+              "items": [
+                "I06J",
+                "I08Y",
+                "I02T",
+                "I04A",
+                "I08G",
+                null
+              ],
               "mmr_before": 998,
               "mmr_after": 1022,
               "mmr_delta": 24,
@@ -3025,6 +3617,14 @@
               "start_team": 2,
               "hero": "H004",
               "hero_name": "Slayer",
+              "items": [
+                "I06L",
+                "I02O",
+                null,
+                "I05I",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3046,6 +3646,14 @@
               "start_team": 2,
               "hero": "EC45",
               "hero_name": "Faceless Void",
+              "items": [
+                "I0HR",
+                "I0MI",
+                null,
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3067,6 +3675,14 @@
               "start_team": 1,
               "hero": "N0M7",
               "hero_name": "Winter Wyvern",
+              "items": [
+                "I0QS",
+                "I04P",
+                "I04R",
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3088,6 +3704,14 @@
               "start_team": 1,
               "hero": "UC01",
               "hero_name": "Queen of Pain",
+              "items": [
+                "I0BK",
+                "I02O",
+                "I05H",
+                null,
+                "I05I",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3109,6 +3733,14 @@
               "start_team": 1,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I0P4",
+                "I06J",
+                "I046",
+                null,
+                "I06B",
+                "I0SJ"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3130,6 +3762,14 @@
               "start_team": 1,
               "hero": "E01A",
               "hero_name": "Witch Doctor",
+              "items": [
+                "I0SD",
+                "I05I",
+                null,
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3151,6 +3791,14 @@
               "start_team": 2,
               "hero": "N01V",
               "hero_name": "Priestess of the Moon",
+              "items": [
+                "I06J",
+                "I02T",
+                "I08T",
+                "I06J",
+                "I06J",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3172,6 +3820,14 @@
               "start_team": 2,
               "hero": "H507",
               "hero_name": "Talon Queen",
+              "items": [
+                "I0HB",
+                "I04O",
+                "I02T",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3210,6 +3866,14 @@
               "start_team": 1,
               "hero": "N0MD",
               "hero_name": "Oracle",
+              "items": [
+                "I0K6",
+                "I05I",
+                "I04R",
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3231,6 +3895,14 @@
               "start_team": 1,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I02O",
+                "I0BK",
+                "I04Q",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3252,6 +3924,14 @@
               "start_team": 2,
               "hero": "N00B",
               "hero_name": "Faerie Dragon",
+              "items": [
+                "I0BK",
+                "I06L",
+                "I04R",
+                "I02O",
+                "I05G",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3273,6 +3953,14 @@
               "start_team": 2,
               "hero": "Hlgr",
               "hero_name": "Dragon Knight",
+              "items": [
+                "I05Z",
+                "I06A",
+                "I04R",
+                "I0BM",
+                "I06L",
+                "I052"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3294,6 +3982,14 @@
               "start_team": 2,
               "hero": "Ekee",
               "hero_name": "Tormented Soul",
+              "items": [
+                "I012",
+                "I05Z",
+                "I06L",
+                "I050",
+                null,
+                "I04V"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3315,6 +4011,14 @@
               "start_team": 1,
               "hero": "H004",
               "hero_name": "Slayer",
+              "items": [
+                "I0GC",
+                "I0SD",
+                "I04P",
+                "I05I",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3355,6 +4059,14 @@
               "start_team": 2,
               "hero": "U00F",
               "hero_name": "Butcher",
+              "items": [
+                "I0K6",
+                null,
+                "I08O",
+                "I0OI",
+                "I0GH",
+                "I08Z"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3376,6 +4088,14 @@
               "start_team": 2,
               "hero": "Ntin",
               "hero_name": "Tinker",
+              "items": [
+                "I06L",
+                "I0MI",
+                "I0QS",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3397,6 +4117,14 @@
               "start_team": 1,
               "hero": "N0MU",
               "hero_name": "Earth Spirit",
+              "items": [
+                "I0LL",
+                "I0QS",
+                "I08O",
+                "I0BM",
+                "I0MI",
+                "I05I"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3418,6 +4146,14 @@
               "start_team": 2,
               "hero": "H00Q",
               "hero_name": "Sacred Warrior",
+              "items": [
+                "I04L",
+                "I05Y",
+                "I0A3",
+                "I0A5",
+                "I04K",
+                "I0FY"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3439,6 +4175,14 @@
               "start_team": 1,
               "hero": "UC91",
               "hero_name": "Slithereen Guard",
+              "items": [
+                "I0OV",
+                "I06H",
+                "I051",
+                "I05Y",
+                "I08O",
+                "I04L"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3460,6 +4204,14 @@
               "start_team": 1,
               "hero": "Udre",
               "hero_name": "Night Stalker",
+              "items": [
+                "I0KY",
+                "I0BA",
+                "I05Y",
+                "I08K",
+                "I08T",
+                "I0A5"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3481,6 +4233,14 @@
               "start_team": 2,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                "I04N",
+                "I0HB",
+                "I0QS",
+                "I0MI",
+                null,
+                "I0GH"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3502,6 +4262,14 @@
               "start_team": 1,
               "hero": "H500",
               "hero_name": "Formless",
+              "items": [
+                "I0SD",
+                "I0HI",
+                "I0AL",
+                "I00Z",
+                "I05I",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3542,6 +4310,14 @@
               "start_team": 2,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I06H",
+                "I02O",
+                "I0P4",
+                "I04W",
+                null,
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3563,6 +4339,14 @@
               "start_team": 2,
               "hero": "EC77",
               "hero_name": "Netherdrake",
+              "items": [
+                "I06J",
+                "I043",
+                "I02O",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3584,6 +4368,14 @@
               "start_team": 1,
               "hero": "H501",
               "hero_name": "Sieger",
+              "items": [
+                "I0LL",
+                null,
+                null,
+                "I0MI",
+                "I04T",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3605,6 +4397,14 @@
               "start_team": 1,
               "hero": "H0DO",
               "hero_name": "Skywrath Mage",
+              "items": [
+                "I0GC",
+                "I04G",
+                "I053",
+                "I0MI",
+                "I0LL",
+                "I04R"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3626,6 +4426,14 @@
               "start_team": 1,
               "hero": "U008",
               "hero_name": "Lycanthrope",
+              "items": [
+                "I04K",
+                "I04C",
+                "I04C",
+                "I0BA",
+                null,
+                "I02O"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3647,6 +4455,14 @@
               "start_team": 2,
               "hero": "N01O",
               "hero_name": "Lone Druid",
+              "items": [
+                "I0HB",
+                "I05Y",
+                "I04O",
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3685,6 +4501,14 @@
               "start_team": 2,
               "hero": "U00F",
               "hero_name": "Butcher",
+              "items": [
+                "I04I",
+                "I0OI",
+                "I08O",
+                "I0BM",
+                "I04R",
+                "I0HB"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3706,6 +4530,14 @@
               "start_team": 2,
               "hero": "E02H",
               "hero_name": "Shadow Demon",
+              "items": [
+                "I0SD",
+                "I0HB",
+                "I053",
+                "I0LL",
+                "I04R",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3727,6 +4559,14 @@
               "start_team": 2,
               "hero": "UC11",
               "hero_name": "Magnataur",
+              "items": [
+                "I0OG",
+                "I046",
+                "I063",
+                "I0BM",
+                "I047",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3748,6 +4588,14 @@
               "start_team": 1,
               "hero": "Hjai",
               "hero_name": "Crystal Maiden",
+              "items": [
+                "I0SD",
+                "I091",
+                null,
+                null,
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3769,6 +4617,14 @@
               "start_team": 1,
               "hero": "Ekee",
               "hero_name": "Tormented Soul",
+              "items": [
+                "I0MI",
+                "I0AJ",
+                "I0BK",
+                "I0QS",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3790,6 +4646,14 @@
               "start_team": 1,
               "hero": "H0DO",
               "hero_name": "Skywrath Mage",
+              "items": [
+                "I05G",
+                "I0QS",
+                "I067",
+                "I0SV",
+                "I0MI",
+                "I04R"
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3811,6 +4675,14 @@
               "start_team": 2,
               "hero": "H000",
               "hero_name": "Centaur Warchief",
+              "items": [
+                "I0K6",
+                "I0BA",
+                "I05Y",
+                null,
+                "I08O",
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3832,6 +4704,14 @@
               "start_team": 1,
               "hero": "Uktl",
               "hero_name": "Enigma",
+              "items": [
+                "I0GC",
+                "I0SV",
+                "I02O",
+                "I0HI",
+                null,
+                null
+              ],
               "mmr_before": null,
               "mmr_after": null,
               "mmr_delta": null,
@@ -3870,6 +4750,14 @@
               "start_team": 1,
               "hero": "U00A",
               "hero_name": "Chaos Knight",
+              "items": [
+                "I05Y",
+                "I0HR",
+                "I08P",
+                "I08K",
+                "I04F",
+                "I0JF"
+              ],
               "mmr_before": 975,
               "mmr_after": 948,
               "mmr_delta": -27,
@@ -3891,6 +4779,14 @@
               "start_team": 1,
               "hero": "Ewar",
               "hero_name": "Phantom Assassin",
+              "items": [
+                "I04K",
+                "I0GH",
+                "I05Y",
+                null,
+                "I0JF",
+                null
+              ],
               "mmr_before": 1025,
               "mmr_after": 998,
               "mmr_delta": -27,
@@ -3912,6 +4808,14 @@
               "start_team": 2,
               "hero": "H00Q",
               "hero_name": "Sacred Warrior",
+              "items": [
+                "I00Q",
+                "I05Y",
+                "I0KY",
+                null,
+                "I0GH",
+                "I0OV"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1027,
               "mmr_delta": 27,
@@ -3933,6 +4837,14 @@
               "start_team": 2,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I012",
+                "I05Z",
+                "I06L",
+                "I052",
+                "I0OL",
+                null
+              ],
               "mmr_before": 975,
               "mmr_after": 1002,
               "mmr_delta": 27,
@@ -3954,6 +4866,14 @@
               "start_team": 1,
               "hero": "H0DO",
               "hero_name": "Skywrath Mage",
+              "items": [
+                "I0HB",
+                "I0MI",
+                "I05I",
+                "I063",
+                null,
+                null
+              ],
               "mmr_before": 1025,
               "mmr_after": 998,
               "mmr_delta": -27,
@@ -3975,6 +4895,14 @@
               "start_team": 2,
               "hero": "N0M0",
               "hero_name": "Ember Spirit",
+              "items": [
+                "I0HB",
+                "I0GJ",
+                "I06J",
+                "I0A3",
+                "I08G",
+                "I062"
+              ],
               "mmr_before": 975,
               "mmr_after": 1002,
               "mmr_delta": 27,
@@ -3996,6 +4924,14 @@
               "start_team": 1,
               "hero": "Usyl",
               "hero_name": "Dwarven Sniper",
+              "items": [
+                "I09H",
+                "I06J",
+                "I02T",
+                "I0BE",
+                "I05I",
+                "I06J"
+              ],
               "mmr_before": 1025,
               "mmr_after": 998,
               "mmr_delta": -27,
@@ -4017,6 +4953,14 @@
               "start_team": 1,
               "hero": "UC76",
               "hero_name": "Death Prophet",
+              "items": [
+                "I0LL",
+                null,
+                "I05Z",
+                "I05I",
+                "I04B",
+                "I04R"
+              ],
               "mmr_before": 1025,
               "mmr_after": 998,
               "mmr_delta": -27,
@@ -4038,6 +4982,14 @@
               "start_team": 2,
               "hero": "E01C",
               "hero_name": "Warlock",
+              "items": [
+                "I05I",
+                "I0MI",
+                "I091",
+                "I0HB",
+                "I05G",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 1027,
               "mmr_delta": 27,
@@ -4059,6 +5011,14 @@
               "start_team": 2,
               "hero": "Opgh",
               "hero_name": "Axe",
+              "items": [
+                "I05I",
+                "I0BA",
+                "I02O",
+                "I0KL",
+                "I08O",
+                null
+              ],
               "mmr_before": 975,
               "mmr_after": 1002,
               "mmr_delta": 27,
@@ -4097,6 +5057,14 @@
               "start_team": 2,
               "hero": "N0EG",
               "hero_name": "Windrunner",
+              "items": [
+                "I0AP",
+                "I0HI",
+                "I0MI",
+                null,
+                "I050",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4118,6 +5086,14 @@
               "start_team": 1,
               "hero": "E02N",
               "hero_name": "Gyrocopter",
+              "items": [
+                "I0MI",
+                "I09H",
+                "I0GC",
+                "I06J",
+                "I05I",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -4139,6 +5115,14 @@
               "start_team": 2,
               "hero": "Hjai",
               "hero_name": "Crystal Maiden",
+              "items": [
+                "I0LL",
+                "I0MI",
+                "I04R",
+                "I0HB",
+                "I0NG",
+                "I04O"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4160,6 +5144,14 @@
               "start_team": 1,
               "hero": "Hblm",
               "hero_name": "Keeper of the Light",
+              "items": [
+                "I04P",
+                "I0LL",
+                "I05I",
+                "I04O",
+                "I0SD",
+                "I04R"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -4181,6 +5173,14 @@
               "start_team": 2,
               "hero": "UC76",
               "hero_name": "Death Prophet",
+              "items": [
+                "I06L",
+                "I04R",
+                "I0MI",
+                "I06L",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4202,6 +5202,14 @@
               "start_team": 1,
               "hero": "Opgh",
               "hero_name": "Axe",
+              "items": [
+                "I0QH",
+                "I0MI",
+                "I05I",
+                "I04I",
+                "I08O",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -4223,6 +5231,14 @@
               "start_team": 2,
               "hero": "N01O",
               "hero_name": "Lone Druid",
+              "items": [
+                null,
+                "I067",
+                null,
+                null,
+                "I09T",
+                "I0SD"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4244,6 +5260,14 @@
               "start_team": 1,
               "hero": "O00J",
               "hero_name": "Spiritbreaker",
+              "items": [
+                "I0KY",
+                "I05I",
+                "I05Y",
+                "I0BA",
+                "I04Q",
+                "I047"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -4265,6 +5289,14 @@
               "start_team": 1,
               "hero": "E004",
               "hero_name": "Bone Fletcher",
+              "items": [
+                "I0AI",
+                "I08T",
+                "I05I",
+                "I08G",
+                "I05Y",
+                "I0AW"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -4286,6 +5318,14 @@
               "start_team": 2,
               "hero": "UC18",
               "hero_name": "Demon Witch",
+              "items": [
+                "I012",
+                "I063",
+                "I052",
+                "I05Z",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4847,6 +5887,14 @@
               "start_team": 2,
               "hero": "N0HP",
               "hero_name": "Ancient Apparition",
+              "items": [
+                "I0MI",
+                "I063",
+                "I0QS",
+                null,
+                "I05I",
+                "I05G"
+              ],
               "mmr_before": 975,
               "mmr_after": 1000,
               "mmr_delta": 25,
@@ -4868,6 +5916,14 @@
               "start_team": 1,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                "I0GC",
+                null,
+                null,
+                "I02O",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4889,6 +5945,14 @@
               "start_team": 1,
               "hero": "H507",
               "hero_name": "Talon Queen",
+              "items": [
+                "I0HB",
+                "I0MI",
+                null,
+                "I06J",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4910,6 +5974,14 @@
               "start_team": 1,
               "hero": "Nbbc",
               "hero_name": "Juggernaut",
+              "items": [
+                "I04O",
+                "I05Y",
+                "I04G",
+                "I08T",
+                "I0JF",
+                "I04M"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -4931,6 +6003,14 @@
               "start_team": 1,
               "hero": "Ntin",
               "hero_name": "Tinker",
+              "items": [
+                "I05I",
+                null,
+                null,
+                null,
+                "I0MI",
+                "I0LL"
+              ],
               "mmr_before": 975,
               "mmr_after": 950,
               "mmr_delta": -25,
@@ -4952,6 +6032,14 @@
               "start_team": 2,
               "hero": "UC76",
               "hero_name": "Death Prophet",
+              "items": [
+                "I0LL",
+                "I0MI",
+                "I0GC",
+                null,
+                "I05I",
+                "I04I"
+              ],
               "mmr_before": 975,
               "mmr_after": 1000,
               "mmr_delta": 25,
@@ -4973,6 +6061,14 @@
               "start_team": 2,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I0MI",
+                "I0LL",
+                "I05I",
+                "I0NG",
+                "I0QS",
+                null
+              ],
               "mmr_before": 1025,
               "mmr_after": 1050,
               "mmr_delta": 25,
@@ -4994,6 +6090,14 @@
               "start_team": 2,
               "hero": "H008",
               "hero_name": "Bristleback",
+              "items": [
+                "I0HB",
+                "I0BM",
+                "I0MI",
+                "I050",
+                "I05I",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5034,6 +6138,14 @@
               "start_team": 2,
               "hero": "U00F",
               "hero_name": "Butcher",
+              "items": [
+                "I0K6",
+                null,
+                "I08O",
+                "I0OI",
+                "I0GH",
+                "I08Z"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5055,6 +6167,14 @@
               "start_team": 2,
               "hero": "Ntin",
               "hero_name": "Tinker",
+              "items": [
+                "I06L",
+                "I0MI",
+                "I0QS",
+                null,
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5076,6 +6196,14 @@
               "start_team": 1,
               "hero": "N0MU",
               "hero_name": "Earth Spirit",
+              "items": [
+                "I0LL",
+                "I0QS",
+                "I08O",
+                "I0BM",
+                "I0MI",
+                "I05I"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5097,6 +6225,14 @@
               "start_team": 2,
               "hero": "H00Q",
               "hero_name": "Sacred Warrior",
+              "items": [
+                "I04L",
+                "I05Y",
+                "I0A3",
+                "I0A5",
+                "I04K",
+                "I0FY"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5118,6 +6254,14 @@
               "start_team": 1,
               "hero": "UC91",
               "hero_name": "Slithereen Guard",
+              "items": [
+                "I0OV",
+                "I06H",
+                "I051",
+                "I05Y",
+                "I08O",
+                "I04L"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5139,6 +6283,14 @@
               "start_team": 1,
               "hero": "Udre",
               "hero_name": "Night Stalker",
+              "items": [
+                "I0KY",
+                "I0BA",
+                "I05Y",
+                "I08K",
+                "I08T",
+                "I0A5"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5160,6 +6312,14 @@
               "start_team": 2,
               "hero": "Ulic",
               "hero_name": "Lich",
+              "items": [
+                "I04N",
+                "I0HB",
+                "I0QS",
+                "I0MI",
+                null,
+                "I0GH"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5181,6 +6341,14 @@
               "start_team": 1,
               "hero": "H500",
               "hero_name": "Formless",
+              "items": [
+                "I0SD",
+                "I0HI",
+                "I0AL",
+                "I00Z",
+                "I05I",
+                "I0HB"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5570,6 +6738,14 @@
               "start_team": 1,
               "hero": "UC60",
               "hero_name": "Necro'lic",
+              "items": [
+                "I0HI",
+                "I0MI",
+                "I0BK",
+                "I0PB",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5591,6 +6767,14 @@
               "start_team": 2,
               "hero": "Orkn",
               "hero_name": "Shadow Shaman",
+              "items": [
+                "I0SA",
+                "I0QS",
+                "I0LL",
+                "I0MI",
+                "I0HI",
+                "I05I"
+              ],
               "mmr_before": 1025,
               "mmr_after": 1050,
               "mmr_delta": 25,
@@ -5612,6 +6796,14 @@
               "start_team": 1,
               "hero": "N0M7",
               "hero_name": "Winter Wyvern",
+              "items": [
+                null,
+                "I04Z",
+                null,
+                "I0LL",
+                "I0SD",
+                null
+              ],
               "mmr_before": 975,
               "mmr_after": 950,
               "mmr_delta": -25,
@@ -5633,6 +6825,14 @@
               "start_team": 1,
               "hero": "Nbrn",
               "hero_name": "Drow Ranger",
+              "items": [
+                "I0HB",
+                "I0MU",
+                "I02T",
+                "I08T",
+                null,
+                "I09C"
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5654,6 +6854,14 @@
               "start_team": 2,
               "hero": "Udre",
               "hero_name": "Night Stalker",
+              "items": [
+                "I0KY",
+                "I05Y",
+                "I0BA",
+                "I095",
+                "I0KL",
+                null
+              ],
               "mmr_before": 975,
               "mmr_after": 1000,
               "mmr_delta": 25,
@@ -5675,6 +6883,14 @@
               "start_team": 2,
               "hero": "E02H",
               "hero_name": "Shadow Demon",
+              "items": [
+                "I0SD",
+                "I0LL",
+                null,
+                null,
+                "I0JI",
+                "I0GC"
+              ],
               "mmr_before": 975,
               "mmr_after": 1000,
               "mmr_delta": 25,
@@ -5715,6 +6931,14 @@
               "start_team": 1,
               "hero": "N0MD",
               "hero_name": "Oracle",
+              "items": [
+                "I0K6",
+                "I05I",
+                "I04R",
+                null,
+                "I0MI",
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5736,6 +6960,14 @@
               "start_team": 1,
               "hero": "U00P",
               "hero_name": "Obsidian Destroyer",
+              "items": [
+                "I02O",
+                "I0BK",
+                "I04Q",
+                null,
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
@@ -5757,6 +6989,14 @@
               "start_team": 2,
               "hero": "N00B",
               "hero_name": "Faerie Dragon",
+              "items": [
+                "I0BK",
+                "I06L",
+                "I04R",
+                "I02O",
+                "I05G",
+                "I0HB"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5778,6 +7018,14 @@
               "start_team": 2,
               "hero": "Hlgr",
               "hero_name": "Dragon Knight",
+              "items": [
+                "I05Z",
+                "I06A",
+                "I04R",
+                "I0BM",
+                "I06L",
+                "I052"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5799,6 +7047,14 @@
               "start_team": 2,
               "hero": "Ekee",
               "hero_name": "Tormented Soul",
+              "items": [
+                "I012",
+                "I05Z",
+                "I06L",
+                "I050",
+                null,
+                "I04V"
+              ],
               "mmr_before": 1000,
               "mmr_after": 1025,
               "mmr_delta": 25,
@@ -5820,6 +7076,14 @@
               "start_team": 1,
               "hero": "H004",
               "hero_name": "Slayer",
+              "items": [
+                "I0GC",
+                "I0SD",
+                "I04P",
+                "I05I",
+                null,
+                null
+              ],
               "mmr_before": 1000,
               "mmr_after": 975,
               "mmr_delta": -25,
