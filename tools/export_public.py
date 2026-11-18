@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from contextlib import closing
 import json
 from pathlib import Path
+import re
 import sqlite3
 from lod_modes import game_mode, replay_index
 from rating import replay
@@ -24,6 +25,16 @@ MODE_LADDERS = (
     ('lod-4x4', 'DotA LoD 4×4 · без мида', 4, 'no-mid'),
     ('lod-3x3', 'DotA LoD 3×3 · только мид', 3, 'only-mid'),
 )
+
+
+def inventory(stats):
+    values = [stats.get(f'item{slot}') for slot in range(1, 7)]
+    if any(not isinstance(value, str) for value in values):
+        return None
+    items = [value if value and value != '\0' * 4 else None for value in values]
+    if any(value is not None and not re.fullmatch(r'[A-Za-z0-9]{4}', value) for value in items):
+        return None
+    return items
 
 
 def mode_ladder(label, size, lane, events, histories, people):
@@ -173,6 +184,7 @@ def export(sources,display_names=None,hero_catalog=None):
                     hero=str(s.get('hero') or '')[:4]
                     match['players'].append(dict(name=players[r['name'].casefold()]['name'],team=team,start_team=r['team']+1,
                                                 hero=hero,hero_name=hero_catalog.get(profile,{}).get(hero),
+                                                items=inventory(s),
                                                 mmr_before=None,mmr_after=None,mmr_delta=None,xp_gained=None,
                                                 **{m:int(s[m]) if s.get(m) is not None else None for m in (*METRICS,'gold')}))
                 # Preserve the complete start roster requirement even if result rows are partial.

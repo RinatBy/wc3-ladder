@@ -85,3 +85,7 @@
 .ladder-directory a:focus-visible {
   color: #fff1a0;
 }
+
+.inventory-slots{display:flex;justify-content:center;gap:3px}
+.inventory-slot{box-sizing:content-box;display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #655746;background-color:#090909;background-repeat:no-repeat;background-size:512px auto;color:#aa9b80;font:bold 16px Arial,sans-serif}
+.match-inventory{width:219px;min-width:219px}
